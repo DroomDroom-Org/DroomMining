@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Bitcoin, Clock, Calendar, TrendingUp } from "lucide-react";
 import { getCmcImageUrl } from "@/lib/config";
+import BitcoinNavigation from "@/components/bitcoin-navigation";
 
 interface HalvingData {
   blockHeight: number;
@@ -129,9 +130,12 @@ export default function BitcoinHalvingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground py-8">
+    <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-4">
-        <div className="w-full mb-4">
+        <BitcoinNavigation />
+        
+        {/* Page Header */}
+        <div className="w-full mb-4 pt-8">
           <div className="w-full flex items-center gap-4 mb-4">
             <img
               src={getCmcImageUrl(1)}

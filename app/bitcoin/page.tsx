@@ -41,6 +41,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { getCmcImageUrl } from "@/lib/config";
+import BitcoinNavigation from "@/components/bitcoin-navigation";
 
 export default function BitcoinMiningPage() {
   const [liveData, setLiveData] = useState({
@@ -73,21 +74,21 @@ export default function BitcoinMiningPage() {
     value: 110000 + Math.random() * 2000,
   }));
 
-  useEffect(() => {
-    // Fetch from your API: /api/bitcoin/stats
-    const fetchData = async () => {
-      try {
-        const res = await fetch("/api/bitcoin/stats");
-        const data = await res.json();
-        setLiveData((prev) => ({ ...prev, ...data }));
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-    const interval = setInterval(fetchData, 300000); // 5 min
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   // Fetch from your API: /api/bitcoin/stats
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await fetch("/api/bitcoin/stats");
+  //       const data = await res.json();
+  //       setLiveData((prev) => ({ ...prev, ...data }));
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+  //   fetchData();
+  //   const interval = setInterval(fetchData, 300000); // 5 min
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const basicInfo = [
     { key: "Name", value: "Bitcoin" },
@@ -170,9 +171,12 @@ export default function BitcoinMiningPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground py-8">
+    <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-4">
-        <div className="w-full mb-4">
+        <BitcoinNavigation />
+
+        {/* Page Header */}
+        <div className="w-full mb-4 pt-8">
           <div className="w-full flex items-center gap-4 mb-4">
             <img
               src={getCmcImageUrl(1)}

@@ -25,14 +25,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -43,6 +35,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getCmcImageUrl } from "@/lib/config";
+import BitcoinNavigation from "@/components/bitcoin-navigation";
 
 interface Miner {
   name: string;
@@ -337,6 +330,9 @@ export default function BitcoinCalculatorPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-4">
+        <BitcoinNavigation />
+
+        {/* Page Header */}
         <section className="pt-8">
           <div className="">
             <div className="flex items-start justify-between">
