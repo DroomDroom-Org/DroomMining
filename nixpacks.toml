@@ -1,0 +1,70 @@
+[build]
+# Commands to run during the build phase
+cmds = [
+  "echo '🚀 CUSTOM NIXPACKS: Starting build with Node.js 20 and custom configuration...'" ,
+  "node -v",
+  "pnpm run build",
+  "echo '✅ CUSTOM NIXPACKS: Build completed successfully!'"
+]
+# Cache these directories to speed up builds
+cache_directories = [
+  ".next/cache",
+  "node_modules/.cache"
+]
+
+[install]
+# Commands to run during the install phase
+cmds = [
+  "echo '💾 CUSTOM NIXPACKS: Starting dependency installation...'" ,
+  "pnpm i --frozen-lockfile",
+  "echo '📚 CUSTOM NIXPACKS: Dependencies installed successfully!'"
+]
+# Cache the PNPM store to speed up package installation
+cache_directories = [
+  "/root/.local/share/pnpm/store/v3"
+]
+# Add node_modules/.bin to PATH
+paths = [
+  "/app/node_modules/.bin"
+]
+
+[setup]
+# Use Node.js 20 and PNPM 9.x
+nixPkgs = [
+  "nodejs_20", # Upgrading to Node.js 20 for better performance
+  "pnpm-9_x",
+  "openssl",
+  "mongodb-tools" # Added for MongoDB utilities
+]
+
+# Add a setup script to verify environment
+setupCmds = [
+  "echo '🛠️ CUSTOM NIXPACKS: Setting up build environment with Node.js 20...'",
+  "echo 'System information:'",
+  "uname -a",
+  "echo 'Available packages:'",
+  "node -v",
+  "pnpm -v"
+]
+nixOverlays = [
+  "https://github.com/railwayapp/nix-npm-overlay/archive/main.tar.gz"
+]
+nixpkgsArchive = "ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7"
+# Additional apt packages
+aptPkgs = [
+  "curl",
+  "wget",
+  "ca-certificates" # Added for HTTPS support
+]
+
+[start]
+# Command to start the application
+cmd = "echo '🚀 CUSTOM NIXPACKS: Starting application...' && pnpm run start"
+
+[variables]
+# Environment variables
+NODE_ENV = "production"
+NPM_CONFIG_PRODUCTION = "false"
+CI = "true"
+# Add a custom port variable to make it configurable
+PORT = "3000"
