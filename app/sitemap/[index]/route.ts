@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { generateCryptoExchangesSitemaps } from '@/lib/sitemap';
+import { generateCryptoCoinsSitemaps } from '@/lib/sitemap';
 
 export async function GET(
   request: Request,
@@ -11,7 +11,7 @@ export async function GET(
       return new NextResponse('Invalid sitemap index', { status: 400 });
     }
 
-    const sitemaps = await generateCryptoExchangesSitemaps();
+    const sitemaps = await generateCryptoCoinsSitemaps();
     const sitemap = sitemaps.find(s => s.index === index);
 
     if (!sitemap) {

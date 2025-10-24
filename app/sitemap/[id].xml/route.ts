@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generateCryptoExchangesSitemaps } from '@/lib/sitemap';
+import { generateCryptoCoinsSitemaps } from '@/lib/sitemap';
 
 export const dynamic = 'force-dynamic';
 
@@ -24,7 +24,7 @@ export async function GET(
     // Generate all sitemaps
     let sitemaps = [];
     try {
-      sitemaps = await generateCryptoExchangesSitemaps();
+      sitemaps = await generateCryptoCoinsSitemaps();
     } catch (sitemapError) {
       console.error('Error generating sitemaps:', sitemapError);
       // Return an empty sitemap as fallback

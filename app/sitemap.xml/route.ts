@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generateCryptoExchangesSitemaps, generateSitemapIndex } from '@/lib/sitemap';
+import { generateCryptoCoinsSitemaps, generateSitemapIndex } from '@/lib/sitemap';
 
 export async function GET(request: NextRequest) {
   try {
     // Generate all sitemaps to determine how many we have
-    const sitemaps = await generateCryptoExchangesSitemaps();
+    const sitemaps = await generateCryptoCoinsSitemaps();
     
     // Create a list of just the sitemap indexes
     const sitemapIndexes = sitemaps.map(sitemap => ({

@@ -1,7 +1,7 @@
 import { prisma } from './prisma';
 
-const generateExchangeUrl = (slug: string) => {
-  return `/crypto-exchanges/${slug}`;  
+const generateCoinMiningUrl = (name: string) => {
+  return `/mining/${name}`;
 };
 
 const CHUNK_SIZE = 200;
@@ -22,22 +22,22 @@ const escapeXml = (unsafe: string) => {
   });
 };
 
-export async function generateCryptoExchangesSitemaps() {
+export async function generateCryptoCoinsSitemaps() {
   try {
     // First get all asset basepaths for the first sitemap
-    const assetBasepaths = await prisma.exchange.findMany({
+    const assetBasepaths = await prisma.coin.findMany({
       select: {
-        slug: true
+        name: true
       },
-      distinct: ['slug'], 
+      distinct: ['name'],
     });
 
-  const availableBasepaths = assetBasepaths
-    .map(asset => asset.slug)
-    .filter(Boolean) as string[];
+    const availableBasepaths = assetBasepaths
+      .map(asset => asset.name)
+      .filter(Boolean) as string[];
 
-  // Generate first sitemap with static pages and asset category pages
-  const firstSitemap = `<?xml version="1.0" encoding="UTF-8"?>
+    // Generate first sitemap with static pages and asset category pages
+    const firstSitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Static Pages -->
   <url>
@@ -55,50 +55,44 @@ export async function generateCryptoExchangesSitemaps() {
   </url>`).join('\n')}
 </urlset>`;
 
-  // Get all live Exchanges
-  const exchanges = await prisma.exchange.findMany({
-    select: {
-      id: true,
-      name: true,
-      slug: true,
-      updatedAt: true
-    },
-    orderBy: {
-      updatedAt: 'desc'
-    }
-  });
+    const coins = await prisma.coin.findMany({
+      select: {
+        id: true,
+        name: true,
+        updatedAt: true
+      },
+      orderBy: {
+        updatedAt: 'desc'
+      }
+    });
 
-  // Calculate number of chunks needed for Exchanges
-  const totalExchangeChunks = Math.ceil(exchanges.length / CHUNK_SIZE);
-  // Initialize the sitemaps array with the first sitemap (static pages)
-  const sitemaps = [{ index: 1, content: firstSitemap }];
+    const totalCoinChunks = Math.ceil(coins.length / CHUNK_SIZE);
+    const sitemaps = [{ index: 1, content: firstSitemap }];
 
-  // Generate each Exchange chunk starting at index 2
-    for (let i = 0; i < totalExchangeChunks; i++) {
-    const start = i * CHUNK_SIZE;
-    const end = start + CHUNK_SIZE;
-    const chunk = exchanges.slice(start, end);
+    for (let i = 0; i < totalCoinChunks; i++) {
+      const start = i * CHUNK_SIZE;
+      const end = start + CHUNK_SIZE;
+      const chunk = coins.slice(start, end);
 
-    // Only create a sitemap if we have Exchanges in this chunk
-    if (chunk.length > 0) {
-      const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+      if (chunk.length > 0) {
+        const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${chunk.map(exchange => `  <url>
-    <loc>${escapeXml(`${SITE_URL}${generateExchangeUrl(exchange.slug)}`)}</loc>
-    <lastmod>${exchange.updatedAt.toISOString()}</lastmod>
+${chunk.map(coin => `  <url>
+    <loc>${escapeXml(`${SITE_URL}${generateCoinMiningUrl(coin.name)}`)}</loc>
+    <lastmod>${coin.updatedAt.toISOString()}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>`).join('\n')}
 </urlset>`;
 
-      sitemaps.push({
-        index: i + 2, // Start Exchange sitemaps at index 2
-        content: sitemap
-      });
+        sitemaps.push({
+          index: i + 2,
+          content: sitemap
+        });
+      }
     }
-  }
 
-  return sitemaps;
+    return sitemaps;
   } catch (error) {
     console.error('Error generating sitemaps:', error);
     // Return a minimal sitemap with just the homepage in case of error
@@ -151,6 +145,6 @@ ${sitemaps.map(sitemap => `  <sitemap>
 //   if (!event) return false;
 
 //   // If never generated or updated after last generation
-//   return !event.isStaticGenerated || 
+//   return !event.isStaticGenerated ||
 //          (event.lastStaticGenerated && event.updatedAt > event.lastStaticGenerated);
 // } 

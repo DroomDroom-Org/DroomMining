@@ -7,3 +7,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Coin {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  cmcId String  @unique
+  name  String  @unique
+  ticker String @unique
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
