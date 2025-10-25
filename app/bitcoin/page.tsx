@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import axios from "axios";
 import { getApiUrl } from "@/lib/config";
 import BitcoinHomePageClient from "./page-client";
+import BitcoinHomePageClientShimmer from "./page-client-shimmer";
 
 async function fetchInitialData() {
   try {
@@ -40,9 +41,7 @@ export default async function BitcoinHomePage() {
   return (
     <Suspense
       fallback={
-        <div className="w-full h-full flex items-center justify-center">
-          Loading.........
-        </div>
+        <BitcoinHomePageClientShimmer/>
       }
     >
       <BitcoinHomePageClient

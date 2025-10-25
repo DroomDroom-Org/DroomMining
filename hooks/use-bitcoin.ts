@@ -2,7 +2,6 @@ import { useState, useCallback, useEffect } from "react";
 import axios from "axios";
 import { ChartDataPoint } from "@/types";
 import { getApiUrl } from "@/lib/config";
-import { time } from "console";
 
 export const useBitcoin = () => {
 
