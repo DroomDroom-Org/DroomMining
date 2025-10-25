@@ -1,54 +1,119 @@
 import { NextRequest, NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
-
 const endpoints = {
   blockCount: 'https://blockchain.info/q/getblockcount',
   difficulty: 'https://blockchain.info/q/getdifficulty',
   networkHashrate: 'https://blockchain.info/q/hashrate',
-  difficultyRetarget: 2016,
   volume: 'https://blockchain.info/q/totalbc',
-};
+} as const;
+
+const DIFFICULTY_RETARGET = 2016;
+const BLOCK_TIME_TARGET = 600;
 
 function getBlockReward(blockCount: number): number {
-  const halvings = Math.floor(blockCount / 210000);
+  const halvings = Math.floor(blockCount / 210_000);
   const initialReward = 50;
   return initialReward / Math.pow(2, halvings);
 }
 
-async function fetchValue(url: string): Promise<number> {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`Failed to fetch from ${url}`);
-  const text = await res.text();
-  return parseFloat(text);
+async function fetchValue(url: string, name: string): Promise<number> {
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000); 
+
+    const res = await fetch(url, {
+      signal: controller.signal,
+      next: { revalidate: 3600 },
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+    }
+
+    const text = await res.text();
+    const value = parseFloat(text);
+
+    if (isNaN(value) || value < 0) {
+      throw new Error(`Invalid numeric response: ${text}`);
+    }
+
+    return value;
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Unknown error';
+    throw new Error(`Failed to fetch ${name}: ${message}`);
+  }
 }
 
 export async function GET(request: NextRequest) {
+  const results = {
+    blockCount: null as number | null,
+    difficulty: null as number | null,
+    networkHashrate: null as number | null,
+    blockReward: null as number | null,
+    blockTime: BLOCK_TIME_TARGET,
+    difficultyRetarget: DIFFICULTY_RETARGET,
+    volume: null as number | null,
+  };
+
+  const errors: string[] = [];
+
   try {
-    const [
-      blockCount,
-      difficulty,
-      networkHashrate,
-      volume,
-    ] = await Promise.all([
-      fetchValue(endpoints.blockCount),
-      fetchValue(endpoints.difficulty),
-      fetchValue(endpoints.networkHashrate),
-      fetchValue(endpoints.volume),
-    ]);
+    const [blockCount, difficulty, networkHashrate, volume] = await Promise.allSettled([
+      fetchValue(endpoints.blockCount, 'blockCount'),
+      fetchValue(endpoints.difficulty, 'difficulty'),
+      fetchValue(endpoints.networkHashrate, 'networkHashrate'),
+      fetchValue(endpoints.volume, 'volume'),
+    ]).then((results) =>
+      results.map((result, i) => {
+        if (result.status === 'fulfilled') {
+          return result.value;
+        } else {
+          const endpointName = Object.keys(endpoints)[i];
+          const errorMsg = result.reason?.message || 'Unknown error';
+          errors.push(`${endpointName}: ${errorMsg}`);
+          console.warn(`Partial failure in blockchain stats API [${endpointName}]:`, errorMsg);
+          return null;
+        }
+      })
+    );
 
-    const blockReward = getBlockReward(blockCount);
+    results.blockCount = blockCount ?? null;
+    results.difficulty = difficulty ?? null;
+    results.networkHashrate = networkHashrate ?? null;
+    results.volume = volume ?? null;
 
-    return NextResponse.json({
-      blockCount,
-      difficulty,
-      networkHashrate,
-      blockReward,
-      blockTime : 600,
-      difficultyRetarget: endpoints.difficultyRetarget,
-      volume,
-    });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (blockCount !== null) {
+      results.blockReward = getBlockReward(blockCount);
+    }
+
+    const hasAnyData =
+      results.blockCount !== null ||
+      results.difficulty !== null ||
+      results.networkHashrate !== null ||
+      results.volume !== null;
+
+    const status = hasAnyData && errors.length > 0 ? 206 : hasAnyData ? 200 : 503;
+
+    return NextResponse.json(
+      {
+        data: results,
+        warnings: errors.length > 0 ? errors : undefined,
+      },
+      { status }
+    );
+  } catch (error) {
+    console.error('Critical error in blockchain stats API:', error);
+
+    return NextResponse.json(
+      {
+        error: 'Failed to fetch blockchain statistics',
+        details: error instanceof Error ? error.message : 'Unknown error',
+        data: results,
+      },
+      { status: 503 }
+    );
   }
 }
