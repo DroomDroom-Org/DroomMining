@@ -39,11 +39,25 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Area,
+  ComposedChart,
+  ReferenceLine,
 } from "recharts";
 import { getCmcImageUrl } from "@/lib/config";
 import BitcoinNavigation from "@/components/bitcoin-navigation";
+import useBitcoin from "@/hooks/use-bitcoin";
+import { chartTimeRanges } from "@/lib/constant";
+import BitcoinPriceChart from "@/components/bitcoin-price-chart";
 
 export default function BitcoinMiningPage() {
+  const {
+    chartData,
+    isChartLoading,
+    chartTimeRange,
+    setChartTimeRange,
+    fetchChart,
+  } = useBitcoin();
+
   const [liveData, setLiveData] = useState({
     blockCount: 920545,
     difficulty: 146716052770110,
@@ -169,6 +183,13 @@ export default function BitcoinMiningPage() {
       value: `${liveData.difficultyRetarget} blocks`,
     },
   ];
+
+  const handleTimeRangeChange = (newTimeRange: string) => {
+    setChartTimeRange(newTimeRange);
+    fetchChart(newTimeRange);
+  };
+
+  console.log("Chart Data", chartData);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -350,75 +371,36 @@ export default function BitcoinMiningPage() {
 
         {/* Price and Exchange Rate */}
         <Card className="mb-12 animate-slide-in-from-bottom animation-delay-800">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <DollarSign className="h-5 w-5" />
-              Bitcoin Price and Exchange Rate Information
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto mb-8">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Exchange</TableHead>
-                    <TableHead>Current Exchange Rate</TableHead>
-                    <TableHead>Exchange Volume</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>Bitstamp</TableCell>
-                    <TableCell>
-                      ${liveData.prices.bitstamp.toLocaleString()}
-                    </TableCell>
-                    <TableCell>{liveData.volume.toFixed(8)} BTC</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>CoinGecko</TableCell>
-                    <TableCell>
-                      ${liveData.prices.coingecko.toLocaleString()}
-                    </TableCell>
-                    <TableCell>0.00000000 BTC</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Coinbase</TableCell>
-                    <TableCell>
-                      ${liveData.prices.coinbase.toLocaleString()}
-                    </TableCell>
-                    <TableCell>0.00000000 BTC</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
+          <div className="flex justify-between space-y-1.5 p-6">
+            <div className="flex items-center gap-2 text-2xl font-semibold leading-none tracking-tight">
+              <TrendingUp className="h-5 w-5" />
+              Bitcoin Price Chart
             </div>
-            <Card className="animate-slide-in-from-bottom">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  Bitcoin Exchange Rate Chart
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="h-64">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={priceChartData}>
-                      <CartesianGrid
-                        strokeDasharray="3 3"
-                        stroke={liveData ? "#f0f0f0" : "#333"}
-                      />
-                      <XAxis dataKey="date" />
-                      <YAxis />
-                      <Tooltip />
-                      <Line
-                        type="monotone"
-                        dataKey="value"
-                        stroke="#ff7300"
-                        strokeWidth={2}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
+            <div className="flex justify-end items-center">
+              <div className="flex gap-1 items-center md:overflow-x-auto md:pb-0 md:scrollbar-none">
+                <div className="flex gap-2 items-center text-muted-foreground md:gap-3 md:w-auto md:justify-start">
+                  {chartTimeRanges.map((range) => (
+                    <button
+                      key={range.value}
+                      className={`px-2 py-1.5 text-xs min-w-[36px] text-center font-medium rounded cursor-pointer transition-all duration-200 md:px-3 md:min-w-[32px] md:text-[13px] ${
+                        chartTimeRange === range.value
+                          ? `bg-muted dark:text-white text-black md:font-semibold`
+                          : `bg-transparent dark:text-gray-400 text-gray-600 md:font-normal`
+                      }`}
+                      onClick={() => handleTimeRangeChange(range.value)}
+                    >
+                      {range.label}
+                    </button>
+                  ))}
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
+          </div>
+          <CardContent>
+            <BitcoinPriceChart
+              chartData={chartData}
+              openingPrice={chartData[0]?.price}
+            />
           </CardContent>
         </Card>
       </div>
