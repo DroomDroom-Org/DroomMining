@@ -12,6 +12,7 @@ import {
   Calculator,
   ChevronRight,
   DollarSign,
+  Gauge
 } from "lucide-react";
 import {
   Card,
@@ -86,22 +87,6 @@ export default function BitcoinMiningPage() {
     },
     volume: 1751.34282734,
   });
-
-  // useEffect(() => {
-  //   // Fetch from your API: /api/bitcoin/stats
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await fetch("/api/bitcoin/stats");
-  //       const data = await res.json();
-  //       setLiveData((prev) => ({ ...prev, ...data }));
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-  //   fetchData();
-  //   const interval = setInterval(fetchData, 300000); // 5 min
-  //   return () => clearInterval(interval);
-  // }, []);
 
   const basicInfo = [
     { key: "Name", value: "Bitcoin" },
@@ -183,7 +168,7 @@ export default function BitcoinMiningPage() {
     },
   ];
 
-  const handleDiffcultyTimeRangeChange = (newTimeRange: string) => {
+  const handleDifficultyTimeRangeChange = (newTimeRange: string) => {
     setDiffcultyCurrentTimerange(newTimeRange);
     fetchPriceChart(newTimeRange);
   };
@@ -314,36 +299,15 @@ export default function BitcoinMiningPage() {
           </CardContent>
         </Card>
 
-        {/* Difficulty Chart */}
-        <Card className="mb-12 animate-slide-in-from-bottom animation-delay-400">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5" />
-              Bitcoin Difficulty
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={difficultyChartData}>
-                  <CartesianGrid
-                    strokeDasharray="3 3"
-                    stroke={liveData ? "#f0f0f0" : "#333"}
-                  />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line
-                    type="monotone"
-                    dataKey="value"
-                    stroke="#8884d8"
-                    strokeWidth={2}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
+        <BitcoinChart
+          title="Bitcoin Difficulty"
+          icon={<Gauge className="h-5 w-5" />}
+          data={difficultyChartData}
+          opening={difficultyChartData[0]?.y}
+          loading={isDifficultyChartLoading}
+          timeRange={difficultyCurrentTimerange}
+          onTimeRangeChange={handleDifficultyTimeRangeChange}
+        />
 
         <BitcoinChart
           title="Bitcoin Hashrate"

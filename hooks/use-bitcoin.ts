@@ -19,48 +19,70 @@ export const useBitcoin = () => {
 
 
   const fetchPriceChart = useCallback(async (timeRange: string = priceCurrentTimerange) => {
-      setIsPriceChartLoading(true);
-      try {
-        const timestamp = new Date().getTime();
-        const response = await axios.get(getApiUrl(`/bitcoin/chart/price?timespan=${timestamp}`));
+    setIsPriceChartLoading(true);
+    try {
+      const timestamp = new Date().getTime();
+      const response = await axios.get(getApiUrl(`/bitcoin/chart/price?timespan=${timestamp}`));
 
-        if (!response.status) {
-          throw new Error(`Error fetching price chart data: ${response.status}`);
-        }
-        setPriceChartData(response.data.values);
-      } catch (error) {
-        console.error("Error fetching chart data:", error);
-        setPriceChartData([]);
-      } finally {
-        setIsPriceChartLoading(false);
+      if (!response.status) {
+        throw new Error(`Error fetching price chart data: ${response.status}`);
       }
-    },
+      setPriceChartData(response.data.values);
+    } catch (error) {
+      console.error("Error fetching chart data:", error);
+      setPriceChartData([]);
+    } finally {
+      setIsPriceChartLoading(false);
+    }
+  },
     [priceCurrentTimerange]
   );
 
-    const fetchHashrateChart = useCallback(async (timeRange: string = hashrateCurrentTimerange) => {
-      setIsHashrateChartLoading(true);
-      try {
-        const timestamp = new Date().getTime();
-        const response = await axios.get(getApiUrl(`/bitcoin/chart/hashrate?timespan=${timestamp}`));
+  const fetchHashrateChart = useCallback(async (timeRange: string = hashrateCurrentTimerange) => {
+    setIsHashrateChartLoading(true);
+    try {
+      const timestamp = new Date().getTime();
+      const response = await axios.get(getApiUrl(`/bitcoin/chart/hashrate?timespan=${timestamp}`));
 
-        if (!response.status) {
-          throw new Error(`Error fetching hashrate chart data: ${response.status}`);
-        }
-        setHashrateChartData(response.data.values);
-      } catch (error) {
-        console.error("Error fetching chart data:", error);
-        setHashrateChartData([]);
-      } finally {
-        setIsHashrateChartLoading(false);
+      if (!response.status) {
+        throw new Error(`Error fetching hashrate chart data: ${response.status}`);
       }
-    },
+      setHashrateChartData(response.data.values);
+    } catch (error) {
+      console.error("Error fetching chart data:", error);
+      setHashrateChartData([]);
+    } finally {
+      setIsHashrateChartLoading(false);
+    }
+  },
     [hashrateCurrentTimerange]
   );
 
+
+  const fetchDifficultyChart = useCallback(async (timeRange: string = hashrateCurrentTimerange) => {
+    setIsDifficultyChartLoading(true);
+    try {
+      const timestamp = new Date().getTime();
+      const response = await axios.get(getApiUrl(`/bitcoin/chart/difficulty?timespan=${timestamp}`));
+
+      if (!response.status) {
+        throw new Error(`Error fetching difficulty chart data: ${response.status}`);
+      }
+      setDifficultyChartData(response.data.values);
+    } catch (error) {
+      console.error("Error fetching chart data:", error);
+      setDifficultyChartData([]);
+    } finally {
+      setIsDifficultyChartLoading(false);
+    }
+  },
+    [difficultyCurrentTimerange]
+  );
+
   useEffect(() => {
-      fetchPriceChart("all")
-      fetchHashrateChart("all")
+    fetchPriceChart("all")
+    fetchHashrateChart("all")
+    fetchDifficultyChart("all")
   }, []);
 
   return {
