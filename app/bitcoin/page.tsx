@@ -47,15 +47,29 @@ import { getCmcImageUrl } from "@/lib/config";
 import BitcoinNavigation from "@/components/bitcoin-navigation";
 import useBitcoin from "@/hooks/use-bitcoin";
 import { chartTimeRanges } from "@/lib/constant";
-import BitcoinPriceChart from "@/components/bitcoin-price-chart";
+import BitcoinChart from "@/components/bitcoin-chart";
 
 export default function BitcoinMiningPage() {
   const {
-    chartData,
-    isChartLoading,
-    chartTimeRange,
-    setChartTimeRange,
-    fetchChart,
+    difficultyChartData,
+    setDifficultyChartData,
+    isDifficultyChartLoading,
+    setIsDifficultyChartLoading,
+    difficultyCurrentTimerange,
+    setDiffcultyCurrentTimerange,
+    fetchPriceChart,
+    hashrateChartData,
+    setHashrateChartData,
+    isHashrateChartLoading,
+    setIsHashrateChartLoading,
+    hashrateCurrentTimerange,
+    setHashrateCurrentTimerange,
+    priceChartData,
+    setPriceChartData,
+    isPriceChartLoading,
+    setIsPriceChartLoading,
+    priceCurrentTimerange,
+    setPriceCurrentTimerange,
   } = useBitcoin();
 
   const [liveData, setLiveData] = useState({
@@ -72,21 +86,6 @@ export default function BitcoinMiningPage() {
     },
     volume: 1751.34282734,
   });
-
-  const difficultyChartData = Array.from({ length: 30 }, (_, i) => ({
-    date: `${i} days ago`,
-    value: 146000000000000 + Math.random() * 10000000000000,
-  }));
-
-  const hashrateChartData = Array.from({ length: 30 }, (_, i) => ({
-    date: `${i} days ago`,
-    value: 1000000 + Math.random() * 50000,
-  }));
-
-  const priceChartData = Array.from({ length: 30 }, (_, i) => ({
-    date: `${i} days ago`,
-    value: 110000 + Math.random() * 2000,
-  }));
 
   // useEffect(() => {
   //   // Fetch from your API: /api/bitcoin/stats
@@ -184,12 +183,20 @@ export default function BitcoinMiningPage() {
     },
   ];
 
-  const handleTimeRangeChange = (newTimeRange: string) => {
-    setChartTimeRange(newTimeRange);
-    fetchChart(newTimeRange);
+  const handleDiffcultyTimeRangeChange = (newTimeRange: string) => {
+    setDiffcultyCurrentTimerange(newTimeRange);
+    fetchPriceChart(newTimeRange);
   };
 
-  console.log("Chart Data", chartData);
+  const handleHashrateTimeRangeChange = (newTimeRange: string) => {
+    setHashrateCurrentTimerange(newTimeRange);
+    fetchPriceChart(newTimeRange);
+  };
+
+  const handlePriceTimeRangeChange = (newTimeRange: string) => {
+    setPriceCurrentTimerange(newTimeRange);
+    fetchPriceChart(newTimeRange);
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -338,43 +345,12 @@ export default function BitcoinMiningPage() {
           </CardContent>
         </Card>
 
-        {/* Hashrate Chart */}
-        <Card className="mb-12 animate-slide-in-from-bottom animation-delay-600">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Hash className="h-5 w-5" />
-              Bitcoin Hashrate
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={hashrateChartData}>
-                  <CartesianGrid
-                    strokeDasharray="3 3"
-                    stroke={liveData ? "#f0f0f0" : "#333"}
-                  />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line
-                    type="monotone"
-                    dataKey="value"
-                    stroke="#82ca9d"
-                    strokeWidth={2}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
-
         {/* Price and Exchange Rate */}
-        <Card className="mb-12 animate-slide-in-from-bottom animation-delay-800">
+        {/* <Card className="mb-12 animate-slide-in-from-bottom animation-delay-800">
           <div className="flex justify-between space-y-1.5 p-6">
             <div className="flex items-center gap-2 text-2xl font-semibold leading-none tracking-tight">
-              <TrendingUp className="h-5 w-5" />
-              Bitcoin Price Chart
+              <Hash className="h-5 w-5" />
+              Bitcoin Hashrate
             </div>
             <div className="flex justify-end items-center">
               <div className="flex gap-1 items-center md:overflow-x-auto md:pb-0 md:scrollbar-none">
@@ -402,7 +378,27 @@ export default function BitcoinMiningPage() {
               openingPrice={chartData[0]?.price}
             />
           </CardContent>
-        </Card>
+        </Card> */}
+
+        <BitcoinChart
+          title="Bitcoin Hashrate"
+          icon={<Hash className="h-5 w-5" />}
+          data={priceChartData}
+          opening={priceChartData[0]?.y}
+          loading={isPriceChartLoading}
+          timeRange={priceCurrentTimerange}
+          onTimeRangeChange={handlePriceTimeRangeChange}
+        />
+
+        <BitcoinChart
+          title="Bitcoin Price Chart"
+          icon={<TrendingUp className="h-5 w-5" />}
+          data={priceChartData}
+          opening={priceChartData[0]?.y}
+          loading={isPriceChartLoading}
+          timeRange={priceCurrentTimerange}
+          onTimeRangeChange={handlePriceTimeRangeChange}
+        />
       </div>
     </div>
   );

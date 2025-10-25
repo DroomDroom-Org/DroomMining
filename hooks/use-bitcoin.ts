@@ -1,57 +1,67 @@
 import { useState, useCallback, useEffect } from "react";
 import axios from "axios";
 import { ChartDataPoint } from "@/types";
+import { getApiUrl } from "@/lib/config";
 
 export const useBitcoin = () => {
-  const [chartData, setChartData] = useState<ChartDataPoint[]>([]);
-  const [chartTimeRange, setChartTimeRange] = useState<string>("3m");
-  const [isChartLoading, setIsChartLoading] = useState(false);
 
-  const fetchChart = useCallback(
-    async (timeRange: string = chartTimeRange) => {
-      setIsChartLoading(true);
+  const [difficultyChartData, setDifficultyChartData] = useState<ChartDataPoint[]>([]);
+  const [hashrateChartData, setHashrateChartData] = useState<ChartDataPoint[]>([]);
+  const [priceChartData, setPriceChartData] = useState<ChartDataPoint[]>([]);
+
+  const [isDifficultyChartLoading, setIsDifficultyChartLoading] = useState(false);
+  const [isHashrateChartLoading, setIsHashrateChartLoading] = useState(false);
+  const [isPriceChartLoading, setIsPriceChartLoading] = useState(false);
+
+  const [difficultyCurrentTimerange, setDiffcultyCurrentTimerange] = useState('all');
+  const [hashrateCurrentTimerange, setHashrateCurrentTimerange] = useState('all');
+  const [priceCurrentTimerange, setPriceCurrentTimerange] = useState('all');
+
+
+  const fetchPriceChart = useCallback(async (timeRange: string = priceCurrentTimerange) => {
+      setIsPriceChartLoading(true);
       try {
         const timestamp = new Date().getTime();
-        const densityParam =
-          timeRange === "1d"
-            ? "&interval=5m"
-            : timeRange === "7d"
-              ? "&interval=30m"
-              : timeRange === "30d" || timeRange === "1m"
-                ? "&interval=1h"
-                : timeRange === "90d" || timeRange === "3m"
-                  ? "&interval=4h"
-                  : "&interval=1d";
+        const response = await axios.get(getApiUrl(`/bitcoin/chart/price?timespan=${timestamp}`));
 
-        const response = await axios.get(`https://droomdroom.com/price/api/coin/chart/1?timeRange=${timeRange}${densityParam}&_t=${timestamp}`)
-        const data = response.data;
-        const processedData = data.map((item: any, index: number) => ({
-          timestamp: item.time || item.timestamp || item[0],
-          price: item.price || item[1],
-          volume: item.volume || Math.random() * 1000000 + 500000,
-          percent_change_24h: item.percent_change_24h || 0,
-        }));
-        setChartData(processedData);
+        if (!response.status) {
+          throw new Error(`Error fetching price chart data: ${response.status}`);
+        }
+        setPriceChartData(response.data.values);
       } catch (error) {
         console.error("Error fetching chart data:", error);
-        setChartData([]);
+        setPriceChartData([]);
       } finally {
-        setIsChartLoading(false);
+        setIsPriceChartLoading(false);
       }
     },
-    [chartTimeRange]
+    [priceCurrentTimerange]
   );
 
   useEffect(() => {
-    fetchChart();
-  }, [fetchChart]);
+      fetchPriceChart("all")
+  }, []);
 
   return {
-    chartData,
-    isChartLoading,
-    chartTimeRange,
-    setChartTimeRange,
-    fetchChart,
+    difficultyChartData,
+    setDifficultyChartData,
+    isDifficultyChartLoading,
+    setIsDifficultyChartLoading,
+    difficultyCurrentTimerange,
+    setDiffcultyCurrentTimerange,
+    fetchPriceChart,
+    hashrateChartData,
+    setHashrateChartData,
+    isHashrateChartLoading,
+    setIsHashrateChartLoading,
+    hashrateCurrentTimerange,
+    setHashrateCurrentTimerange,
+    priceChartData,
+    setPriceChartData,
+    isPriceChartLoading,
+    setIsPriceChartLoading,
+    priceCurrentTimerange,
+    setPriceCurrentTimerange
   };
 };
 

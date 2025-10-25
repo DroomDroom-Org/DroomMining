@@ -12,38 +12,31 @@ import {
   ReferenceLine,
 } from "recharts";
 import { Card, CardContent } from "@/components/ui/card";
+import { ChartDataPoint } from "@/types";
 import { useTheme } from "next-themes";
+import { TrendingUp } from "lucide-react";
+import { chartTimeRanges } from "@/lib/constant";
 
-type ChartDataPoint = {
-  timestamp: number;
-  price: number;
-  priceVisual?: number;
+type BitcoinChartProps = {
+  title: string;
+  icon: React.ReactNode;
+  data: ChartDataPoint[];
+  opening?: number;
+  loading?: boolean;
+  timeRange: string;
+  onTimeRangeChange: (timeRange: string) => void;
 };
 
-type BitcoinPriceChartProps = {
-  chartData: ChartDataPoint[];
-  openingPrice?: number;
-};
-
-const BitcoinPriceChart: React.FC<BitcoinPriceChartProps> = ({
-  chartData,
-  openingPrice,
+const BitcoinChart: React.FC<BitcoinChartProps> = ({
+  title,
+  icon,
+  data,
+  opening,
+  loading,
+  timeRange,
+  onTimeRangeChange,
 }) => {
   const { theme } = useTheme();
-  const processedData = useMemo(() => {
-    if (!chartData || chartData.length === 0) return [];
-
-    const maxPoints = 800;
-    const step = Math.max(1, Math.ceil(chartData.length / maxPoints));
-
-    return chartData
-      .filter((_, index) => index % step === 0)
-      .map((item) => ({
-        ...item,
-        priceVisual: item.priceVisual || item.price,
-        date: new Date(item.timestamp * 1000),
-      }));
-  }, [chartData]);
 
   const formatPrice = (value: number) => {
     if (value >= 1e9) return `$${(value / 1e9).toFixed(2)}B`;
@@ -57,18 +50,49 @@ const BitcoinPriceChart: React.FC<BitcoinPriceChartProps> = ({
   const tooltipBg = theme === "light" ? "#ffffff" : "#1a1a1a";
   const tooltipBorder = theme === "light" ? "#e0e0e0" : "#333";
 
+  const chartData = data.map((p: any) => ({
+    x: p.x * 1000,
+    y: p.y,
+  }));
+
+
   return (
-    <Card className="animate-slide-in-from-bottom animation-delay-800">
+    <Card className="mb-12 animate-slide-in-from-bottom animation-delay-800">
+      <div className="flex justify-between space-y-1.5 p-6">
+        <div className="flex items-center gap-2 text-2xl font-semibold leading-none tracking-tight">
+          {icon}
+          {title}
+        </div>
+        <div className="flex justify-end items-center">
+          <div className="flex gap-1 items-center md:overflow-x-auto md:pb-0 md:scrollbar-none">
+            <div className="flex gap-2 items-center text-muted-foreground md:gap-3 md:w-auto md:justify-start">
+              {chartTimeRanges.map((range) => (
+                <button
+                  key={range.value}
+                  className={`px-2 py-1.5 text-xs min-w-[36px] text-center font-medium rounded cursor-pointer transition-all duration-200 md:px-3 md:min-w-[32px] md:text-[13px] ${
+                    timeRange === range.value
+                      ? `bg-muted dark:text-white text-black md:font-semibold`
+                      : `bg-transparent dark:text-gray-400 text-gray-600 md:font-normal`
+                  }`}
+                  onClick={() => onTimeRangeChange(range.value)}
+                >
+                  {range.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
       <CardContent>
         <div className="h-96 pt-5">
-          {processedData.length === 0 ? (
+          {chartData.length === 0 ? (
             <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-              No price data available
+              No data available
             </div>
           ) : (
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
-                data={processedData}
+                data={chartData}
                 margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
               >
                 <CartesianGrid
@@ -78,21 +102,18 @@ const BitcoinPriceChart: React.FC<BitcoinPriceChartProps> = ({
                 />
 
                 <XAxis
-                  dataKey="date"
+                  dataKey="x"
                   type="category"
                   tick={{ fill: textColor, fontSize: 12 }}
                   axisLine={false}
                   tickLine={false}
-                  //   @ts-ignore
-                  ticks={processedData
+                  ticks={chartData
                     .filter(
                       (_, i) =>
-                        i %
-                          Math.max(1, Math.floor(processedData.length / 6)) ===
-                        0
+                        i % Math.max(1, Math.floor(data.length / 6)) === 0
                     )
                     .slice(0, 7)
-                    .map((d) => d.date)}
+                    .map((d) => d.x)}
                   tickFormatter={(date) => {
                     const d = new Date(date);
                     return d.toLocaleDateString("en-US", {
@@ -103,12 +124,13 @@ const BitcoinPriceChart: React.FC<BitcoinPriceChartProps> = ({
                 />
 
                 <YAxis
+                  dataKey="y"
                   tick={{ fill: textColor, fontSize: 12 }}
                   axisLine={false}
                   tickLine={false}
                   tickFormatter={formatPrice}
                   domain={["dataMin * 0.995", "dataMax * 1.005"]}
-                  tickCount={7}
+                  tickCount={9}
                 />
 
                 <Tooltip
@@ -131,9 +153,9 @@ const BitcoinPriceChart: React.FC<BitcoinPriceChartProps> = ({
                   }}
                 />
 
-                {openingPrice !== undefined && (
+                {opening !== undefined && (
                   <ReferenceLine
-                    y={openingPrice}
+                    y={opening}
                     stroke={textColor}
                     strokeDasharray="3 3"
                     strokeOpacity={0.5}
@@ -142,7 +164,7 @@ const BitcoinPriceChart: React.FC<BitcoinPriceChartProps> = ({
 
                 <Line
                   type="monotone"
-                  dataKey="priceVisual"
+                  dataKey="y"
                   stroke="#10b981"
                   strokeWidth={2}
                   dot={false}
@@ -164,4 +186,4 @@ const BitcoinPriceChart: React.FC<BitcoinPriceChartProps> = ({
   );
 };
 
-export default BitcoinPriceChart;
+export default BitcoinChart;
