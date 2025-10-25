@@ -45,7 +45,7 @@ const BitcoinChart: React.FC<BitcoinChartProps> = ({
   const { theme } = useTheme();
 
 
-  const gridColor = theme === "light" ? "#f0f0f0" : "#333";
+  const gridColor = theme === "light" ? "#ccc" : "#333";
   const textColor = theme === "light" ? "#333" : "#ccc";
   const tooltipBg = theme === "light" ? "#ffffff" : "#1a1a1a";
   const tooltipBorder = theme === "light" ? "#e0e0e0" : "#333";
@@ -141,7 +141,7 @@ const BitcoinChart: React.FC<BitcoinChartProps> = ({
                     fontSize: "13px",
                   }}
                   labelStyle={{ color: textColor, fontWeight: 500 }}
-                  itemStyle={{ color: "#10b981" }}
+                  itemStyle={{ color: "#f7931a" }}
                   formatter={(value: number) => [
                     formatNumber(value),
                     yAxisLabel,
@@ -168,12 +168,12 @@ const BitcoinChart: React.FC<BitcoinChartProps> = ({
                 <Line
                   type="monotone"
                   dataKey="y"
-                  stroke="#10b981"
+                  stroke="#f7931a"
                   strokeWidth={2}
                   dot={false}
                   activeDot={{
                     r: 6,
-                    fill: "#10b981",
+                    fill: "#f7931a",
                     stroke: theme === "light" ? "#ffffff" : "#1a1a1a",
                     strokeWidth: 2,
                   }}
