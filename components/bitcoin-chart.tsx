@@ -44,7 +44,6 @@ const BitcoinChart: React.FC<BitcoinChartProps> = ({
 }) => {
   const { theme } = useTheme();
 
-
   const gridColor = theme === "light" ? "#ccc" : "#333";
   const textColor = theme === "light" ? "#333" : "#ccc";
   const tooltipBg = theme === "light" ? "#ffffff" : "#1a1a1a";
@@ -74,6 +73,7 @@ const BitcoinChart: React.FC<BitcoinChartProps> = ({
                       : `bg-transparent dark:text-gray-400 text-gray-600 md:font-normal`
                   }`}
                   onClick={() => onTimeRangeChange(range.value)}
+                  disabled={loading}
                 >
                   {range.label}
                 </button>
@@ -84,7 +84,20 @@ const BitcoinChart: React.FC<BitcoinChartProps> = ({
       </div>
       <CardContent>
         <div className="h-96 pt-5">
-          {chartData.length === 0 ? (
+          {loading ? (
+            <div className="flex h-full items-center justify-center">
+              <div className="flex flex-col items-center gap-3">
+                <div className="relative w-12 h-12">
+                  <div className="absolute inset-0 border-4 border-gray-200 dark:border-gray-700 rounded-full"></div>
+
+                  <div className="absolute inset-0 border-4 border-transparent border-t-[#f7931a] rounded-full animate-spin"></div>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Loading chart data...
+                </p>
+              </div>
+            </div>
+          ) : chartData.length === 0 ? (
             <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
               No data available
             </div>

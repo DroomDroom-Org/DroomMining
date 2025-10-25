@@ -31,44 +31,24 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Area,
-  ComposedChart,
-  ReferenceLine,
-} from "recharts";
 import { getCmcImageUrl } from "@/lib/config";
 import BitcoinNavigation from "@/components/bitcoin-navigation";
 import useBitcoin from "@/hooks/use-bitcoin";
-import { chartTimeRanges } from "@/lib/constant";
 import BitcoinChart from "@/components/bitcoin-chart";
 
 export default function BitcoinMiningPage() {
   const {
     difficultyChartData,
-    setDifficultyChartData,
     isDifficultyChartLoading,
-    setIsDifficultyChartLoading,
     difficultyCurrentTimerange,
     setDiffcultyCurrentTimerange,
     fetchPriceChart,
     hashrateChartData,
-    setHashrateChartData,
     isHashrateChartLoading,
-    setIsHashrateChartLoading,
     hashrateCurrentTimerange,
     setHashrateCurrentTimerange,
     priceChartData,
-    setPriceChartData,
     isPriceChartLoading,
-    setIsPriceChartLoading,
     priceCurrentTimerange,
     setPriceCurrentTimerange,
     fetchHashrateChart,
