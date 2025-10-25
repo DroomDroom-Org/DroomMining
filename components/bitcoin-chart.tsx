@@ -20,7 +20,10 @@ import { chartTimeRanges } from "@/lib/constant";
 type BitcoinChartProps = {
   title: string;
   icon: React.ReactNode;
+  xAxisLabel: string;
+  yAxisLabel: string;
   data: ChartDataPoint[];
+  formatNumber: (value: number) => string;
   opening?: number;
   loading?: boolean;
   timeRange: string;
@@ -30,7 +33,10 @@ type BitcoinChartProps = {
 const BitcoinChart: React.FC<BitcoinChartProps> = ({
   title,
   icon,
+  xAxisLabel,
+  yAxisLabel,
   data,
+  formatNumber,
   opening,
   loading,
   timeRange,
@@ -38,12 +44,6 @@ const BitcoinChart: React.FC<BitcoinChartProps> = ({
 }) => {
   const { theme } = useTheme();
 
-  const formatPrice = (value: number) => {
-    if (value >= 1e9) return `$${(value / 1e9).toFixed(2)}B`;
-    if (value >= 1e6) return `$${(value / 1e6).toFixed(2)}M`;
-    if (value >= 1e3) return `$${(value / 1e3).toFixed(1)}K`;
-    return `$${value.toFixed(2)}`;
-  };
 
   const gridColor = theme === "light" ? "#f0f0f0" : "#333";
   const textColor = theme === "light" ? "#333" : "#ccc";
@@ -54,7 +54,6 @@ const BitcoinChart: React.FC<BitcoinChartProps> = ({
     x: p.x * 1000,
     y: p.y,
   }));
-
 
   return (
     <Card className="mb-12 animate-slide-in-from-bottom animation-delay-800">
@@ -124,11 +123,12 @@ const BitcoinChart: React.FC<BitcoinChartProps> = ({
                 />
 
                 <YAxis
+                  orientation="right"
                   dataKey="y"
                   tick={{ fill: textColor, fontSize: 12 }}
-                  axisLine={false}
+                  axisLine={true}
                   tickLine={false}
-                  tickFormatter={formatPrice}
+                  tickFormatter={formatNumber}
                   domain={["dataMin * 0.995", "dataMax * 1.005"]}
                   tickCount={9}
                 />
@@ -142,7 +142,10 @@ const BitcoinChart: React.FC<BitcoinChartProps> = ({
                   }}
                   labelStyle={{ color: textColor, fontWeight: 500 }}
                   itemStyle={{ color: "#10b981" }}
-                  formatter={(value: number) => [formatPrice(value), "Price"]}
+                  formatter={(value: number) => [
+                    formatNumber(value),
+                    yAxisLabel,
+                  ]}
                   labelFormatter={(label) => {
                     const date = new Date(label);
                     return date.toLocaleDateString("en-US", {

@@ -186,6 +186,32 @@ export default function BitcoinMiningPage() {
     fetchPriceChart(newTimeRange);
   };
 
+  const formatChartPrice = (value: number) => {
+    if (value >= 1e9) return `$${(value / 1e9).toFixed(2)}B`;
+    if (value >= 1e6) return `$${(value / 1e6).toFixed(2)}M`;
+    if (value >= 1e3) return `$${(value / 1e3).toFixed(1)}K`;
+    return `${value.toFixed(2)}`;
+  };
+
+  const formatChartDifficulty = (value: number): string => {
+    if (value >= 1e15) return `${(value / 1e15).toFixed(2)}Q`;
+    if (value >= 1e12) return `${(value / 1e12).toFixed(2)}T`;
+    if (value >= 1e9) return `${(value / 1e9).toFixed(2)}B`;
+    if (value >= 1e6) return `${(value / 1e6).toFixed(2)}M`;
+    if (value >= 1e3) return `${(value / 1e3).toFixed(1)}K`;
+    return value.toFixed(2);
+  };
+
+  const formatChartHashrate = (value: number): string => {
+    if (value >= 1e18) return `${(value / 1e18).toFixed(2)}EH/s`;
+    if (value >= 1e15) return `${(value / 1e15).toFixed(2)}PH/s`;
+    if (value >= 1e12) return `${(value / 1e12).toFixed(2)}TH/s`;
+    if (value >= 1e9) return `${(value / 1e9).toFixed(2)}GH/s`;
+    if (value >= 1e6) return `${(value / 1e6).toFixed(2)}MH/s`;
+    if (value >= 1e3) return `${(value / 1e3).toFixed(1)}KH/s`;
+    return `${value.toFixed(2)}H/s`;
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-4">
@@ -305,7 +331,10 @@ export default function BitcoinMiningPage() {
         <BitcoinChart
           title="Bitcoin Difficulty"
           icon={<Gauge className="h-5 w-5" />}
+          xAxisLabel="Date"
+          yAxisLabel="Difficulty"
           data={difficultyChartData}
+          formatNumber={formatChartDifficulty}
           opening={difficultyChartData[0]?.y}
           loading={isDifficultyChartLoading}
           timeRange={difficultyCurrentTimerange}
@@ -315,7 +344,10 @@ export default function BitcoinMiningPage() {
         <BitcoinChart
           title="Bitcoin Hashrate"
           icon={<Hash className="h-5 w-5" />}
+          xAxisLabel="Date"
+          yAxisLabel="Hashrate"
           data={hashrateChartData}
+          formatNumber={formatChartHashrate}
           opening={hashrateChartData[0]?.y}
           loading={isHashrateChartLoading}
           timeRange={hashrateCurrentTimerange}
@@ -325,7 +357,10 @@ export default function BitcoinMiningPage() {
         <BitcoinChart
           title="Bitcoin Price Chart"
           icon={<TrendingUp className="h-5 w-5" />}
+          xAxisLabel="Date"
+          yAxisLabel="Price"
           data={priceChartData}
+          formatNumber={formatChartPrice}
           opening={priceChartData[0]?.y}
           loading={isPriceChartLoading}
           timeRange={priceCurrentTimerange}
