@@ -151,7 +151,7 @@ export default function BitcoinMiningPage() {
       value: (
         <Badge
           variant="default"
-          className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+          className="bg-bitcoin hover:bg-bitcoin/80"
         >
           Healthy
         </Badge>
@@ -318,7 +318,11 @@ export default function BitcoinMiningPage() {
               Calculate your Bitcoin mining profitability and daily Bitcoin
               mining rewards with our Bitcoin mining calculator
             </p>
-            <Button asChild size="lg" className="interactive-element">
+            <Button
+              asChild
+              size="lg"
+              className="interactive-element bg-bitcoin hover:bg-bitcoin-dark"
+            >
               <Link href="/bitcoin/calculator">
                 <Calculator className="mr-2 h-4 w-4" />
                 Bitcoin Mining Calculator
