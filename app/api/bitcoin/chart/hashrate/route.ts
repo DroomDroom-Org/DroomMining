@@ -1,5 +1,6 @@
-import dynamic from 'next/dynamic';
 import { NextRequest, NextResponse } from 'next/server';
+export const dynamic = 'force-dynamic';
+
 
 const BASE_URL = 'https://api.blockchain.info/charts/hash-rate';
 const validTimespans = new Set(['all', '1year', '6months', '3months', '1months', '7days', '1days']);

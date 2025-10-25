@@ -58,15 +58,10 @@ export default function BitcoinMiningPage() {
   const [liveData, setLiveData] = useState({
     blockCount: 920545,
     difficulty: 146716052770110,
-    networkHashrate: 1145710.27, // PH/s
+    networkHashrate: 1145710.27, 
     blockReward: 3.125,
     blockTime: 10,
     difficultyRetarget: 2016,
-    prices: {
-      bitstamp: 111177.0,
-      coingecko: 111195.0,
-      coinbase: 111199.55,
-    },
     volume: 1751.34282734,
   });
 

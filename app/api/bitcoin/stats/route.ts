@@ -1,61 +1,54 @@
-import { NextResponse } from 'next/server';
-
+import { NextRequest, NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
+
+const endpoints = {
+  blockCount: 'https://blockchain.info/q/getblockcount',
+  difficulty: 'https://blockchain.info/q/getdifficulty',
+  networkHashrate: 'https://blockchain.info/q/hashrate',
+  difficultyRetarget: 2016,
+  volume: 'https://blockchain.info/q/totalbc',
+};
+
+function getBlockReward(blockCount: number): number {
+  const halvings = Math.floor(blockCount / 210000);
+  const initialReward = 50;
+  return initialReward / Math.pow(2, halvings);
+}
+
+async function fetchValue(url: string): Promise<number> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to fetch from ${url}`);
+  const text = await res.text();
+  return parseFloat(text);
+}
+
+export async function GET(request: NextRequest) {
   try {
-    const heightRes = await fetch('https://blockstream.info/api/blocks/tip/height', {
-    });
-    if (!heightRes.ok) throw new Error('Failed to fetch block height');
-    const heightText = await heightRes.text(); 
-    const height = parseInt(heightText.trim(), 10);
-    if (isNaN(height)) throw new Error('Invalid block height');
+    const [
+      blockCount,
+      difficulty,
+      networkHashrate,
+      volume,
+    ] = await Promise.all([
+      fetchValue(endpoints.blockCount),
+      fetchValue(endpoints.difficulty),
+      fetchValue(endpoints.networkHashrate),
+      fetchValue(endpoints.volume),
+    ]);
 
-    const blockRes = await fetch(`https://blockstream.info/api/block-height/${height}`, {
-    });
-    if (!blockRes.ok) throw new Error('Failed to fetch block data');
-    const blockData = await blockRes.json();
+    const blockReward = getBlockReward(blockCount);
 
-    let globalHashrate = 0;
-    try {
-      const hashrateRes = await fetch(
-        'https://blockchain.info/charts/hash-rate?timespan=1hour&format=json',
-        { next: { revalidate: 300 } }
-      );
-      if (hashrateRes.ok) {
-        const hashrateData = await hashrateRes.json();
-        const latest = hashrateData.values?.[0]?.y;
-        if (latest) globalHashrate = latest / 1_000_000; 
-      }
-    } catch (e) {
-      console.warn('Hashrate fetch failed');
-    }
-
-    const subsidy = 50 >> Math.floor(height / 210000);
-    const blockReward = Number((subsidy / 1).toFixed(8));
-
-    const responseData = {
-      blockHeight: height,
-      difficulty: blockData.difficulty,
+    return NextResponse.json({
+      blockCount,
+      difficulty,
+      networkHashrate,
       blockReward,
-      globalHashrate: Number(globalHashrate.toFixed(2)),
-      timestamp: new Date().toISOString(),
-    };
-
-    return NextResponse.json(responseData, { status: 200 });
-  } catch (error) {
-    console.error('Bitcoin Stats API Error:', error);
-
-    return NextResponse.json(
-      {
-        blockHeight: 920545,
-        difficulty: 146716052770110,
-        blockReward: 3.125,
-        globalHashrate: 1145.71,
-        timestamp: new Date().toISOString(),
-        error: 'API failed, using fallback',
-      },
-      { status: 200 }
-    );
+      blockTime : 600,
+      difficultyRetarget: endpoints.difficultyRetarget,
+      volume,
+    });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
