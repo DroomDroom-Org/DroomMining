@@ -345,49 +345,14 @@ export default function BitcoinMiningPage() {
           </CardContent>
         </Card>
 
-        {/* Price and Exchange Rate */}
-        {/* <Card className="mb-12 animate-slide-in-from-bottom animation-delay-800">
-          <div className="flex justify-between space-y-1.5 p-6">
-            <div className="flex items-center gap-2 text-2xl font-semibold leading-none tracking-tight">
-              <Hash className="h-5 w-5" />
-              Bitcoin Hashrate
-            </div>
-            <div className="flex justify-end items-center">
-              <div className="flex gap-1 items-center md:overflow-x-auto md:pb-0 md:scrollbar-none">
-                <div className="flex gap-2 items-center text-muted-foreground md:gap-3 md:w-auto md:justify-start">
-                  {chartTimeRanges.map((range) => (
-                    <button
-                      key={range.value}
-                      className={`px-2 py-1.5 text-xs min-w-[36px] text-center font-medium rounded cursor-pointer transition-all duration-200 md:px-3 md:min-w-[32px] md:text-[13px] ${
-                        chartTimeRange === range.value
-                          ? `bg-muted dark:text-white text-black md:font-semibold`
-                          : `bg-transparent dark:text-gray-400 text-gray-600 md:font-normal`
-                      }`}
-                      onClick={() => handleTimeRangeChange(range.value)}
-                    >
-                      {range.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-          <CardContent>
-            <BitcoinPriceChart
-              chartData={chartData}
-              openingPrice={chartData[0]?.price}
-            />
-          </CardContent>
-        </Card> */}
-
         <BitcoinChart
           title="Bitcoin Hashrate"
           icon={<Hash className="h-5 w-5" />}
-          data={priceChartData}
-          opening={priceChartData[0]?.y}
-          loading={isPriceChartLoading}
-          timeRange={priceCurrentTimerange}
-          onTimeRangeChange={handlePriceTimeRangeChange}
+          data={hashrateChartData}
+          opening={hashrateChartData[0]?.y}
+          loading={isHashrateChartLoading}
+          timeRange={hashrateCurrentTimerange}
+          onTimeRangeChange={handleHashrateTimeRangeChange}
         />
 
         <BitcoinChart

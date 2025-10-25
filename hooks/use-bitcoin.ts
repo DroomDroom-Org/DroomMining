@@ -38,8 +38,29 @@ export const useBitcoin = () => {
     [priceCurrentTimerange]
   );
 
+    const fetchHashrateChart = useCallback(async (timeRange: string = hashrateCurrentTimerange) => {
+      setIsHashrateChartLoading(true);
+      try {
+        const timestamp = new Date().getTime();
+        const response = await axios.get(getApiUrl(`/bitcoin/chart/hashrate?timespan=${timestamp}`));
+
+        if (!response.status) {
+          throw new Error(`Error fetching hashrate chart data: ${response.status}`);
+        }
+        setHashrateChartData(response.data.values);
+      } catch (error) {
+        console.error("Error fetching chart data:", error);
+        setHashrateChartData([]);
+      } finally {
+        setIsHashrateChartLoading(false);
+      }
+    },
+    [hashrateCurrentTimerange]
+  );
+
   useEffect(() => {
       fetchPriceChart("all")
+      fetchHashrateChart("all")
   }, []);
 
   return {
