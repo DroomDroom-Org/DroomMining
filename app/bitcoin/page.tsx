@@ -12,7 +12,7 @@ import {
   Calculator,
   ChevronRight,
   DollarSign,
-  Gauge
+  Gauge,
 } from "lucide-react";
 import {
   Card,
@@ -71,6 +71,8 @@ export default function BitcoinMiningPage() {
     setIsPriceChartLoading,
     priceCurrentTimerange,
     setPriceCurrentTimerange,
+    fetchHashrateChart,
+    fetchDifficultyChart,
   } = useBitcoin();
 
   const [liveData, setLiveData] = useState({
@@ -169,13 +171,14 @@ export default function BitcoinMiningPage() {
   ];
 
   const handleDifficultyTimeRangeChange = (newTimeRange: string) => {
+    console.log(newTimeRange);
     setDiffcultyCurrentTimerange(newTimeRange);
-    fetchPriceChart(newTimeRange);
+    fetchDifficultyChart(newTimeRange);
   };
 
   const handleHashrateTimeRangeChange = (newTimeRange: string) => {
     setHashrateCurrentTimerange(newTimeRange);
-    fetchPriceChart(newTimeRange);
+    fetchHashrateChart(newTimeRange);
   };
 
   const handlePriceTimeRangeChange = (newTimeRange: string) => {

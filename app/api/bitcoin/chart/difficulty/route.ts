@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const BASE_URL = 'https://api.blockchain.info/charts/difficulty';
-const validTimespans = new Set(['all', '1year', '6months', '3months', '1month', '7days', '1day']);
+const validTimespans = new Set(['all', '1year', '6months', '3months', '1months', '7days', '1days']);
 
 export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);

@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 import axios from "axios";
 import { ChartDataPoint } from "@/types";
 import { getApiUrl } from "@/lib/config";
+import { time } from "console";
 
 export const useBitcoin = () => {
 
@@ -21,8 +22,7 @@ export const useBitcoin = () => {
   const fetchPriceChart = useCallback(async (timeRange: string = priceCurrentTimerange) => {
     setIsPriceChartLoading(true);
     try {
-      const timestamp = new Date().getTime();
-      const response = await axios.get(getApiUrl(`/bitcoin/chart/price?timespan=${timestamp}`));
+      const response = await axios.get(getApiUrl(`/bitcoin/chart/price?timespan=${timeRange}`));
 
       if (!response.status) {
         throw new Error(`Error fetching price chart data: ${response.status}`);
@@ -41,8 +41,7 @@ export const useBitcoin = () => {
   const fetchHashrateChart = useCallback(async (timeRange: string = hashrateCurrentTimerange) => {
     setIsHashrateChartLoading(true);
     try {
-      const timestamp = new Date().getTime();
-      const response = await axios.get(getApiUrl(`/bitcoin/chart/hashrate?timespan=${timestamp}`));
+      const response = await axios.get(getApiUrl(`/bitcoin/chart/hashrate?timespan=${timeRange}`));
 
       if (!response.status) {
         throw new Error(`Error fetching hashrate chart data: ${response.status}`);
@@ -62,8 +61,7 @@ export const useBitcoin = () => {
   const fetchDifficultyChart = useCallback(async (timeRange: string = hashrateCurrentTimerange) => {
     setIsDifficultyChartLoading(true);
     try {
-      const timestamp = new Date().getTime();
-      const response = await axios.get(getApiUrl(`/bitcoin/chart/difficulty?timespan=${timestamp}`));
+      const response = await axios.get(getApiUrl(`/bitcoin/chart/difficulty?timespan=${timeRange}`));
 
       if (!response.status) {
         throw new Error(`Error fetching difficulty chart data: ${response.status}`);
@@ -93,6 +91,8 @@ export const useBitcoin = () => {
     difficultyCurrentTimerange,
     setDiffcultyCurrentTimerange,
     fetchPriceChart,
+    fetchHashrateChart,
+    fetchDifficultyChart,
     hashrateChartData,
     setHashrateChartData,
     isHashrateChartLoading,
