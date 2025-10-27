@@ -1,12 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -49,7 +44,16 @@ interface BitcoinHalvingPageClientProps {
 export default function BitcoinHalvingPageClient({
   statsData,
 }: BitcoinHalvingPageClientProps) {
-  const [stats] = useState<BitcoinStats>(statsData);
+  const [stats, setStats] = useState<BitcoinStats>({
+    blockCount: 0,
+    difficulty: 0,
+    networkHashrate: 0,
+    blockReward: 0,
+    blockTime: 0,
+    difficultyRetarget: 0,
+    volume: 0,
+  });
+
   const [countdown, setCountdown] = useState({
     days: 0,
     hours: 0,
@@ -60,6 +64,19 @@ export default function BitcoinHalvingPageClient({
   const [showAllHalvings, setShowAllHalvings] = useState(false);
   const [allHalvings] = useState(bitcoinAllHalvings);
 
+  useEffect(() => {
+    if (statsData) {
+      setStats({
+        blockCount: statsData.blockCount,
+        difficulty: statsData.difficulty,
+        networkHashrate: statsData.networkHashrate,
+        blockReward: statsData.blockReward,
+        blockTime: statsData.blockTime,
+        difficultyRetarget: statsData.difficultyRetarget,
+        volume: statsData.volume,
+      });
+    }
+  }, [statsData]);
 
   useEffect(() => {
     let raf: number;
@@ -97,7 +114,8 @@ export default function BitcoinHalvingPageClient({
   const progress = (blocksInEra / HALVING_INTERVAL) * 100;
 
   const estimatedHalvingMs =
-    Date.now() + countdown.days * 86_400_000 +
+    Date.now() +
+    countdown.days * 86_400_000 +
     countdown.hours * 3_600_000 +
     countdown.minutes * 60_000 +
     countdown.seconds * 1_000 +
@@ -214,8 +232,8 @@ export default function BitcoinHalvingPageClient({
               </div>
             </div>
             <p className="text-center mt-4 text-muted-foreground">
-              The Bitcoin halving event completed successfully at block
-              840,000 on April 20, 2024
+              The Bitcoin halving event completed successfully at block 840,000
+              on April 20, 2024
             </p>
           </CardContent>
         </Card>
@@ -232,7 +250,7 @@ export default function BitcoinHalvingPageClient({
             <p className="text-lg mb-4">
               Bitcoin halving 2028 date prediction for the next Bitcoin halving
               at block {nextHalvingBlock.toLocaleString()}. It is estimated to
-              occur in approximately **{countdown.days} days** on{" "}
+              occur in approximately {countdown.days} days on{" "}
               <strong>{estimatedHalvingDate.toLocaleDateString()}</strong>.
             </p>
 
@@ -385,7 +403,9 @@ export default function BitcoinHalvingPageClient({
                           <span
                             className={`
                               text-sm font-medium
-                              ${isPresent ? "drop-shadow-md" : "text-foreground"}
+                              ${
+                                isPresent ? "drop-shadow-md" : "text-foreground"
+                              }
                             `}
                           >
                             {label}

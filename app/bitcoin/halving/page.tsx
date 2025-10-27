@@ -14,7 +14,9 @@ async function fetchInitialData() {
   } catch (error) {
     console.error("Error fetching initial data:", error);
     return {
-      statsData: null,
+      statsData: {
+        
+      },
     };
   }
 }

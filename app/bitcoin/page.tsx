@@ -36,14 +36,8 @@ export default async function BitcoinHomePage() {
   const data = await fetchInitialData();
   const { statsData, difficultyData, hashrateData, priceData } = data;
 
-  console.log(priceData);
-
   return (
-    <Suspense
-      fallback={
-        <BitcoinHomePageClientShimmer/>
-      }
-    >
+    <Suspense fallback={<BitcoinHomePageClientShimmer />}>
       <BitcoinHomePageClient
         statsData={statsData}
         difficultyData={difficultyData}
