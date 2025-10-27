@@ -27,12 +27,10 @@ import { toZonedTime } from "date-fns-tz";
     return `${value.toFixed(2)}H/s`;
   };
 
-  // Helper – always works with a Date (never null)
 export const formatDateTime = (date: Date): string => {
-  // Force the date into UTC so we always get “… UTC”
   const utcDate = toZonedTime(date, "UTC");
 
-  const monthDayYear = format(utcDate, "MMMM d, yyyy");   // January 3, 2009
-  const time        = format(utcDate, "h:mm:ss a");      // 6:15:05 PM
+  const monthDayYear = format(utcDate, "MMMM d, yyyy");   
+  const time        = format(utcDate, "h:mm:ss a");   
   return `${monthDayYear}\n${time} UTC`;
 };
