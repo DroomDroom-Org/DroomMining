@@ -7,3 +7,409 @@ export const chartTimeRanges = [
     { label: '1Y', value: '1year' },
     { label: 'ALL', value: 'all' },
 ];
+
+
+export const bitcoinAllHalvings = [
+    {
+        era: 0,
+        height: 0,
+        reward: 50,
+        date: new Date("2009-01-03T18:15:05.000Z"),
+        year: 2009,
+        status: "past",
+    },
+    {
+        era: 1,
+        height: 210_000,
+        reward: 25,
+        date: new Date("2012-11-28T15:24:38.000Z"),
+        year: 2012,
+        status: "past",
+    },
+    {
+        era: 2,
+        height: 420_000,
+        reward: 12.5,
+        date: new Date("2016-07-09T16:46:13.000Z"),
+        year: 2016,
+        status: "past",
+    },
+    {
+        era: 3,
+        height: 630_000,
+        reward: 6.25,
+        date: new Date("2020-05-11T19:23:43.000Z"),
+        year: 2020,
+        status: "past",
+    },
+    {
+        era: 4,
+        height: 840_000,
+        reward: 3.125,
+        date: new Date("2024-04-20T00:00:00.000Z"), // Approximate; exact time may vary slightly
+        year: 2024,
+        status: "past",
+    },
+    {
+        era: 5,
+        height: 1_050_000,
+        reward: 1.5625,
+        date: new Date("2028-03-24T00:00:00.000Z"), // Projected, but included as Date for consistency
+        year: 2028,
+        status: "present",
+    },
+    // Future eras: date = null
+    {
+        era: 6,
+        height: 1_260_000,
+        reward: 0.78125,
+        date: null,
+        year: 2032,
+        status: "future",
+    },
+    {
+        era: 7,
+        height: 1_470_000,
+        reward: 0.390625,
+        date: null,
+        year: 2036,
+        status: "future",
+    },
+    {
+        era: 8,
+        height: 1_680_000,
+        reward: 0.1953125,
+        date: null,
+        year: 2040,
+        status: "future",
+    },
+    {
+        era: 9,
+        height: 1_890_000,
+        reward: 0.09765625,
+        date: null,
+        year: 2044,
+        status: "future",
+    },
+    {
+        era: 10,
+        height: 2_100_000,
+        reward: 0.048828125,
+        date: null,
+        year: 2048,
+        status: "future",
+    },
+    {
+        era: 11,
+        height: 2_310_000,
+        reward: 0.0244140625,
+        date: null,
+        year: 2052,
+        status: "future",
+    },
+    {
+        era: 12,
+        height: 2_520_000,
+        reward: 0.01220703125,
+        date: null,
+        year: 2056,
+        status: "future",
+    },
+    {
+        era: 13,
+        height: 2_730_000,
+        reward: 0.006103515625,
+        date: null,
+        year: 2060,
+        status: "future",
+    },
+    {
+        era: 14,
+        height: 2_940_000,
+        reward: 0.0030517578125,
+        date: null,
+        year: 2064,
+        status: "future",
+    },
+    {
+        era: 15,
+        height: 3_150_000,
+        reward: 0.00152587890625,
+        date: null,
+        year: 2068,
+        status: "future",
+    },
+    {
+        era: 16,
+        height: 3_360_000,
+        reward: 0.000762939453125,
+        date: null,
+        year: 2072,
+        status: "future",
+    },
+    {
+        era: 17,
+        height: 3_570_000,
+        reward: 0.0003814697265625,
+        date: null,
+        year: 2076,
+        status: "future",
+    },
+    {
+        era: 18,
+        height: 3_780_000,
+        reward: 0.00019073486328125,
+        date: null,
+        year: 2080,
+        status: "future",
+    },
+    {
+        era: 19,
+        height: 3_990_000,
+        reward: 0.000095367431640625,
+        date: null,
+        year: 2084,
+        status: "future",
+    },
+    {
+        era: 20,
+        height: 4_200_000,
+        reward: 0.0000476837158203125,
+        date: null,
+        year: 2088,
+        status: "future",
+    },
+    {
+        era: 21,
+        height: 4_410_000,
+        reward: 0.00002384185791015625,
+        date: null,
+        year: 2092,
+        status: "future",
+    },
+    {
+        era: 22,
+        height: 4_620_000,
+        reward: 0.000011920928955078125,
+        date: null,
+        year: 2096,
+        status: "future",
+    },
+    {
+        era: 23,
+        height: 4_830_000,
+        reward: 0.0000059604644775390625,
+        date: null,
+        year: 2100,
+        status: "future",
+    },
+    {
+        era: 24,
+        height: 5_040_000,
+        reward: 0.0000029802322387695312,
+        date: null,
+        year: 2104,
+        status: "future",
+    },
+    {
+        era: 25,
+        height: 5_250_000,
+        reward: 0.0000014901161193847656,
+        date: null,
+        year: 2108,
+        status: "future",
+    },
+    {
+        era: 26,
+        height: 5_460_000,
+        reward: 0.0000007450580596923828,
+        date: null,
+        year: 2112,
+        status: "future",
+    },
+    {
+        era: 27,
+        height: 5_670_000,
+        reward: 0.0000003725290298461914,
+        date: null,
+        year: 2116,
+        status: "future",
+    },
+    {
+        era: 28,
+        height: 5_880_000,
+        reward: 0.0000001862645149230957,
+        date: null,
+        year: 2120,
+        status: "future",
+    },
+    {
+        era: 29,
+        height: 6_090_000,
+        reward: 0.00000009313225746154785,
+        date: null,
+        year: 2124,
+        status: "future",
+    },
+    {
+        era: 30,
+        height: 6_300_000,
+        reward: 0.000000046566128730773926,
+        date: null,
+        year: 2128,
+        status: "future",
+    },
+    {
+        era: 31,
+        height: 6_510_000,
+        reward: 0.000000023283064365386963,
+        date: null,
+        year: 2132,
+        status: "future",
+    },
+    {
+        era: 32,
+        height: 6_720_000,
+        reward: 0.000000011641532182693481,
+        date: null,
+        year: 2136,
+        status: "future",
+    },
+    {
+        era: 33,
+        height: 6_930_000,
+        reward: 0,
+        date: null,
+        year: 2140,
+        status: "future",
+    },
+];
+
+
+export const bitcoinHalvingFaqs = [
+    {
+        question: "Halving Meaning - What is the Bitcoin Halving?",
+        answer: [
+            "Bitcoin Halving is a pre-programmed event that cuts the block reward in half every 210,000 blocks (approximately 4 years).",
+            "The reward started at 50 BTC (2009) → 25 BTC (2012) → 12.5 BTC (2016) → 6.25 BTC (2020) → 3.125 BTC (2024).",
+            "Halvings are hard-coded and will continue until the reward reaches 0.00000000 BTC around the year 2140.",
+            "Purpose: control Bitcoin’s inflation, keep the total supply capped at 21 million, and make it a deflationary asset.",
+            "Historically, halvings have led to increased demand and often price appreciation.",
+            "The exact date can shift a few days if the Bitcoin hashrate changes significantly.",
+        ],
+    },
+
+    {
+        question: "When is the next Bitcoin Halving 2028?",
+        answer: [
+            "The next halving is scheduled for 2028.",
+            "It will reduce the block reward from 3.125 BTC to 1.5625 BTC.",
+            "The most recent halving occurred in April 2024.",
+            "Halvings occur every 210,000 blocks — a fixed, predictable schedule.",
+            "The exact date depends on block time; currently at block 921,026 with an average of 9 minutes 48 seconds per block.",
+        ],
+    },
+
+    {
+        question: "When was the last Bitcoin halving date?",
+        answer: [
+            "The last Bitcoin halving occurred on April 20, 2024.",
+            "This was the fourth halving since Bitcoin's launch in 2009.",
+            "It reduced the block reward from 6.25 BTC to 3.125 BTC per block.",
+            "Halving slows new Bitcoin creation, increasing scarcity.",
+            "Unlike fiat money, Bitcoin cannot be printed — supply is strictly controlled.",
+        ],
+    },
+
+    {
+        question: "What is Bitcoin Halving Countdown?",
+        answer: [
+            "A Bitcoin halving countdown tracks time until the next halving event.",
+            "Halving occurs every 210,000 blocks or approximately every 4 years.",
+            "It cuts the rate of new Bitcoin creation in half.",
+            "Purpose: control inflation and maintain scarcity.",
+            "The countdown shows blocks remaining and estimated time based on recent mining speed (last 20,160 blocks).",
+        ],
+    },
+
+    {
+        question: "When is next Bitcoin halving countdown?",
+        answer: [
+            "The next halving is estimated for Thursday, March 23, 2028.",
+            "Approximately 877 days from now.",
+            "Current cycle is 38.58% complete.",
+            "Halving occurs at block 1,050,000.",
+            "After this, the next cycle begins with a reward of 1.5625 BTC.",
+        ],
+    },
+
+    {
+        question: "What is the Bitcoin halving countdown clock used for?",
+        answer: [
+            "The countdown clock helps users track time until the next halving (2028).",
+            "It provides real-time visualization of progress in the current halving cycle.",
+            "Useful for traders, miners, and investors planning around the event.",
+        ],
+    },
+
+    {
+        question: "How long does Bitcoin halving last?",
+        answer: [
+            "Each halving cycle lasts approximately 4 years or 210,000 blocks.",
+            "The halving 'event' itself is instantaneous — it happens at a specific block.",
+            "The process repeats until around 2140 when the block reward becomes zero.",
+        ],
+    },
+
+    {
+        question: "How often does the Bitcoin Halving occur?",
+        answer: [
+            "Bitcoin Halving occurs every 210,000 blocks.",
+            "This equals approximately every 4 years.",
+            "The schedule is fixed in the Bitcoin protocol.",
+            "It will continue until the year ~2140 when no new BTC are minted.",
+        ],
+    },
+
+    {
+        question: "How is the Bitcoin halving date 2028 calculated?",
+        answer: [
+            "The date is calculated using current block height and average block time.",
+            "Average is taken over the last 20,160 blocks (10 difficulty retargets).",
+            "Current average block time: 588 seconds (9 minutes 48 seconds).",
+            "Based on block 921,026.",
+        ],
+    },
+
+    {
+        question: "What is the significance of the Bitcoin Halving event?",
+        answer: [
+            "Halving reduces the rate of new Bitcoin creation.",
+            "It enforces a deflationary monetary policy.",
+            "Total supply is capped at 21 million BTC.",
+            "Increases scarcity over time — often compared to 'digital gold'.",
+            "Transparent, predictable supply schedule unlike fiat currencies.",
+        ],
+    },
+
+    {
+        question: "How does the Bitcoin Halving affect the price of Bitcoin?",
+        answer: [
+            "The 2024 halving reduced the reward to 3.125 BTC per block.",
+            "Lower issuance + steady or growing demand can push price up.",
+            "Scarcity increases as fewer new coins enter circulation.",
+            "Price is also affected by market sentiment, adoption, and external events.",
+        ],
+    },
+
+    {
+        question: "What is the historical impact of Bitcoin Halvings on its price?",
+        answer: [
+            "2012 Halving: price rose from ~$12 to over $1,000 within a year.",
+            "2016 Halving: price surged from ~$650 to ~$20,000 by late 2017.",
+            "2020 Halving: price went from ~$8,800 to ~$69,000 in 2021.",
+            "Each halving reduced supply growth, increasing scarcity.",
+            "Past performance does not guarantee future results.",
+        ],
+    },
+];
