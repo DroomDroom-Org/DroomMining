@@ -82,6 +82,7 @@ export default function ZcashHomePageClient({
     blockTime: 0,
     difficultyRetarget: 0,
     volume: 0,
+    price:0,
   });
 
   useEffect(() => {
@@ -94,6 +95,7 @@ export default function ZcashHomePageClient({
         blockTime: statsData.blockTime,
         difficultyRetarget: statsData.difficultyRetarget,
         volume: statsData.volume,
+        price: statsData.price
       });
     }
     if (difficultyData) {

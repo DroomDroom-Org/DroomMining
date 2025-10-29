@@ -83,6 +83,7 @@ export default function BitcoinHomePageClient({
     blockTime: 0,
     difficultyRetarget: 0,
     volume: 0,
+    price: 0,
   });
 
   useEffect(() => {
@@ -95,6 +96,7 @@ export default function BitcoinHomePageClient({
         blockTime: statsData.blockTime,
         difficultyRetarget: statsData.difficultyRetarget,
         volume: statsData.volume,
+        price: statsData.price,
       });
     }
     if (difficultyData) {

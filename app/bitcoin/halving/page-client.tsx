@@ -52,6 +52,7 @@ export default function BitcoinHalvingPageClient({
     blockTime: 0,
     difficultyRetarget: 0,
     volume: 0,
+    price:0
   });
 
   const [countdown, setCountdown] = useState({
@@ -74,6 +75,7 @@ export default function BitcoinHalvingPageClient({
         blockTime: statsData.blockTime,
         difficultyRetarget: statsData.difficultyRetarget,
         volume: statsData.volume,
+        price: statsData.price
       });
     }
   }, [statsData]);
