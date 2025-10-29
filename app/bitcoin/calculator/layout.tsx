@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BitcoinHalvingLayout({
+export default function BitcoinCalculatorLayout({
   children,
 }: {
   children: React.ReactNode;
