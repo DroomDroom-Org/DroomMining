@@ -28,17 +28,9 @@ export interface BitcoinMiner {
 
 
 export interface BitcoinCalculator {
-  hashrateUnit: string;
-  hashrateValue: number;
-  power: number;
-  electricityCost: number;
-  poolFee: number;
-}
-
-export interface BitcoinCalculator {
-  hashrate: number;        // H/s (internal)
-  hashrateValue: number;   // user-visible number (e.g. 390)
-  hashrateUnit: string;    // "TH/s", "PH/s", …
+  hashrate: number;        
+  hashrateValue: number;   
+  hashrateUnit: string;    
   power: number;
   electricityCost: number;
   poolFee: number;
@@ -54,3 +46,13 @@ export interface ZcashStats {
   volume: number;
   price: number;
 };
+
+
+export interface ZcashCalculator {
+  hashrate: number;        
+  hashrateValue: number;   
+  hashrateUnit: string;    
+  power: number;
+  electricityCost: number;
+  poolFee: number;
+}
