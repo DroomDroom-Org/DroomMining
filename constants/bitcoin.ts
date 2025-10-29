@@ -1,4 +1,4 @@
-export const bitcoinChartTimeRanges = [
+export const chartTimeRanges = [
     { label: '1D', value: '1days' },
     { label: '7D', value: '7days' },
     { label: '1M', value: '1months' },
@@ -6,14 +6,6 @@ export const bitcoinChartTimeRanges = [
     { label: '6M', value: '6months' },
     { label: '1Y', value: '1year' },
     { label: 'ALL', value: 'all' },
-];
-
-export const zcashChartTimeRanges = [
-    { label: '1D', value: '1days' },
-    { label: '7D', value: '7days' },
-    { label: '1M', value: '1months' },
-    { label: '3M', value: '3months' },
-    { label: '6M', value: '6months' },
 ];
 
 export const bitcoinAllHalvings = [
@@ -53,7 +45,7 @@ export const bitcoinAllHalvings = [
         era: 4,
         height: 840_000,
         reward: 3.125,
-        date: new Date("2024-04-20T00:00:00.000Z"), // Approximate; exact time may vary slightly
+        date: new Date("2024-04-20T00:00:00.000Z"),
         year: 2024,
         status: "past",
     },
@@ -61,11 +53,10 @@ export const bitcoinAllHalvings = [
         era: 5,
         height: 1_050_000,
         reward: 1.5625,
-        date: new Date("2028-03-24T00:00:00.000Z"), // Projected, but included as Date for consistency
+        date: new Date("2028-03-24T00:00:00.000Z"),
         year: 2028,
         status: "present",
     },
-    // Future eras: date = null
     {
         era: 6,
         height: 1_260_000,
@@ -292,7 +283,6 @@ export const bitcoinAllHalvings = [
     },
 ];
 
-
 export const bitcoinHalvingFaqs = [
     {
         question: "Halving Meaning - What is the Bitcoin Halving?",
@@ -419,4 +409,289 @@ export const bitcoinHalvingFaqs = [
             "Past performance does not guarantee future results.",
         ],
     },
+];
+
+export const bitcoinMiners = [
+    {
+        manufacturer: "MicroBT",
+        name: "Whatsminer M63S Hydro 390T",
+        hashrateValue: 390,
+        hashrateUnit: "TH/s",
+        power: 7215,
+        efficiency: 18.5,
+        cost: 13699,
+    },
+    {
+        manufacturer: "MicroBT",
+        name: "Whatsminer M63 Hydro 366T",
+        hashrateValue: 366,
+        hashrateUnit: "TH/s",
+        power: 7283,
+        efficiency: 19.9,
+        cost: 11799,
+    },
+    {
+        manufacturer: "MicroBT",
+        name: "Whatsminer M63S Hydro 360T",
+        hashrateValue: 360,
+        hashrateUnit: "TH/s",
+        power: 7215,
+        efficiency: 20.04,
+        cost: 12499,
+    },
+    {
+        manufacturer: "Bitmain",
+        name: "Antminer S21 Hydro",
+        hashrateValue: 335,
+        hashrateUnit: "TH/s",
+        power: 5360,
+        efficiency: 16,
+        cost: 7599,
+    },
+    {
+        manufacturer: "MicroBT",
+        name: "Whatsminer M63 Hydro 334T",
+        hashrateValue: 334,
+        hashrateUnit: "TH/s",
+        power: 7283,
+        efficiency: 21.81,
+        cost: 10799,
+    },
+    {
+        manufacturer: "MicroBT",
+        name: "Whatsminer M66S Hydro 298T",
+        hashrateValue: 298,
+        hashrateUnit: "TH/s",
+        power: 5513,
+        efficiency: 18.5,
+        cost: 10799,
+    },
+    {
+        manufacturer: "MicroBT",
+        name: "Whatsminer M66 Hydro 280T",
+        hashrateValue: 280,
+        hashrateUnit: "TH/s",
+        power: 5572,
+        efficiency: 19.9,
+        cost: 9499,
+    },
+    {
+        manufacturer: "MicroBT",
+        name: "Whatsminer M66S Hydro 270T",
+        hashrateValue: 270,
+        hashrateUnit: "TH/s",
+        power: 5513,
+        efficiency: 20.42,
+        cost: 9699,
+    },
+    {
+        manufacturer: "MicroBT",
+        name: "Whatsminer M53S Hydro",
+        hashrateValue: 260,
+        hashrateUnit: "TH/s",
+        power: 6760,
+        efficiency: 26,
+        cost: 5999,
+    },
+    {
+        manufacturer: "MicroBT",
+        name: "Whatsminer M33S++ Hydro",
+        hashrateValue: 242,
+        hashrateUnit: "TH/s",
+        power: 7260,
+        efficiency: 30,
+        cost: 5599,
+    },
+    {
+        manufacturer: "MicroBT",
+        name: "Whatsminer M66 Hydro 238T",
+        hashrateValue: 238,
+        hashrateUnit: "TH/s",
+        power: 5572,
+        efficiency: 23.41,
+        cost: 7999,
+    },
+    {
+        manufacturer: "Bitmain",
+        name: "Antminer S21",
+        hashrateValue: 200,
+        hashrateUnit: "TH/s",
+        power: 3500,
+        efficiency: 17.5,
+        cost: 5449,
+    },
+    {
+        manufacturer: "Bitmain",
+        name: "Antminer T21",
+        hashrateValue: 190,
+        hashrateUnit: "TH/s",
+        power: 3610,
+        efficiency: 19,
+        cost: 4369,
+    },
+    {
+        manufacturer: "MicroBT",
+        name: "Whatsminer M60S 186T",
+        hashrateValue: 186,
+        hashrateUnit: "TH/s",
+        power: 3441,
+        efficiency: 18.5,
+        cost: 6299,
+    },
+    {
+        manufacturer: "MicroBT",
+        name: "Whatsminer M60 172T",
+        hashrateValue: 172,
+        hashrateUnit: "TH/s",
+        power: 3422,
+        efficiency: 19.9,
+        cost: 5499,
+    },
+    {
+        manufacturer: "Canaan",
+        name: "Avalon A1466I 170T",
+        hashrateValue: 170,
+        hashrateUnit: "TH/s",
+        power: 3315,
+        efficiency: 19.5,
+        cost: 3699,
+    },
+    {
+        manufacturer: "MicroBT",
+        name: "Whatsminer M60S 170T",
+        hashrateValue: 170,
+        hashrateUnit: "TH/s",
+        power: 3441,
+        efficiency: 20.24,
+        cost: 5699,
+    },
+    {
+        manufacturer: "MicroBT",
+        name: "Whatsminer M60 156T",
+        hashrateValue: 156,
+        hashrateUnit: "TH/s",
+        power: 3422,
+        efficiency: 21.94,
+        cost: 4799,
+    },
+    {
+        manufacturer: "Bitmain",
+        name: "Antminer S19j XP 151T",
+        hashrateValue: 151,
+        hashrateUnit: "TH/s",
+        power: 3247,
+        efficiency: 21.5,
+        cost: 6299,
+    },
+    {
+        manufacturer: "Canaan",
+        name: "Avalon A1466 150T",
+        hashrateValue: 150,
+        hashrateUnit: "TH/s",
+        power: 3230,
+        efficiency: 21.53,
+        cost: 3399,
+    },
+    {
+        manufacturer: "Bitmain",
+        name: "Antminer S19 XP",
+        hashrateValue: 140,
+        hashrateUnit: "TH/s",
+        power: 3010,
+        efficiency: 21.5,
+        cost: 17999.99,
+    },
+];
+
+export const bitcoinCalculatorFaqs = [
+  {
+    question: "How do I use the Bitcoin mining calculator?",
+    answer: [
+      "Enter your hashrate (TH/s), power consumption (W), electricity cost ($/kWh), and pool fee (%).",
+      "Or click any miner from the 'Popular Miners' table to auto-fill specs.",
+      "Click 'Calculate Profit' to see real-time earnings, ROI, and break-even time.",
+      "All inputs are preloaded with top ASIC miner specs and live network data.",
+      "Results update instantly with current Bitcoin price, difficulty, and block reward.",
+    ],
+  },
+  {
+    question: "How does Bitcoin mining work?",
+    answer: [
+      "Miners compete to solve complex math puzzles (hashes) to validate transactions.",
+      "The first to solve the puzzle adds a new block and earns the block reward.",
+      "Current reward: 3.125 BTC per block (post-2024 halving).",
+      "Requires massive computing power — measured in EH/s (exahashes per second).",
+      "Network hashrate is currently over 600 EH/s globally.",
+    ],
+  },
+  {
+    question: "What hardware do I need to mine Bitcoin?",
+    answer: [
+      "You need an ASIC (Application-Specific Integrated Circuit) miner.",
+      "CPUs, GPUs, and FPGAs are no longer profitable for Bitcoin mining.",
+      "Top models: Bitmain Antminer S21, MicroBT Whatsminer M60S, etc.",
+      "Most require 220V+ power and 20+ AMP circuits.",
+      "Check wattage: e.g., 3,500W per S21 unit.",
+    ],
+  },
+  {
+    question: "How do I set up a Bitcoin mining rig?",
+    answer: [
+      "1. Buy ASIC miner(s) from reputable vendors.",
+      "2. Ensure 220V+ power with sufficient amperage (e.g., 200A service = ~33kW usable).",
+      "3. Connect to stable internet and cooling system.",
+      "4. Join a mining pool (e.g., F2Pool, AntPool, ViaBTC).",
+      "5. Configure miner with pool URL, worker name, and password.",
+      "6. Monitor via pool dashboard or miner interface.",
+    ],
+  },
+  {
+    question: "What are Bitcoin mining pools and should I join one?",
+    answer: [
+      "Solo mining is statistically impossible due to 600+ EH/s network hashrate.",
+      "Pools combine hashrate from thousands of miners to find blocks faster.",
+      "Rewards are split proportionally (PPS, FPPS, PPLNS payout models).",
+      "Fees: 1–4% (e.g., F2Pool: 2.5%, SlushPool: 2%).",
+      "Popular pools: F2Pool, AntPool, ViaBTC, BTC.com, Poolin, SlushPool.",
+    ],
+  },
+  {
+    question: "Is Bitcoin mining still profitable in 2025?",
+    answer: [
+      "Yes — with efficient hardware (95+ TH/s), cheap power (<$0.05/kWh), and scale.",
+      "Profit depends on: hashrate, electricity cost, BTC price, and difficulty.",
+      "Example: 390 TH/s at $0.05/kWh → ~$8–$12/day profit (at $110k BTC).",
+      "Profitability changes daily — use this calculator to check real-time ROI.",
+      "Industrial miners in Texas, Iceland, or with renewable energy dominate.",
+    ],
+  },
+  {
+    question: "How many Bitcoin can I mine in a day?",
+    answer: [
+      "Depends on your hashrate and network difficulty.",
+      "Example: 390 TH/s → ~0.000157 BTC/day (~$17 revenue at $110k).",
+      "After ~$8.50 in electricity → ~$8.50 net profit.",
+      "Use the calculator above to get your exact daily output.",
+    ],
+  },
+  {
+    question: "How long does it take to mine 1 Bitcoin?",
+    answer: [
+      "At 390 TH/s: ~6,362 days (~17.4 years) to mine 1 BTC.",
+      "At 1 PH/s: ~2,500 days (~6.8 years).",
+      "At 10 PH/s (data center): ~250 days.",
+      "Does NOT account for difficulty increases or halvings.",
+      "Most miners sell BTC daily, not HODL for 1 full coin.",
+    ],
+  },
+  {
+    question: "How much electricity do I need to mine Bitcoin?",
+    answer: [
+      "Calculate: Hashrate × Efficiency (J/TH) = Watts.",
+      "Example: 390 TH/s × 18.5 J/TH = ~7,215W.",
+      "200 AMP × 220V service = 44kW → ~33kW safe → ~11 × S17+ miners.",
+      "Never exceed 75% of circuit capacity to avoid tripping breakers.",
+      "Use PDUs, cooling, and monitoring for 24/7 uptime.",
+    ],
+  },
 ];

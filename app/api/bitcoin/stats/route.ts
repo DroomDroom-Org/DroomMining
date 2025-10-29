@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic';
 const endpoints = {
   blockCount: 'https://blockchain.info/q/getblockcount',
   difficulty: 'https://blockchain.info/q/getdifficulty',
-  networkHashrate: 'https://blockchain.info/q/hashrate',
+  networkHashrate: 'https://mempool.space/api/v1/mining/hashrate/24h',
   volume: 'https://blockchain.info/q/totalbc',
   price: 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd',
 } as const;
@@ -21,7 +21,7 @@ function getBlockReward(blockCount: number): number {
 async function fetchValue(url: string, name: string): Promise<number> {
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000); 
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
 
     const res = await fetch(url, {
       signal: controller.signal,
@@ -34,17 +34,35 @@ async function fetchValue(url: string, name: string): Promise<number> {
       throw new Error(`HTTP ${res.status}: ${res.statusText}`);
     }
 
-    // Special handling for price endpoint (JSON)
-    if (name === 'price') {
+    if (name === 'price' || name === 'networkHashrate') {
       const data = await res.json();
-      const price = data?.bitcoin?.usd;
-      if (typeof price !== 'number' || price < 0) {
-        throw new Error(`Invalid price data: ${JSON.stringify(data)}`);
+
+      if (name === 'price') {
+        const price = data?.bitcoin?.usd;
+        if (typeof price !== 'number' || price < 0) {
+          throw new Error(`Invalid price data: ${JSON.stringify(data)}`);
+        }
+        return price;
       }
-      return price;
+
+      if (name === 'networkHashrate') {
+        const current = (data as any).currentHashrate;
+        if (typeof current === 'number' && current > 0) {
+          return current;
+        }
+
+        const hashrates = (data as any).hashrates;
+        if (Array.isArray(hashrates) && hashrates.length > 0) {
+          const latest = hashrates[hashrates.length - 1];
+          if (typeof latest.avgHashrate === 'number' && latest.avgHashrate > 0) {
+            return latest.avgHashrate;
+          }
+        }
+
+        throw new Error('No valid hashrate found in response');
+      }
     }
 
-    // For other endpoints (plain text numbers)
     const text = await res.text();
     const value = parseFloat(text);
 
@@ -68,7 +86,7 @@ export async function GET(request: NextRequest) {
     blockTime: BLOCK_TIME_TARGET,
     difficultyRetarget: DIFFICULTY_RETARGET,
     volume: null as number | null,
-    price: null as number | null, // New field
+    price: null as number | null,
   };
 
   const errors: string[] = [];
@@ -93,6 +111,7 @@ export async function GET(request: NextRequest) {
         }
       })
     );
+
 
     results.blockCount = blockCount ?? null;
     results.difficulty = difficulty ?? null;
