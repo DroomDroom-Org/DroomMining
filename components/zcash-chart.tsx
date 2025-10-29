@@ -15,9 +15,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ChartDataPoint } from "@/types";
 import { useTheme } from "next-themes";
 import { TrendingUp } from "lucide-react";
-import { bitcoinChartTimeRanges } from "@/lib/constant";
+import { zcashChartTimeRanges } from "@/lib/constant";
 
-type BitcoinChartProps = {
+type ZcashChartProps = {
   title: string;
   icon: React.ReactNode;
   xAxisLabel: string;
@@ -30,7 +30,7 @@ type BitcoinChartProps = {
   onTimeRangeChange: (timeRange: string) => void;
 };
 
-const BitcoinChart: React.FC<BitcoinChartProps> = ({
+const ZcashChart: React.FC<ZcashChartProps> = ({
   title,
   icon,
   xAxisLabel,
@@ -64,7 +64,7 @@ const BitcoinChart: React.FC<BitcoinChartProps> = ({
         <div className="flex justify-end items-center">
           <div className="flex gap-1 items-center md:overflow-x-auto md:pb-0 md:scrollbar-none">
             <div className="flex gap-2 items-center text-muted-foreground md:gap-3 md:w-auto md:justify-start">
-              {bitcoinChartTimeRanges.map((range) => (
+              {zcashChartTimeRanges.map((range) => (
                 <button
                   key={range.value}
                   className={`px-2 py-1.5 text-xs min-w-[36px] text-center font-medium rounded cursor-pointer transition-all duration-200 md:px-3 md:min-w-[32px] md:text-[13px] ${
@@ -202,4 +202,4 @@ const BitcoinChart: React.FC<BitcoinChartProps> = ({
   );
 };
 
-export default BitcoinChart;
+export default ZcashChart;

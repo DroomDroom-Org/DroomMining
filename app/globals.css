@@ -66,7 +66,7 @@ body {
 @keyframes marquee         { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
 /* -------------------------------------------------
-   THEME – BITCOIN COLORS
+   THEME – BITCOIN + ZCASH COLORS
    ------------------------------------------------- */
 @layer base {
   :root {
@@ -86,6 +86,10 @@ body {
     --accent-bitcoin:       27 100% 60%;       /* #f7931a */
     --accent-bitcoin-foreground: 0 0% 100%;
 
+    /* ZCASH ORANGE – extra accent */
+    --accent-zcash:         27 100% 60%;      /* #f7931a */
+    --accent-zcash-foreground:0 0% 100%;      
+
     --secondary:            210 40% 96.1%;
     --secondary-foreground: 222 47% 11%;
     --muted:                210 40% 96.1%;
@@ -96,7 +100,7 @@ body {
     --destructive-foreground: 210 40% 98%;
     --border:               214.3 31.8% 91.4%;
     --input:                214.3 31.8% 91.4%;
-    --ring:                 215 100% 55%;      /* same blue for focus ring */
+    --ring:                 215 100% 55%;
     --chart-1:              215 100% 55%;
     --chart-2:              215 70% 50%;
     --chart-3:              215 50% 40%;
@@ -114,13 +118,17 @@ body {
     --popover:              0 0% 5%;
     --popover-foreground:   0 0% 100%;
 
-    /* BITCOIN BLUE – a little brighter in dark */
+    /* BITCOIN BLUE – brighter in dark */
     --primary:              215 100% 65%;      /* #3395ff */
     --primary-foreground:   0 0% 100%;
 
-    /* BITCOIN ORANGE – stays vivid */
+    /* BITCOIN ORANGE – vivid */
     --accent-bitcoin:       27 100% 70%;       /* #ff9f1a */
     --accent-bitcoin-foreground: 0 0% 100%;
+
+    /* ZCASH ORANGE – vivid */
+    --accent-zcash:         27 100% 70%;      /* #ff9f1a */
+    --accent-zcash-foreground:0 0% 100%;
 
     --secondary:            0 0% 10%;
     --secondary-foreground: 0 0% 100%;
@@ -164,7 +172,11 @@ body {
 .calendar-no-header div div div { display: none !important; }
 
 /* -------------------------------------------------
-   CUSTOM UTILITIES (optional – use anywhere)
+   CUSTOM UTILITIES
    ------------------------------------------------- */
 .text-bitcoin { color: hsl(var(--accent-bitcoin)); }
 .bg-bitcoin   { background-color: hsl(var(--accent-bitcoin)); }
+
+.text-zcash   { color: hsl(var(--accent-zcash)); }
+.bg-zcash     { background-color: hsl(var(--accent-zcash)); }
+
