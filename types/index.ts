@@ -11,6 +11,7 @@ export interface BitcoinStats {
   blockTime: number;
   difficultyRetarget: number;
   volume: number;
+  price: number;
 };
 
 export interface ZcashStats {
@@ -21,4 +22,5 @@ export interface ZcashStats {
   blockTime: number;
   difficultyRetarget: number;
   volume: number;
+  price: number;
 };

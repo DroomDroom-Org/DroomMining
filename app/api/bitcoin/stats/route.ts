@@ -6,6 +6,7 @@ const endpoints = {
   difficulty: 'https://blockchain.info/q/getdifficulty',
   networkHashrate: 'https://blockchain.info/q/hashrate',
   volume: 'https://blockchain.info/q/totalbc',
+  price: 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd',
 } as const;
 
 const DIFFICULTY_RETARGET = 2016;
@@ -33,6 +34,17 @@ async function fetchValue(url: string, name: string): Promise<number> {
       throw new Error(`HTTP ${res.status}: ${res.statusText}`);
     }
 
+    // Special handling for price endpoint (JSON)
+    if (name === 'price') {
+      const data = await res.json();
+      const price = data?.bitcoin?.usd;
+      if (typeof price !== 'number' || price < 0) {
+        throw new Error(`Invalid price data: ${JSON.stringify(data)}`);
+      }
+      return price;
+    }
+
+    // For other endpoints (plain text numbers)
     const text = await res.text();
     const value = parseFloat(text);
 
@@ -56,16 +68,18 @@ export async function GET(request: NextRequest) {
     blockTime: BLOCK_TIME_TARGET,
     difficultyRetarget: DIFFICULTY_RETARGET,
     volume: null as number | null,
+    price: null as number | null, // New field
   };
 
   const errors: string[] = [];
 
   try {
-    const [blockCount, difficulty, networkHashrate, volume] = await Promise.allSettled([
+    const [blockCount, difficulty, networkHashrate, volume, price] = await Promise.allSettled([
       fetchValue(endpoints.blockCount, 'blockCount'),
       fetchValue(endpoints.difficulty, 'difficulty'),
       fetchValue(endpoints.networkHashrate, 'networkHashrate'),
       fetchValue(endpoints.volume, 'volume'),
+      fetchValue(endpoints.price, 'price'),
     ]).then((results) =>
       results.map((result, i) => {
         if (result.status === 'fulfilled') {
@@ -84,6 +98,7 @@ export async function GET(request: NextRequest) {
     results.difficulty = difficulty ?? null;
     results.networkHashrate = networkHashrate ?? null;
     results.volume = volume ?? null;
+    results.price = price ?? null;
 
     if (blockCount !== null) {
       results.blockReward = getBlockReward(blockCount);
@@ -93,7 +108,8 @@ export async function GET(request: NextRequest) {
       results.blockCount !== null ||
       results.difficulty !== null ||
       results.networkHashrate !== null ||
-      results.volume !== null;
+      results.volume !== null ||
+      results.price !== null;
 
     const status = hasAnyData && errors.length > 0 ? 206 : hasAnyData ? 200 : 503;
 

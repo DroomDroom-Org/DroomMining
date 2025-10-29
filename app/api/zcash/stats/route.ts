@@ -70,6 +70,7 @@ export async function GET(request: NextRequest) {
     blockTime: BLOCK_TIME_TARGET,
     difficultyRetarget: DIFFICULTY_RETARGET,
     volume: null as number | null,
+    price: null as number | null,
   };
 
   const errors: string[] = [];
@@ -95,6 +96,7 @@ export async function GET(request: NextRequest) {
       results.networkHashrate = minerstatData.network_hashrate;
       results.blockReward = minerstatData.reward_block;
       results.volume = minerstatData.volume;
+      results.price = minerstatData.price;
     } else {
       errors.push(`minerstat: ${minerstatRes.reason?.message || 'Unknown error'}`);
       console.warn('Failed to fetch minerstat data:', minerstatRes.reason);
