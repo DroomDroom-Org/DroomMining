@@ -2,175 +2,198 @@
 
 import React from "react";
 import {
-  Bitcoin,
-  Zap,
-  DollarSign,
-  Clock,
+  Calculator,
   TrendingUp,
   Settings,
-  Calculator,
-  ChevronRight,
+  Clock,
+  Zap,
+  DollarSign,
+  ChevronsDown,
 } from "lucide-react";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardContent,
-  CardDescription,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
-  TableBody,
-  TableRow,
-  TableCell,
-  TableHead,
   TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
 } from "@/components/ui/table";
-import { Skeleton } from "@/components/ui/skeleton";
 import BitcoinNavigation from "@/components/bitcoin-navigation";
 
-export default function BitcoinCalculatorPageClientShimmer() {
+export default function BitcoinCalculatorShimmer() {
   return (
-    <div className="min-h-screen bg-background text-foreground animate-pulse-theme">
+    <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-4">
         <BitcoinNavigation />
 
-        {/* Page Header */}
+        {/* Header */}
         <section className="pt-8">
-          <div className="">
-            <div className="flex items-start justify-between">
-              <div className="flex flex-col">
-                <div className="w-full flex items-center mb-4 gap-4">
-                  <Skeleton className="w-10 h-10 rounded" />
-                  <Skeleton className="h-8 w-64" />
-                </div>
-                <Skeleton className="h-5 w-full max-w-2xl pl-14" />
+          <div className="flex items-start justify-between">
+            <div className="flex flex-col">
+              <div className="flex items-center mb-4 gap-4">
+                <Skeleton className="w-10 h-10 rounded-full" />
+                <Skeleton className="h-9 w-64" />
               </div>
-              <Skeleton className="h-6 w-32 rounded-md" />
+              <Skeleton className="h-6 w-96 pl-14" />
             </div>
+            <Badge variant="secondary" className="self-start">
+              <Skeleton className="h-4 w-24" />
+            </Badge>
           </div>
         </section>
 
-        {/* Main Layout: Calculator + Sidebar */}
-        <div className="py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Calculator Card */}
-          <Card className="lg:col-span-2">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Calculator className="h-5 w-5" />
-                <Skeleton className="h-6 w-40" />
-              </CardTitle>
-              <Skeleton className="h-4 w-80" />
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Input Form Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {[...Array(4)].map((_, idx) => (
-                  <div key={idx} className="space-y-2">
-                    <Skeleton className="h-4 w-24" />
-                    <Skeleton className="h-10 w-full" />
-                  </div>
-                ))}
-              </div>
-
-              {/* Calculate Button */}
-              <Skeleton className="h-12 w-full rounded-md" />
-
-              {/* Results Grid (simulated) */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 border-t border-border">
-                {[...Array(4)].map((_, idx) => (
-                  <div key={idx} className="text-center space-y-1">
-                    <Skeleton className="h-8 w-20 mx-auto" />
-                    <Skeleton className="h-3 w-16 mx-auto" />
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Live BTC Stats Card */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4" />
-                  <Skeleton className="h-5 w-24" />
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4 text-sm">
-                {[...Array(5)].map((_, idx) => (
-                  <div key={idx} className="flex justify-between py-1">
-                    <Skeleton className="h-3 w-20" />
-                    <Skeleton className="h-3 w-24" />
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            {/* Bitcoin Miners Card */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Settings className="h-4 w-4" />
-                  <Skeleton className="h-5 w-32" />
-                </CardTitle>
-                <Skeleton className="h-3 w-48" />
-              </CardHeader>
-              <CardContent className="space-y-3 max-h-96 overflow-y-auto">
-                {/* Miner List Items */}
-                {[...Array(8)].map((_, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center p-2 rounded-md bg-muted/50"
-                  >
-                    <Skeleton className="w-4 h-4 mr-2 rounded" />
-                    <div className="flex-1 space-y-1">
-                      <Skeleton className="h-3 w-32" />
-                      <Skeleton className="h-2.5 w-20" />
-                    </div>
-                    <div className="text-right space-y-1">
-                      <Skeleton className="h-3 w-12" />
-                      <Skeleton className="h-2.5 w-10" />
-                    </div>
-                  </div>
-                ))}
-                {/* View All Button */}
-                <Skeleton className="h-10 w-full rounded-md" />
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-
-        {/* Results Sections (conditionally rendered - show shimmer version) */}
-        <Card className="mx-auto max-w-4xl">
+        {/* Main Calculator Card */}
+        <Card className="mt-8">
           <CardHeader>
-            <Skeleton className="h-6 w-48" />
-            <Skeleton className="h-3 w-64" />
+            <CardTitle className="flex items-center gap-2">
+              <Calculator className="h-5 w-5" />
+              <Skeleton className="h-6 w-48" />
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            {/* Rewards Table */}
-            <div className="overflow-x-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+              {/* Inputs */}
+              <div className="space-y-6">
+                {[...Array(4)].map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <Skeleton className="h-4 w-32" />
+                    <div className="flex gap-2">
+                      <Skeleton className="h-10 flex-1" />
+                      {i === 0 && <Skeleton className="h-10 w-24" />}
+                    </div>
+                  </div>
+                ))}
+                <Skeleton className="h-12 w-full" />
+              </div>
+
+              {/* Live Stats + Summary */}
+              <div className="space-y-6">
+                <div className="border-b pb-2">
+                  <div className="flex items-center gap-2 text-lg font-semibold">
+                    <TrendingUp className="h-5 w-5" />
+                    <Skeleton className="h-5 w-32" />
+                  </div>
+                  <div className="mt-3 space-y-3 text-sm">
+                    {[...Array(5)].map((_, i) => (
+                      <div key={i} className="flex justify-between">
+                        <Skeleton className="h-4 w-28" />
+                        <Skeleton className="h-4 w-20" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <Skeleton className="h-5 w-32 mb-3" />
+                  <div className="space-y-3">
+                    {[...Array(6)].map((_, i) => (
+                      <div key={i} className="flex justify-between">
+                        <Skeleton className="h-4 w-32" />
+                        <Skeleton className="h-4 w-20" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Forecast Table */}
+        <Card className="mt-8">
+          <CardHeader>
+            <Skeleton className="h-6 w-48" />
+            <Skeleton className="h-4 w-64" />
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  {["Period", "BTC", "Revenue", "Cost", "Fees", "Profit"].map((h) => (
+                    <TableHead key={h}>
+                      <Skeleton className="h-4 w-16" />
+                    </TableHead>
+                  ))}
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {[...Array(5)].map((_, i) => (
+                  <TableRow key={i}>
+                    {[...Array(6)].map((_, j) => (
+                      <TableCell key={j}>
+                        <Skeleton className="h-4 w-20" />
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+
+        {/* KPI Cards */}
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { icon: DollarSign, title: "Profit Margin" },
+            { icon: Clock, title: "Days to 1 BTC" },
+            { icon: Zap, title: "ROI (Days)" },
+          ].map((kpi, i) => (
+            <Card key={i}>
+              <CardHeader className="text-center pb-3">
+                <CardTitle className="text-lg flex items-center justify-center gap-2">
+                  <kpi.icon className="h-5 w-5" />
+                  <Skeleton className="h-5 w-32" />
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <Skeleton className="h-10 w-24 mx-auto" />
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Popular Miners */}
+        <Card className="mt-8">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Settings className="h-5 w-5" />
+              <Skeleton className="h-6 w-32" />
+            </CardTitle>
+            <Skeleton className="h-4 w-48" />
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="rounded-md border">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    {[...Array(6)].map((_, idx) => (
-                      <TableHead key={idx}>
+                    {["Miner", "Hashrate", "Power", "Cost"].map((h) => (
+                      <TableHead key={h} className={h === "Miner" ? "" : "text-right"}>
                         <Skeleton className="h-4 w-16" />
                       </TableHead>
                     ))}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {[...Array(5)].map((_, idx) => (
-                    <TableRow key={idx} className="border-b border-border/50">
-                      {[...Array(6)].map((_, cellIdx) => (
-                        <TableCell key={cellIdx}>
-                          <Skeleton className="h-4 w-full max-w-20" />
+                  {[...Array(5)].map((_, i) => (
+                    <TableRow key={i}>
+                      <TableCell>
+                        <div className="flex flex-col">
+                          <Skeleton className="h-4 w-32" />
+                          <Skeleton className="h-3 w-20 mt-1" />
+                        </div>
+                      </TableCell>
+                      {[...Array(3)].map((_, j) => (
+                        <TableCell key={j} className="text-right">
+                          <Skeleton className="h-4 w-16 inline-block" />
                         </TableCell>
                       ))}
                     </TableRow>
@@ -178,32 +201,27 @@ export default function BitcoinCalculatorPageClientShimmer() {
                 </TableBody>
               </Table>
             </div>
-            <Skeleton className="h-3 w-48 mt-2 mx-auto" />
+            <div className="px-6 py-3">
+              <Skeleton className="h-9 w-full" />
+            </div>
           </CardContent>
         </Card>
 
-        {/* Investment Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-8">
-          {[...Array(3)].map((_, idx) => (
-            <Card key={idx}>
-              <CardHeader className="text-center">
-                <Skeleton className="h-4 w-24 mx-auto flex items-center gap-2 justify-center">
-                  <div className="w-5 h-5 rounded bg-muted/50" />
-                  <Skeleton className="h-4 w-16" />
-                </Skeleton>
-              </CardHeader>
-              <CardContent className="text-center space-y-2">
-                <Skeleton className="h-8 w-16 mx-auto" />
-                <Skeleton className="h-3 w-12 mx-auto" />
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Disclaimer Card */}
-        <Card className="mx-auto max-w-2xl">
-          <CardContent className="py-6">
-            <Skeleton className="h-4 w-full max-w-96" />
+        {/* FAQ */}
+        <Card className="mt-8 mb-12">
+          <CardHeader>
+            <Skeleton className="h-6 w-48" />
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {[...Array(3)].map((_, i) => (
+                <div key={i}>
+                  <Skeleton className="h-5 w-full max-w-md" />
+                  <Skeleton className="h-4 w-full mt-2" />
+                  <Skeleton className="h-4 w-3/4 mt-1" />
+                </div>
+              ))}
+            </div>
           </CardContent>
         </Card>
       </div>
