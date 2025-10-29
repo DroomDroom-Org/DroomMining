@@ -7,40 +7,25 @@ import BitcoinCalculatorPageClient from "./page-client";
 
 async function fetchInitialData() {
   try {
-    const [statsResponse, difficultyResponse, hashrateResponse, priceResponse] =
-      await Promise.all([
-        axios.get(getApiUrl("/bitcoin/stats")),
-        axios.get(getApiUrl(`/bitcoin/chart/difficulty?timespan=all`)),
-        axios.get(getApiUrl(`/bitcoin/chart/hashrate?timespan=all`)),
-        axios.get(getApiUrl(`/bitcoin/chart/price?timespan=all`)),
-      ]);
-
+    const statsResponse = await axios.get(getApiUrl("/bitcoin/stats"));
     return {
       statsData: statsResponse.data.data,
-      difficultyData: difficultyResponse.data.data,
-      hashrateData: hashrateResponse.data.data,
-      priceData: priceResponse.data.data,
     };
   } catch (error) {
     console.error("Error fetching initial data:", error);
     return {
       statsData: null,
-      difficultyData: [],
-      hashrateData: [],
-      priceData: [],
     };
   }
 }
 
-export default async function BitcoinHomePage() {
+export default async function BitcoinCalculatorPage() {
   const data = await fetchInitialData();
-  const { statsData, difficultyData, hashrateData, priceData } = data;
+  const { statsData } = data;
 
   return (
     <Suspense fallback={<BitcoinCalculatorPageClientShimmer />}>
-      <BitcoinCalculatorPageClient
-        statsData={statsData}
-      />
+      <BitcoinCalculatorPageClient statsData={statsData} />
     </Suspense>
   );
 }
