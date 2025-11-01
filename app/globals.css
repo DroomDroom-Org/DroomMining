@@ -78,57 +78,65 @@ body {
     --popover:              0 0% 100%;
     --popover-foreground:   222 47% 11%;
 
-    /* BITCOIN BLUE – primary */
-    --primary:              215 100% 55%;      /* #1a5aff */
-    --primary-foreground:   0 0% 100%;         /* white on blue */
+   /* BITCOIN BLUE – primary */
+   --primary:              215 100% 55%;      /* #1a5aff */
+   --primary-foreground:   0 0% 100%;         /* white on blue */
 
-    /* BITCOIN ORANGE – extra accent */
-    --accent-bitcoin:       27 100% 60%;       /* #f7931a */
-    --accent-bitcoin-foreground: 0 0% 100%;
+   /* BITCOIN ORANGE – extra accent */
+   --accent-bitcoin:       27 100% 60%;       /* #f7931a */
+   --accent-bitcoin-foreground: 0 0% 100%;
 
-    /* ZCASH ORANGE – extra accent */
-    --accent-zcash:         27 100% 60%;      /* #f7931a */
-    --accent-zcash-foreground:0 0% 100%;      
+   /* ZCASH ORANGE – extra accent */
+   --accent-zcash:         27 100% 60%;      /* #f7931a */
+   --accent-zcash-foreground:0 0% 100%;      
 
-    --secondary:            210 40% 96.1%;
-    --secondary-foreground: 222 47% 11%;
-    --muted:                210 40% 96.1%;
-    --muted-foreground:     215 16% 47%;
-    --accent:               210 40% 96.1%;
-    --accent-foreground:    222 47% 11%;
-    --destructive:          0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border:               214.3 31.8% 91.4%;
-    --input:                214.3 31.8% 91.4%;
-    --ring:                 215 100% 55%;
-    --chart-1:              215 100% 55%;
-    --chart-2:              215 70% 50%;
-    --chart-3:              215 50% 40%;
-    --chart-4:              215 30% 30%;
-    --chart-5:              215 10% 20%;
-    --radius:               0.5rem;
-  }
+/* LITECOIN BLUE – official logo color */
+  --accent-litecoin:          214 50% 41%;    /* #345D9D */
+  --accent-litecoin-foreground: 0 0% 100%;   /* white on blue (high contrast) */
 
-  .dark {
-    /* ---------- DARK MODE ---------- */
-    --background:           0 0% 0%;
-    --foreground:           0 0% 100%;
-    --card:                 0 0% 5%;
-    --card-foreground:      0 0% 100%;
-    --popover:              0 0% 5%;
-    --popover-foreground:   0 0% 100%;
+   --secondary:            210 40% 96.1%;
+   --secondary-foreground: 222 47% 11%;
+   --muted:                210 40% 96.1%;
+   --muted-foreground:     215 16% 47%;
+   --accent:               210 40% 96.1%;
+   --accent-foreground:    222 47% 11%;
+   --destructive:          0 84.2% 60.2%;
+   --destructive-foreground: 210 40% 98%;
+   --border:               214.3 31.8% 91.4%;
+   --input:                214.3 31.8% 91.4%;
+   --ring:                 215 100% 55%;
+   --chart-1:              215 100% 55%;
+   --chart-2:              215 70% 50%;
+   --chart-3:              215 50% 40%;
+   --chart-4:              215 30% 30%;
+   --chart-5:              215 10% 20%;
+   --radius:               0.5rem;
+ }
 
-    /* BITCOIN BLUE – brighter in dark */
-    --primary:              215 100% 65%;      /* #3395ff */
-    --primary-foreground:   0 0% 100%;
+ .dark {
+   /* ---------- DARK MODE ---------- */
+   --background:           0 0% 0%;
+   --foreground:           0 0% 100%;
+   --card:                 0 0% 5%;
+   --card-foreground:      0 0% 100%;
+   --popover:              0 0% 5%;
+   --popover-foreground:   0 0% 100%;
 
-    /* BITCOIN ORANGE – vivid */
-    --accent-bitcoin:       27 100% 70%;       /* #ff9f1a */
-    --accent-bitcoin-foreground: 0 0% 100%;
+   /* BITCOIN BLUE – brighter in dark */
+   --primary:              215 100% 65%;      /* #3395ff */
+   --primary-foreground:   0 0% 100%;
 
-    /* ZCASH ORANGE – vivid */
-    --accent-zcash:         27 100% 70%;      /* #ff9f1a */
-    --accent-zcash-foreground:0 0% 100%;
+   /* BITCOIN ORANGE – vivid */
+   --accent-bitcoin:       27 100% 70%;       /* #ff9f1a */
+   --accent-bitcoin-foreground: 0 0% 100%;
+
+   /* ZCASH ORANGE – vivid */
+   --accent-zcash:         27 100% 70%;      /* #ff9f1a */
+   --accent-zcash-foreground:0 0% 100%;
+
+/* LITECOIN BLUE – brighter for dark mode */
+  --accent-litecoin:          214 60% 55%;    /* ≈ #3A81EA */
+  --accent-litecoin-foreground: 0 0% 100%;   /* white on blue */
 
     --secondary:            0 0% 10%;
     --secondary-foreground: 0 0% 100%;
@@ -179,4 +187,8 @@ body {
 
 .text-zcash   { color: hsl(var(--accent-zcash)); }
 .bg-zcash     { background-color: hsl(var(--accent-zcash)); }
+
+
+.text-litecoin   { color: hsl(var(--accent-litecoin)); }
+.bg-litecoin     { background-color: hsl(var(--accent-litecoin)); }
 
