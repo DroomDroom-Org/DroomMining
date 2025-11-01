@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
     }
 
     const currentTime = Math.floor(Date.now() / 1000);
-    const url = `${BASE_URL}?time=${currentTime}&coin=ZEC&algo=Equihash`;
+    const url = `${BASE_URL}?time=${currentTime}&coin=LTC&algo=Scrypt`;
 
     const res = await fetch(url, {
       next: { revalidate: 3600 },
@@ -53,14 +53,14 @@ export async function GET(request: NextRequest) {
 
     const data = await res.json();
 
-    if (!data?.ZEC || typeof data.ZEC !== 'object') {
-      throw new Error('Invalid response format from minerstat API: missing ZEC data');
+    if (!data?.LTC || typeof data.LTC !== 'object') {
+      throw new Error('Invalid response format from minerstat API: missing LTC data');
     }
 
     const startTimestamp = getStartTimestamp(timespan);
     const interval = getDataInterval(timespan);
 
-    const rawPoints = Object.entries(data.ZEC).map(([ts, values]) => {
+    const rawPoints = Object.entries(data.LTC).map(([ts, values]) => {
       const timestamp = parseInt(ts, 10);
       const difficulty = Array.isArray(values) ? parseFloat(values[3] as string) : NaN;
 
