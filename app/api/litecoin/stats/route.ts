@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
-const BLOCK_TIME_TARGET = 85;
-const DIFFICULTY_RETARGET = 1;
+const BLOCK_TIME_TARGET = 170;
+const DIFFICULTY_RETARGET = 2016;
 
 const endpoints = {
-  blockCount: 'https://go.getblock.io/bcc1538aba074eddb8fc0f7f4957610c/',
-  minerstat: 'https://api.minerstat.com/v2/coins?list=ZEC',
+  blockCount: 'https://api.blockcypher.com/v1/ltc/main',
+  minerstat: 'https://api.minerstat.com/v2/coins?list=LTC',
 } as const;
 
 interface MinerstatResponse {
@@ -27,25 +27,18 @@ interface MinerstatResponse {
 
 async function fetchBlockCount(): Promise<number> {
   const res = await fetch(endpoints.blockCount, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      jsonrpc: '2.0',
-      method: 'getblockcount',
-      params: [],
-      id: 'getblock.io',
-    }),
+    method: 'GET',
     next: { revalidate: 60 },
   });
 
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
   const data = await res.json();
-  if (data.error) throw new Error(data.error.message);
-  if (typeof data.result !== 'number') throw new Error('Invalid block count');
+  if (typeof data.height !== 'number') throw new Error('Invalid block count');
 
-  return data.result;
+  return data.height;
 }
+
 
 async function fetchMinerstat(): Promise<MinerstatResponse> {
   const res = await fetch(endpoints.minerstat, {
@@ -55,10 +48,10 @@ async function fetchMinerstat(): Promise<MinerstatResponse> {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
   const data: MinerstatResponse[] = await res.json();
-  const zec = data.find((c) => c.coin === 'ZEC');
-  if (!zec) throw new Error('ZEC not found in minerstat response');
+  const ltc = data.find((c) => c.coin === 'LTC');
+  if (!ltc) throw new Error('LTC not found in minerstat response');
 
-  return zec;
+  return ltc;
 }
 
 export async function GET(request: NextRequest) {
@@ -113,10 +106,10 @@ export async function GET(request: NextRequest) {
       { status }
     );
   } catch (error) {
-    console.error('Critical error in ZEC stats API:', error);
+    console.error('Critical error in LTC stats API:', error);
     return NextResponse.json(
       {
-        error: 'Failed to fetch Zcash statistics',
+        error: 'Failed to fetch Litecoin statistics',
         details: error instanceof Error ? error.message : 'Unknown error',
         data: results,
       },
