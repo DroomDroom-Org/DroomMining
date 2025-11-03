@@ -47,10 +47,11 @@ import { getCmcImageUrl } from "@/lib/config";
 import BitcoinNavigation from "@/components/bitcoin-navigation";
 import { BitcoinStats, BitcoinMiner, BitcoinCalculator } from "@/types";
 import { formatDifficulty, formatHashrate } from "@/lib/format";
-import { bitcoinMiners, bitcoinCalculatorFaqs } from "@/constants/bitcoin";
+import { bitcoinCalculatorFaqs } from "@/constants/bitcoin";
 
 interface BitcoinCalculatorPageClientProps {
   statsData: BitcoinStats;
+  minersData: BitcoinMiner[];
 }
 
 const unitMultipliers: Record<string, number> = {
@@ -67,6 +68,7 @@ const fromHashrate = (hashrate: number, unit: string): number =>
 
 export default function BitcoinCalculatorPageClient({
   statsData,
+  minersData,
 }: BitcoinCalculatorPageClientProps) {
   const [state, setState] = useState<BitcoinCalculator>({
     hashrate: 390_000_000_000_000,
@@ -79,9 +81,7 @@ export default function BitcoinCalculatorPageClient({
 
   const [results, setResults] = useState<any>(null);
   const [loading, setLoading] = useState(false);
-  const [selectedMiner, setSelectedMiner] = useState<BitcoinMiner | null>(
-    bitcoinMiners[0]
-  );
+  const [selectedMiner, setSelectedMiner] = useState<BitcoinMiner | null>(null);
   const [showAllMiners, setShowAllMiners] = useState(false);
 
   const [stats, setStats] = useState<BitcoinStats>({
@@ -98,6 +98,9 @@ export default function BitcoinCalculatorPageClient({
   useEffect(() => {
     if (statsData) {
       setStats(statsData);
+    }
+    if (minersData) {
+      setSelectedMiner(minersData[0]);
     }
   }, [statsData]);
 
@@ -176,9 +179,10 @@ export default function BitcoinCalculatorPageClient({
   const feesPerPeriod = (h: number) => per("feesPerDay", h);
   const profitPerPeriod = (h: number) => per("profitPerDay", h);
 
-  const displayedMiners = showAllMiners
-    ? bitcoinMiners
-    : bitcoinMiners.slice(0, 5);
+  const displayedMiners =
+    showAllMiners && minersData ? minersData : minersData.slice(0, 10);
+
+  console.log("MinersDtaa", minersData);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -344,6 +348,36 @@ export default function BitcoinCalculatorPageClient({
 
               {/* Right: Live Stats + Summary */}
               <div className="flex flex-col justify-start space-y-4 min-h-full">
+                {selectedMiner && (
+                  <div className="flex items-center justify-between p-2 rounded bg-muted/50 text-sm border-1">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium truncate">
+                        {selectedMiner.name}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {formatHashrate(
+                          toHashrate(
+                            selectedMiner.hashrateValue,
+                            selectedMiner.hashrateUnit
+                          )
+                        )}{" "}
+                        • {selectedMiner.power}W
+                      </p>
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(selectedMiner.buyUrl, "_blank");
+                      }}
+                      className="gap-1"
+                    >
+                      Buy
+                      <ChevronRight className="h-3 w-3" />
+                    </Button>
+                  </div>
+                )}
                 <div className="border-b pb-2">
                   <div className="flex items-center gap-2 text-lg font-semibold">
                     <TrendingUp className="h-5 w-5 text-bitcoin" />
@@ -532,92 +566,135 @@ export default function BitcoinCalculatorPageClient({
         )}
 
         {/* Popular Miners Table with View All */}
-        <Card className="mt-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Settings className="h-5 w-5 text-bitcoin" />
+        <div className="mt-8">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold flex items-center gap-2">
+              <Settings className="h-6 w-6 text-bitcoin" />
               Popular Miners
-            </CardTitle>
-            <CardDescription>
-              Click a row to auto-fill calculator
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="p-0">
-            <div className="rounded-md border">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Miner</TableHead>
-                    <TableHead className="text-right">Hashrate</TableHead>
-                    <TableHead className="text-right">Power</TableHead>
-                    <TableHead className="text-right">Cost</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {displayedMiners.map((miner) => {
-                    const minerHashrate = toHashrate(
-                      miner.hashrateValue,
-                      miner.hashrateUnit
-                    );
-                    const isSelected = selectedMiner?.name === miner.name;
+            </h2>
+            <p className="text-muted-foreground mt-1">
+              Click a card to auto-fill calculator
+            </p>
+          </div>
 
-                    return (
-                      <TableRow
-                        key={miner.name}
-                        onClick={() => loadMiner(miner)}
-                        className={`cursor-pointer transition-colors ${
-                          isSelected
-                            ? "bg-muted hover:bg-muted/80"
-                            : "hover:bg-muted/50"
-                        }`}
-                      >
-                        <TableCell className="font-medium">
-                          <div className="flex flex-col">
-                            <span className="text-sm font-medium">
-                              {miner.name}
-                            </span>
-                            <span className="text-xs text-muted-foreground">
-                              {miner.manufacturer}
-                            </span>
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-right font-mono text-sm">
-                          {formatHashrate(minerHashrate)}
-                        </TableCell>
-                        <TableCell className="text-right font-mono text-sm">
-                          {miner.power}W
-                        </TableCell>
-                        <TableCell className="text-right font-mono text-sm text-bitcoin font-semibold">
-                          ${miner.cost.toLocaleString()}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {displayedMiners.map((miner) => {
+              const minerHashrate = toHashrate(
+                miner.hashrateValue,
+                miner.hashrateUnit
+              );
+              const isSelected = selectedMiner?.name === miner.name;
 
-            {/* View All / Collapse Button */}
-            {bitcoinMiners.length > 5 && (
-              <div className="px-6 pb-4 pt-2">
-                <Button
-                  variant="ghost"
-                  className="w-full text-sm"
-                  onClick={() => setShowAllMiners(!showAllMiners)}
+              return (
+                <Card
+                  key={miner.id}
+                  onClick={() => loadMiner(miner)}
+                  className={`cursor-pointer transition-all hover:shadow-lg ${
+                    isSelected
+                      ? "ring-2 ring-bitcoin shadow-lg"
+                      : "hover:ring-1 hover:ring-muted"
+                  }`}
                 >
-                  {showAllMiners ? (
-                    <>Collapse</>
-                  ) : (
-                    <>
-                      View All Miners ({bitcoinMiners.length})
-                      <ChevronsDown className="ml-1 h-4 w-4" />
-                    </>
-                  )}
-                </Button>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+                  <CardContent className="p-0">
+                    {/* Thumbnail */}
+                    <div className="relative h-48 bg-gradient-to-br from-muted to-muted/50 rounded-t-lg overflow-hidden">
+                      {miner.thumbnail ? (
+                        <img
+                          src={miner.thumbnail}
+                          alt={miner.name}
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center h-full">
+                          <Zap className="h-16 w-16 text-muted-foreground/30" />
+                        </div>
+                      )}
+                      {isSelected && (
+                        <Badge className="absolute top-2 right-2 bg-bitcoin text-white">
+                          Selected
+                        </Badge>
+                      )}
+                    </div>
+
+                    {/* Card Details */}
+                    <div className="p-4 space-y-3">
+                      <div>
+                        <h3 className="font-semibold text-lg leading-tight line-clamp-1">
+                          {miner.name}
+                        </h3>
+                        <p className="text-sm text-muted-foreground">
+                          {miner.manufacturer}
+                        </p>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2 text-sm">
+                        <div>
+                          <p className="text-muted-foreground">Hashrate</p>
+                          <p className="font-semibold font-mono">
+                            {formatHashrate(minerHashrate)}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground">Power</p>
+                          <p className="font-semibold font-mono">
+                            {miner.power}W
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-2 border-t">
+                        <div>
+                          <p className="text-xs text-muted-foreground">Price</p>
+                          <p className="text-xl font-bold text-bitcoin">
+                            ${miner.cost.toLocaleString()}
+                          </p>
+                        </div>
+                        {miner.buyUrl && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              window.open(miner.buyUrl, "_blank");
+                            }}
+                            className="gap-1"
+                          >
+                            Buy
+                            <ChevronRight className="h-3 w-3" />
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+
+          {/* View All / Collapse Button */}
+          {minersData.length > 5 && (
+            <div className="mt-6 text-center">
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={() => setShowAllMiners(!showAllMiners)}
+                className="min-w-[200px]"
+              >
+                {showAllMiners ? (
+                  <>
+                    Show Less
+                    <ChevronsDown className="ml-2 h-4 w-4 rotate-180" />
+                  </>
+                ) : (
+                  <>
+                    View All Miners ({minersData.length})
+                    <ChevronsDown className="ml-2 h-4 w-4" />
+                  </>
+                )}
+              </Button>
+            </div>
+          )}
+        </div>
 
         {/* FAQ */}
         <Card className="mt-8 mb-12">

@@ -16,6 +16,7 @@ export interface BitcoinStats {
 
 
 export interface BitcoinMiner {
+  id: number;
   name: string;
   manufacturer: string;
   hashrateValue: number;
@@ -23,7 +24,8 @@ export interface BitcoinMiner {
   power: number;
   efficiency: number;
   cost: number;
-  url?: string;
+  thumbnail?: string;
+  buyUrl?: string;
 }
 
 

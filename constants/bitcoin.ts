@@ -412,7 +412,8 @@ export const bitcoinHalvingFaqs = [
 ];
 
 export const bitcoinMiners = [
-    {
+    {   
+        id: 1,
         manufacturer: "MicroBT",
         name: "Whatsminer M63S Hydro 390T",
         hashrateValue: 390,
@@ -420,8 +421,11 @@ export const bitcoinMiners = [
         power: 7215,
         efficiency: 18.5,
         cost: 13699,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m63s-hydro-390t.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
-    {
+    {  
+        id: 2,
         manufacturer: "MicroBT",
         name: "Whatsminer M63 Hydro 366T",
         hashrateValue: 366,
@@ -429,8 +433,11 @@ export const bitcoinMiners = [
         power: 7283,
         efficiency: 19.9,
         cost: 11799,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m63-hydro-366t.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
     {
+        id: 3,
         manufacturer: "MicroBT",
         name: "Whatsminer M63S Hydro 360T",
         hashrateValue: 360,
@@ -438,8 +445,11 @@ export const bitcoinMiners = [
         power: 7215,
         efficiency: 20.04,
         cost: 12499,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m63s-hydro-360t.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
-    {
+    {   
+        id: 4,
         manufacturer: "Bitmain",
         name: "Antminer S21 Hydro",
         hashrateValue: 335,
@@ -447,8 +457,11 @@ export const bitcoinMiners = [
         power: 5360,
         efficiency: 16,
         cost: 7599,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/antminer-s21-hydro.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
-    {
+    {   
+        id: 5,
         manufacturer: "MicroBT",
         name: "Whatsminer M63 Hydro 334T",
         hashrateValue: 334,
@@ -456,8 +469,11 @@ export const bitcoinMiners = [
         power: 7283,
         efficiency: 21.81,
         cost: 10799,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m63-hydro-334t.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
-    {
+    {   
+        id: 6,
         manufacturer: "MicroBT",
         name: "Whatsminer M66S Hydro 298T",
         hashrateValue: 298,
@@ -465,8 +481,11 @@ export const bitcoinMiners = [
         power: 5513,
         efficiency: 18.5,
         cost: 10799,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m66s-hydro-298t.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
-    {
+    {  
+        id: 7,
         manufacturer: "MicroBT",
         name: "Whatsminer M66 Hydro 280T",
         hashrateValue: 280,
@@ -474,8 +493,11 @@ export const bitcoinMiners = [
         power: 5572,
         efficiency: 19.9,
         cost: 9499,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m66-hydro-280t.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
-    {
+    {   
+        id: 8,
         manufacturer: "MicroBT",
         name: "Whatsminer M66S Hydro 270T",
         hashrateValue: 270,
@@ -483,8 +505,11 @@ export const bitcoinMiners = [
         power: 5513,
         efficiency: 20.42,
         cost: 9699,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m66s-hydro-270t.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
-    {
+    {  
+        id: 9,
         manufacturer: "MicroBT",
         name: "Whatsminer M53S Hydro",
         hashrateValue: 260,
@@ -492,8 +517,11 @@ export const bitcoinMiners = [
         power: 6760,
         efficiency: 26,
         cost: 5999,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m53s-hydro.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
     {
+        id: 10,
         manufacturer: "MicroBT",
         name: "Whatsminer M33S++ Hydro",
         hashrateValue: 242,
@@ -501,8 +529,11 @@ export const bitcoinMiners = [
         power: 7260,
         efficiency: 30,
         cost: 5599,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m33s-plus-plus-hydro.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
     {
+        id: 11,
         manufacturer: "MicroBT",
         name: "Whatsminer M66 Hydro 238T",
         hashrateValue: 238,
@@ -510,8 +541,11 @@ export const bitcoinMiners = [
         power: 5572,
         efficiency: 23.41,
         cost: 7999,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m66-hydro-238t.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
     {
+        id: 12,
         manufacturer: "Bitmain",
         name: "Antminer S21",
         hashrateValue: 200,
@@ -519,8 +553,11 @@ export const bitcoinMiners = [
         power: 3500,
         efficiency: 17.5,
         cost: 5449,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/antminer-s21.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
     {
+        id: 13,
         manufacturer: "Bitmain",
         name: "Antminer T21",
         hashrateValue: 190,
@@ -528,8 +565,11 @@ export const bitcoinMiners = [
         power: 3610,
         efficiency: 19,
         cost: 4369,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/antminer-t21.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
     {
+        id: 14,
         manufacturer: "MicroBT",
         name: "Whatsminer M60S 186T",
         hashrateValue: 186,
@@ -537,8 +577,11 @@ export const bitcoinMiners = [
         power: 3441,
         efficiency: 18.5,
         cost: 6299,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m60s-186t.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
     {
+        id: 15,
         manufacturer: "MicroBT",
         name: "Whatsminer M60 172T",
         hashrateValue: 172,
@@ -546,8 +589,11 @@ export const bitcoinMiners = [
         power: 3422,
         efficiency: 19.9,
         cost: 5499,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m60-172t.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
     {
+        id: 16,
         manufacturer: "Canaan",
         name: "Avalon A1466I 170T",
         hashrateValue: 170,
@@ -555,8 +601,11 @@ export const bitcoinMiners = [
         power: 3315,
         efficiency: 19.5,
         cost: 3699,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/avalon-a1466i-170t.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
     {
+        id: 17,
         manufacturer: "MicroBT",
         name: "Whatsminer M60S 170T",
         hashrateValue: 170,
@@ -564,8 +613,11 @@ export const bitcoinMiners = [
         power: 3441,
         efficiency: 20.24,
         cost: 5699,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m60s-170t.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
     {
+        id: 18,
         manufacturer: "MicroBT",
         name: "Whatsminer M60 156T",
         hashrateValue: 156,
@@ -573,8 +625,11 @@ export const bitcoinMiners = [
         power: 3422,
         efficiency: 21.94,
         cost: 4799,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m60-156t.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
     {
+        id: 19,
         manufacturer: "Bitmain",
         name: "Antminer S19j XP 151T",
         hashrateValue: 151,
@@ -582,8 +637,11 @@ export const bitcoinMiners = [
         power: 3247,
         efficiency: 21.5,
         cost: 6299,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/antminer-s19j-xp-151t.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
     {
+        id: 20,
         manufacturer: "Canaan",
         name: "Avalon A1466 150T",
         hashrateValue: 150,
@@ -591,8 +649,11 @@ export const bitcoinMiners = [
         power: 3230,
         efficiency: 21.53,
         cost: 3399,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/avalon-a1466-150t.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
     {
+        id: 21,
         manufacturer: "Bitmain",
         name: "Antminer S19 XP",
         hashrateValue: 140,
@@ -600,6 +661,8 @@ export const bitcoinMiners = [
         power: 3010,
         efficiency: 21.5,
         cost: 17999.99,
+        thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/antminer-s19-xp.png",
+        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
     },
 ];
 

@@ -7,25 +7,32 @@ import BitcoinCalculatorPageClient from "./page-client";
 
 async function fetchInitialData() {
   try {
-    const statsResponse = await axios.get(getApiUrl("/bitcoin/stats"));
+    const [statsResponse, minersResponse] =
+      await Promise.all([
+        axios.get(getApiUrl("/bitcoin/stats")),
+        axios.get(getApiUrl(`/bitcoin/miners`)),
+      ]);
+
     return {
       statsData: statsResponse.data.data,
+      minersData: minersResponse.data.data,
     };
   } catch (error) {
     console.error("Error fetching initial data:", error);
     return {
       statsData: null,
+      minersData:[],
     };
   }
 }
 
 export default async function BitcoinCalculatorPage() {
   const data = await fetchInitialData();
-  const { statsData } = data;
+  const { statsData  , minersData } = data;
 
   return (
     <Suspense fallback={<BitcoinCalculatorPageClientShimmer />}>
-      <BitcoinCalculatorPageClient statsData={statsData} />
+      <BitcoinCalculatorPageClient statsData={statsData} minersData={minersData} />
     </Suspense>
   );
 }

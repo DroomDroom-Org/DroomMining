@@ -20,6 +20,26 @@ const nextConfig = {
         hostname: 'bucket.droomdroom.online',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'droomdroom.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'upload.wikimedia.org',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.coinwarz.com',
+        pathname: '/**',
+      },
     ],
   },
   async rewrites() {
