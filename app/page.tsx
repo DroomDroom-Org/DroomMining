@@ -38,21 +38,6 @@ const cryptoList: CryptoData[] = [
     logo: getCmcImageUrl(1),
   },
   {
-    id: "2",
-    cmcId: 1027,
-    name: "Ethereum",
-    symbol: "ETH",
-    price: 2345.67,
-    change24h: -1.23,
-    blockReward: 2,
-    blockTime: 12,
-    difficulty: "12.34P",
-    hashrate: "945.23 TH/s",
-    profitability: 0.00004567,
-    algorithm: "Ethash",
-    logo: getCmcImageUrl(1027),
-  },
-  {
     id: "3",
     cmcId: 2,
     name: "Litecoin",
@@ -84,7 +69,7 @@ const cryptoList: CryptoData[] = [
   },
   {
     id: "5",
-    cmcId: 2575,
+    cmcId: 2577,
     name: "Ravencoin",
     symbol: "RVN",
     price: 0.032,
@@ -95,7 +80,7 @@ const cryptoList: CryptoData[] = [
     hashrate: "7.34 TH/s",
     profitability: 0.000987,
     algorithm: "KawPow",
-    logo: getCmcImageUrl(2575),
+    logo: getCmcImageUrl(2577),
   },
   {
     id: "6",
@@ -159,7 +144,11 @@ export default function MiningCalculatorPage() {
                 difficulty, and hashrate for top PoW coins.
               </p>
               <div className="mt-8 animate-slide-in-from-bottom animation-delay-400">
-                <Button asChild size="lg" className="interactive-element bg-bitcoin hover:bg-bitcoin-dark">
+                <Button
+                  asChild
+                  size="lg"
+                  className="interactive-element bg-bitcoin hover:bg-bitcoin-dark"
+                >
                   <Link href="/bitcoin/calculator">
                     <Calculator className="mr-2 h-4 w-4" />
                     Bitcoin Mining Calculator
@@ -186,11 +175,11 @@ export default function MiningCalculatorPage() {
                 >
                   <Card
                     key={coin.id}
-                    className="card-hover interactive-element group cursor-pointer overflow-hidden border border-border/50 bg-card/95 backdrop-blur-sm"
+                    className="card-hover interactive-element group cursor-pointer overflow-hidden border border-border/50 bg-card/95 backdrop-blur-sm h-48 flex flex-col justify-between"
                     style={{ animationDelay: `${idx * 50}ms` }}
                   >
-                    <CardHeader className="pb-3 pt-4 px-3">
-                      <div className="flex flex-col items-center space-y-2">
+                    <CardHeader className="pb-3 pt-4 px-3 flex-shrink-0">
+                      <div className="flex justify-center">
                         <div className="relative">
                           <img
                             src={coin.logo}
@@ -201,8 +190,9 @@ export default function MiningCalculatorPage() {
                         </div>
                       </div>
                     </CardHeader>
-                    <CardContent className="pt-0 pb-3 px-3 text-center">
-                      <p className="text-base font-semibold">
+
+                    <CardContent className="pt-0 pb-4 px-3 text-center flex-grow flex items-center justify-center">
+                      <p className="text-base font-semibold leading-tight">
                         {coin.name} Mining Calculator
                       </p>
                     </CardContent>
@@ -213,8 +203,8 @@ export default function MiningCalculatorPage() {
 
             <div className="mt-12 text-center">
               <p className="text-muted-foreground max-w-3xl mx-auto mb-6">
-                Calculate profitability for Bitcoin, Ethereum, Litecoin,
-                Dogecoin, Monero, Zcash, Ravencoin.
+                Calculate profitability for Bitcoin, Litecoin, Dogecoin, Monero,
+                Zcash, Ravencoin.
               </p>
             </div>
           </div>
