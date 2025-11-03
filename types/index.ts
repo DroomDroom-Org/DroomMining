@@ -75,3 +75,23 @@ export interface LitecoinCalculator {
   electricityCost: number;
   poolFee: number;
 }
+
+export interface DogecoinStats {
+  blockCount: number;
+  difficulty: number;
+  networkHashrate: number;
+  blockReward: number;
+  blockTime: number;
+  difficultyRetarget: number;
+  volume: number;
+  price: number;
+};
+
+export interface DogecoinCalculator {
+  hashrate: number;        
+  hashrateValue: number;   
+  hashrateUnit: string;    
+  power: number;
+  electricityCost: number;
+  poolFee: number;
+}
