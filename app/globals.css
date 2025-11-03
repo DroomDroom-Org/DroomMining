@@ -93,6 +93,10 @@ body {
 /* LITECOIN BLUE – official logo color */
   --accent-litecoin:          214 50% 41%;    /* #345D9D */
   --accent-litecoin-foreground: 0 0% 100%;   /* white on blue (high contrast) */
+  
+/* DOGECOIN GOLD – official logo color */
+    --accent-dogecoin:          45 80% 48%;    /* #C2A633 */
+    --accent-dogecoin-foreground: 0 0% 100%;
 
    --secondary:            210 40% 96.1%;
    --secondary-foreground: 222 47% 11%;
@@ -137,6 +141,10 @@ body {
 /* LITECOIN BLUE – brighter for dark mode */
   --accent-litecoin:          214 60% 55%;    /* ≈ #3A81EA */
   --accent-litecoin-foreground: 0 0% 100%;   /* white on blue */
+
+/* DOGECOIN GOLD – brighter for dark mode */
+    --accent-dogecoin:          45 90% 58%;    /* #E6C24A */
+    --accent-dogecoin-foreground: 0 0% 100%;
 
     --secondary:            0 0% 10%;
     --secondary-foreground: 0 0% 100%;
@@ -192,3 +200,5 @@ body {
 .text-litecoin   { color: hsl(var(--accent-litecoin)); }
 .bg-litecoin     { background-color: hsl(var(--accent-litecoin)); }
 
+.text-dogecoin { color: hsl(var(--accent-dogecoin)); }
+.bg-dogecoin   { background-color: hsl(var(--accent-dogecoin)); }
