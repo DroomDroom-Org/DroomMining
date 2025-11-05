@@ -224,7 +224,37 @@ export default function BitcoinCalculatorPageClient({
           <CardContent>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
               {/* Left: Inputs */}
-              <div className="space-y-6">
+              <div className="space-y-4">
+                {selectedMiner && (
+                  <div className="flex items-center justify-between p-2 rounded bg-muted/50 text-sm border-1">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium truncate">
+                        {selectedMiner.name}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {formatHashrate(
+                          toHashrate(
+                            selectedMiner.hashrateValue,
+                            selectedMiner.hashrateUnit
+                          )
+                        )}{" "}
+                        • {selectedMiner.power}W
+                      </p>
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(selectedMiner.buyUrl, "_blank");
+                      }}
+                      className="gap-1"
+                    >
+                      Buy
+                      <ChevronRight className="h-3 w-3" />
+                    </Button>
+                  </div>
+                )}
                 {/* Hashrate */}
                 <div className="space-y-2">
                   <Label htmlFor="hashrate">Hashrate</Label>
@@ -348,36 +378,6 @@ export default function BitcoinCalculatorPageClient({
 
               {/* Right: Live Stats + Summary */}
               <div className="flex flex-col justify-start space-y-4 min-h-full">
-                {selectedMiner && (
-                  <div className="flex items-center justify-between p-2 rounded bg-muted/50 text-sm border-1">
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium truncate">
-                        {selectedMiner.name}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {formatHashrate(
-                          toHashrate(
-                            selectedMiner.hashrateValue,
-                            selectedMiner.hashrateUnit
-                          )
-                        )}{" "}
-                        • {selectedMiner.power}W
-                      </p>
-                    </div>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(selectedMiner.buyUrl, "_blank");
-                      }}
-                      className="gap-1"
-                    >
-                      Buy
-                      <ChevronRight className="h-3 w-3" />
-                    </Button>
-                  </div>
-                )}
                 <div className="border-b pb-2">
                   <div className="flex items-center gap-2 text-lg font-semibold">
                     <TrendingUp className="h-5 w-5 text-bitcoin" />

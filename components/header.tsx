@@ -264,7 +264,7 @@ export default function Header({
                                     "relative group"
                                   )}
                                 >
-                                  <span className="text-foreground hover:text-foreground transition-transform duration-200 ease-in-out group-hover:translate-x-1">
+                                  <span className="text-foreground hover:text-foreground transition-transform duration-200 ease-in-out group-hover:translate-x-1 truncate">
                                     {subItem.text}
                                   </span>
                                 </DropdownMenuItem>
