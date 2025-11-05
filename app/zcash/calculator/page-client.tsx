@@ -99,7 +99,6 @@ export default function ZcashCalculatorPageClient({
 
   const calculateProfit = () => {
     setLoading(true);
-
     const { hashrate, power, electricityCost, poolFee } = state;
 
     const zecPrice = stats.price 
@@ -158,46 +157,53 @@ export default function ZcashCalculatorPageClient({
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <ZcashNavigation />
 
-        {/* Header */}
-        <section className="pt-8">
-          <div className="flex items-start justify-between">
+        {/*Page Header */}
+        <div className="w-full mb-4 sm:mb-6 pt-6 sm:pt-8">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
             <div className="flex flex-col">
-              <div className="flex items-center mb-4 gap-4">
+              <div className="flex items-center mb-3 sm:mb-4 gap-3 sm:gap-4">
                 <img
                   src={getCmcImageUrl(1437)}
-                  alt="Zcash"
-                  className="w-10 h-10 rounded"
+                  alt="Zcash Logo"
+                  className="w-8 h-8 sm:w-10 sm:h-10 rounded flex-shrink-0"
                 />
-                <h1 className="text-3xl font-bold">Zcash Mining Calculator</h1>
+                <h1 className="text-2xl sm:text-3xl font-bold">
+                  Zcash Mining Calculator
+                </h1>
               </div>
-              <p className="text-xl pl-14 text-muted-foreground">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl pl-11 sm:pl-14 text-muted-foreground leading-relaxed">
                 Calculate ZEC mining profitability in real time
               </p>
             </div>
-            <Badge variant="secondary" className="self-start">
+            <Badge
+              variant="secondary"
+              className="self-start text-xs sm:text-sm whitespace-nowrap"
+            >
               Updated: {new Date().toLocaleDateString()}
             </Badge>
           </div>
-        </section>
+        </div>
 
         {/* Upper Calculator + Summary Card */}
-        <Card className="mt-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Calculator className="h-5 w-5" />
+        <Card className="mt-6 sm:mt-8">
+          <CardHeader className="px-4 sm:px-6">
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+              <Calculator className="h-4 w-4 sm:h-5 sm:w-5" />
               ZEC Mining Calculator
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          <CardContent className="px-4 sm:px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
               {/* Left: Inputs */}
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {/* Hashrate */}
                 <div className="space-y-2">
-                  <Label htmlFor="hashrate">Hashrate</Label>
+                  <Label htmlFor="hashrate" className="text-sm sm:text-base">
+                    Hashrate
+                  </Label>
                   <div className="flex gap-2">
                     <Input
                       id="hashrate"
@@ -213,7 +219,7 @@ export default function ZcashCalculatorPageClient({
                           hashrate: toHashrate(val, s.hashrateUnit),
                         }));
                       }}
-                      className="flex-1"
+                      className="flex-1 text-sm sm:text-base"
                     />
                     <Select
                       value={state.hashrateUnit}
@@ -226,7 +232,7 @@ export default function ZcashCalculatorPageClient({
                         }));
                       }}
                     >
-                      <SelectTrigger className="w-[100px]">
+                      <SelectTrigger className="w-[80px] sm:w-[100px] text-sm">
                         <SelectValue placeholder="Unit" />
                       </SelectTrigger>
                       <SelectContent>
@@ -238,14 +244,16 @@ export default function ZcashCalculatorPageClient({
                       </SelectContent>
                     </Select>
                   </div>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-[10px] sm:text-xs text-muted-foreground">
                     {formatHashrate(state.hashrate)} H/s
                   </p>
                 </div>
 
                 {/* Power */}
                 <div className="space-y-2">
-                  <Label htmlFor="power">Power Consumption (W)</Label>
+                  <Label htmlFor="power" className="text-sm sm:text-base">
+                    Power Consumption (W)
+                  </Label>
                   <Input
                     id="power"
                     type="number"
@@ -257,12 +265,15 @@ export default function ZcashCalculatorPageClient({
                         power: Number(e.target.value) || 0,
                       }))
                     }
+                    className="text-sm sm:text-base"
                   />
                 </div>
 
                 {/* Electricity */}
                 <div className="space-y-2">
-                  <Label htmlFor="elec-cost">Electricity Cost ($/kWh)</Label>
+                  <Label htmlFor="elec-cost" className="text-sm sm:text-base">
+                    Electricity Cost ($/kWh)
+                  </Label>
                   <Input
                     id="elec-cost"
                     type="number"
@@ -275,12 +286,15 @@ export default function ZcashCalculatorPageClient({
                         electricityCost: Number(e.target.value) || 0,
                       }))
                     }
+                    className="text-sm sm:text-base"
                   />
                 </div>
 
                 {/* Pool Fee */}
                 <div className="space-y-2">
-                  <Label htmlFor="pool-fee">Pool Fee (%)</Label>
+                  <Label htmlFor="pool-fee" className="text-sm sm:text-base">
+                    Pool Fee (%)
+                  </Label>
                   <Input
                     id="pool-fee"
                     type="number"
@@ -293,12 +307,13 @@ export default function ZcashCalculatorPageClient({
                         poolFee: Number(e.target.value) || 0,
                       }))
                     }
+                    className="text-sm sm:text-base"
                   />
                 </div>
 
                 <Button
                   onClick={calculateProfit}
-                  className="w-full bg-zcash hover:bg-zcash/90 text-white"
+                  className="w-full bg-zcash hover:bg-zcash/90 text-white text-sm sm:text-base"
                   disabled={loading}
                   size="lg"
                 >
@@ -319,11 +334,11 @@ export default function ZcashCalculatorPageClient({
               {/* Right: Live Stats + Summary */}
               <div className="flex flex-col justify-start space-y-4 min-h-full">
                 <div className="border-b pb-2">
-                  <div className="flex items-center gap-2 text-lg font-semibold">
-                    <TrendingUp className="h-5 w-5 text-zcash" />
+                  <div className="flex items-center gap-2 text-base sm:text-lg font-semibold">
+                    <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-zcash" />
                     Live ZEC Stats
                   </div>
-                  <div className="space-y-3 text-sm mt-3">
+                  <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm mt-3">
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Price</span>
                       <span className="font-semibold">
@@ -348,7 +363,7 @@ export default function ZcashCalculatorPageClient({
                       <span className="text-muted-foreground">
                         Network Hashrate
                       </span>
-                      <span className="font-semibold">
+                      <span className="font-semibold break-all">
                         {formatHashrate(stats.networkHashrate)}
                       </span>
                     </div>
@@ -363,8 +378,10 @@ export default function ZcashCalculatorPageClient({
                   </div>
                 </div>
 
-                <h3 className="font-semibold text-lg">Mining Summary</h3>
-                <div className="flex-1 grid gap-3 content-start">
+                <h3 className="font-semibold text-base sm:text-lg">
+                  Mining Summary
+                </h3>
+                <div className="flex-1 grid gap-2 sm:gap-3 content-start text-xs sm:text-sm">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">
                       Mining Revenue
@@ -391,7 +408,7 @@ export default function ZcashCalculatorPageClient({
                     <span className="text-muted-foreground">
                       Zcash mined per hour
                     </span>
-                    <span className="font-medium">
+                    <span className="font-medium break-all">
                       {results ? results.zecPerHour.toFixed(8) : "0.00000000"}{" "}
                       ZEC
                     </span>
@@ -400,7 +417,7 @@ export default function ZcashCalculatorPageClient({
                     <span className="text-muted-foreground">
                       Zcash mined per day
                     </span>
-                    <span className="font-medium">
+                    <span className="font-medium break-all">
                       {results ? results.zecPerDay.toFixed(8) : "0.00000000"}{" "}
                       ZEC
                     </span>
@@ -421,83 +438,109 @@ export default function ZcashCalculatorPageClient({
 
         {/* Forecast Table */}
         {results && (
-          <Card className="mt-8">
-            <CardHeader>
-              <CardTitle>Mining Reward Forecast</CardTitle>
-              <CardDescription>Projected earnings over time</CardDescription>
+          <Card className="mt-6 sm:mt-8">
+            <CardHeader className="px-4 sm:px-6">
+              <CardTitle className="text-lg sm:text-xl">
+                Mining Reward Forecast
+              </CardTitle>
+              <CardDescription className="text-xs sm:text-sm">
+                Projected earnings over time
+              </CardDescription>
             </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Period</TableHead>
-                    <TableHead>ZEC</TableHead>
-                    <TableHead>Revenue</TableHead>
-                    <TableHead>Power Cost</TableHead>
-                    <TableHead>Fees</TableHead>
-                    <TableHead>Profit</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {[
-                    { label: "Hourly", h: 1 },
-                    { label: "Daily", h: 24 },
-                    { label: "Weekly", h: 168 },
-                    { label: "Monthly", h: 730 },
-                    { label: "Yearly", h: 8760 },
-                  ].map((p) => (
-                    <TableRow key={p.label}>
-                      <TableCell>{p.label}</TableCell>
-                      <TableCell>{zecPerPeriod(p.h).toFixed(8)}</TableCell>
-                      <TableCell>${revenuePerPeriod(p.h).toFixed(2)}</TableCell>
-                      <TableCell>${costPerPeriod(p.h).toFixed(2)}</TableCell>
-                      <TableCell>${feesPerPeriod(p.h).toFixed(2)}</TableCell>
-                      <TableCell className="font-semibold">
-                        ${profitPerPeriod(p.h).toFixed(2)}
-                      </TableCell>
+            <CardContent className="px-2 sm:px-4 lg:px-6">
+              <div className="overflow-x-auto -mx-2 sm:mx-0">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-xs sm:text-sm">
+                        Period
+                      </TableHead>
+                      <TableHead className="text-xs sm:text-sm">ZEC</TableHead>
+                      <TableHead className="text-xs sm:text-sm">
+                        Revenue
+                      </TableHead>
+                      <TableHead className="text-xs sm:text-sm hidden sm:table-cell">
+                        Power Cost
+                      </TableHead>
+                      <TableHead className="text-xs sm:text-sm hidden md:table-cell">
+                        Fees
+                      </TableHead>
+                      <TableHead className="text-xs sm:text-sm">
+                        Profit
+                      </TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {[
+                      { label: "Hourly", h: 1 },
+                      { label: "Daily", h: 24 },
+                      { label: "Weekly", h: 168 },
+                      { label: "Monthly", h: 730 },
+                      { label: "Yearly", h: 8760 },
+                    ].map((p) => (
+                      <TableRow key={p.label}>
+                        <TableCell className="text-xs sm:text-sm font-medium">
+                          {p.label}
+                        </TableCell>
+                        <TableCell className="text-xs sm:text-sm font-mono">
+                          {zecPerPeriod(p.h).toFixed(8)}
+                        </TableCell>
+                        <TableCell className="text-xs sm:text-sm">
+                          ${revenuePerPeriod(p.h).toFixed(2)}
+                        </TableCell>
+                        <TableCell className="text-xs sm:text-sm hidden sm:table-cell">
+                          ${costPerPeriod(p.h).toFixed(2)}
+                        </TableCell>
+                        <TableCell className="text-xs sm:text-sm hidden md:table-cell">
+                          ${feesPerPeriod(p.h).toFixed(2)}
+                        </TableCell>
+                        <TableCell className="text-xs sm:text-sm font-semibold">
+                          ${profitPerPeriod(p.h).toFixed(2)}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </CardContent>
           </Card>
         )}
 
-        {/* KPI Cards – fixed keys */}
+        {/* KPI Cards */}
         {results && (
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             <Card>
-              <CardHeader className="text-center pb-3">
-                <CardTitle className="text-lg">Profit Margin</CardTitle>
+              <CardHeader className="text-center pb-2 sm:pb-3 px-4">
+                <CardTitle className="text-base sm:text-lg">
+                  Profit Margin
+                </CardTitle>
               </CardHeader>
-              <CardContent className="text-center">
-                <div className="text-3xl font-bold text-green-600">
+              <CardContent className="text-center px-4">
+                <div className="text-2xl sm:text-3xl font-bold text-green-600">
                   +{results.profitMargin}%
                 </div>
               </CardContent>
             </Card>
-
             <Card>
-              <CardHeader className="text-center pb-3">
-                <CardTitle className="text-lg flex items-center justify-center gap-2">
-                  <Clock className="h-5 w-5" /> Days to 1 ZEC
+              <CardHeader className="text-center pb-2 sm:pb-3 px-4">
+                <CardTitle className="text-base sm:text-lg flex items-center justify-center gap-2">
+                  <Clock className="h-4 w-4 sm:h-5 sm:w-5" /> Days to 1 ZEC
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-center">
-                <div className="text-3xl font-bold">
+              <CardContent className="text-center px-4">
+                <div className="text-2xl sm:text-3xl font-bold">
                   {results.daysTo1Zec.toFixed(1)}
                 </div>
               </CardContent>
             </Card>
-
             <Card>
-              <CardHeader className="text-center pb-3">
-                <CardTitle className="text-lg flex items-center justify-center gap-2">
-                  <Zap className="h-5 w-5" /> ROI (Days)
+              <CardHeader className="text-center pb-2 sm:pb-3 px-4">
+                <CardTitle className="text-base sm:text-lg flex items-center justify-center gap-2">
+                  <Zap className="h-4 w-4 sm:h-5 sm:w-5" /> ROI (Days)
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-center">
-                <div className="text-3xl font-bold">
+              <CardContent className="text-center px-4">
+                <div className="text-2xl sm:text-3xl font-bold">
                   {results.roiDays === Infinity
                     ? "Never"
                     : results.roiDays.toFixed(1)}
@@ -505,18 +548,18 @@ export default function ZcashCalculatorPageClient({
               </CardContent>
             </Card>
           </div>
-        )}
+        )} 
 
         {/* FAQ */}
-        <Card className="mt-8 mb-12">
-          <CardHeader>
-            <CardTitle>FAQs</CardTitle>
+        <Card className="mt-6 sm:mt-8 mb-8 sm:mb-10 lg:mb-12">
+          <CardHeader className="px-4 sm:px-6">
+            <CardTitle className="text-lg sm:text-xl">FAQs</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-4 sm:px-6">
             <Accordion type="single" collapsible className="w-full">
               {zcashCalculatorFaqs.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-lg">
+                  <AccordionTrigger className="text-sm sm:text-base lg:text-lg text-left">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent>

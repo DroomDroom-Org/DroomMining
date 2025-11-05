@@ -55,22 +55,26 @@ const ZcashChart: React.FC<ZcashChartProps> = ({
   }));
 
   return (
-    <Card className="mb-12 animate-slide-in-from-bottom animation-delay-800">
-      <div className="flex justify-between space-y-1.5 p-6">
-        <div className="flex items-center gap-2 text-2xl font-semibold leading-none tracking-tight">
-          {icon}
-          {title}
+    <Card className="mb-8 sm:mb-10 lg:mb-12 animate-slide-in-from-bottom animation-delay-800">
+      {/* Header Section */}
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4 p-4 sm:p-5 lg:p-6">
+        {/* Title */}
+        <div className="flex items-center gap-2 text-lg sm:text-xl lg:text-2xl font-semibold leading-none tracking-tight">
+          <span className="flex-shrink-0">{icon}</span>
+          <span className="truncate">{title}</span>
         </div>
-        <div className="flex justify-end items-center">
-          <div className="flex gap-1 items-center md:overflow-x-auto md:pb-0 md:scrollbar-none">
-            <div className="flex gap-2 items-center text-muted-foreground md:gap-3 md:w-auto md:justify-start">
+
+        {/* Time Range Buttons */}
+        <div className="flex justify-start sm:justify-end items-center w-full sm:w-auto">
+          <div className="flex gap-1 sm:gap-1.5 overflow-x-auto pb-1 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 w-full sm:w-auto">
+            <div className="flex gap-1 sm:gap-1.5 lg:gap-2 items-center min-w-max">
               {chartTimeRanges.map((range) => (
                 <button
                   key={range.value}
-                  className={`px-2 py-1.5 text-xs min-w-[36px] text-center font-medium rounded cursor-pointer transition-all duration-200 md:px-3 md:min-w-[32px] md:text-[13px] ${
+                  className={`px-2 sm:px-2.5 lg:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs lg:text-[13px] min-w-[32px] sm:min-w-[36px] text-center font-medium rounded cursor-pointer transition-all duration-200 whitespace-nowrap ${
                     timeRange === range.value
-                      ? `bg-muted dark:text-white text-black md:font-semibold`
-                      : `bg-transparent dark:text-gray-400 text-gray-600 md:font-normal`
+                      ? `bg-muted dark:text-white text-black font-semibold`
+                      : `bg-transparent dark:text-gray-400 text-gray-600 hover:bg-muted/50`
                   }`}
                   onClick={() => onTimeRangeChange(range.value)}
                   disabled={loading}
@@ -82,30 +86,36 @@ const ZcashChart: React.FC<ZcashChartProps> = ({
           </div>
         </div>
       </div>
-      <CardContent>
-        <div className="h-96 pt-5">
+
+      {/* Chart Content */}
+      <CardContent className="px-0 sm:px-4 lg:px-6 pb-4 sm:pb-5 lg:pb-6">
+        <div className="h-64 sm:h-80 md:h-96 pt-2 sm:pt-3 lg:pt-5 w-full overflow-hidden">
           {loading ? (
             <div className="flex h-full items-center justify-center">
-              <div className="flex flex-col items-center gap-3">
-                <div className="relative w-12 h-12">
-                  <div className="absolute inset-0 border-4 border-gray-200 dark:border-gray-700 rounded-full"></div>
-
-                  <div className="absolute inset-0 border-4 border-transparent border-t-[#f7931a] rounded-full animate-spin"></div>
+              <div className="flex flex-col items-center gap-2 sm:gap-3">
+                <div className="relative w-10 h-10 sm:w-12 sm:h-12">
+                  <div className="absolute inset-0 border-3 sm:border-4 border-gray-200 dark:border-gray-700 rounded-full"></div>
+                  <div className="absolute inset-0 border-3 sm:border-4 border-transparent border-t-[#f7931a] rounded-full animate-spin"></div>
                 </div>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-xs sm:text-sm text-muted-foreground">
                   Loading chart data...
                 </p>
               </div>
             </div>
           ) : chartData.length === 0 ? (
-            <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+            <div className="flex h-full items-center justify-center text-xs sm:text-sm text-muted-foreground">
               No data available
             </div>
           ) : (
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
                 data={chartData}
-                margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
+                margin={{
+                  top: 5,
+                  right: window.innerWidth < 640 ? 2 : window.innerWidth < 768 ? 10 : 20,
+                  left: window.innerWidth < 640 ? -20 : 10,
+                  bottom: window.innerWidth < 640 ? 20 : 5,
+                }}
               >
                 <CartesianGrid
                   strokeDasharray="3 3"
@@ -116,34 +126,43 @@ const ZcashChart: React.FC<ZcashChartProps> = ({
                 <XAxis
                   dataKey="x"
                   type="category"
-                  tick={{ fill: textColor, fontSize: 12 }}
+                  tick={{ fill: textColor, fontSize: window.innerWidth < 640 ? 10 : 12 }}
                   axisLine={false}
                   tickLine={false}
                   ticks={chartData
                     .filter(
                       (_, i) =>
-                        i % Math.max(1, Math.floor(data.length / 6)) === 0
+                        i % Math.max(1, Math.floor(data.length / (window.innerWidth < 640 ? 4 : 6))) === 0
                     )
-                    .slice(0, 7)
+                    .slice(0, window.innerWidth < 640 ? 5 : 7)
                     .map((d) => d.x)}
                   tickFormatter={(date) => {
                     const d = new Date(date);
+                    if (window.innerWidth < 640) {
+                      return d.toLocaleDateString("en-US", {
+                        month: "short",
+                      });
+                    }
                     return d.toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
                     });
                   }}
+                  angle={window.innerWidth < 640 ? -45 : 0}
+                  textAnchor={window.innerWidth < 640 ? "end" : "middle"}
+                  height={window.innerWidth < 640 ? 50 : 30}
                 />
 
                 <YAxis
                   orientation="right"
                   dataKey="y"
-                  tick={{ fill: textColor, fontSize: 12 }}
+                  tick={{ fill: textColor, fontSize: window.innerWidth < 640 ? 9 : 12 }}
                   axisLine={true}
                   tickLine={false}
                   tickFormatter={formatNumber}
                   domain={["dataMin * 0.995", "dataMax * 1.005"]}
-                  tickCount={9}
+                  tickCount={window.innerWidth < 640 ? 6 : 9}
+                  width={window.innerWidth < 640 ? 60 : 80}
                 />
 
                 <Tooltip
@@ -151,10 +170,18 @@ const ZcashChart: React.FC<ZcashChartProps> = ({
                     backgroundColor: tooltipBg,
                     border: `1px solid ${tooltipBorder}`,
                     borderRadius: "6px",
-                    fontSize: "13px",
+                    fontSize: window.innerWidth < 640 ? "11px" : "13px",
+                    padding: window.innerWidth < 640 ? "6px 8px" : "8px 12px",
                   }}
-                  labelStyle={{ color: textColor, fontWeight: 500 }}
-                  itemStyle={{ color: "#f7931a" }}
+                  labelStyle={{ 
+                    color: textColor, 
+                    fontWeight: 500,
+                    fontSize: window.innerWidth < 640 ? "11px" : "13px",
+                  }}
+                  itemStyle={{ 
+                    color: "#f7931a",
+                    fontSize: window.innerWidth < 640 ? "11px" : "13px",
+                  }}
                   formatter={(value: number) => [
                     formatNumber(value),
                     yAxisLabel,
@@ -182,13 +209,13 @@ const ZcashChart: React.FC<ZcashChartProps> = ({
                   type="monotone"
                   dataKey="y"
                   stroke="#f7931a"
-                  strokeWidth={2}
+                  strokeWidth={window.innerWidth < 640 ? 1.5 : 2}
                   dot={false}
                   activeDot={{
-                    r: 6,
+                    r: window.innerWidth < 640 ? 4 : 6,
                     fill: "#f7931a",
                     stroke: theme === "light" ? "#ffffff" : "#1a1a1a",
-                    strokeWidth: 2,
+                    strokeWidth: window.innerWidth < 640 ? 1.5 : 2,
                   }}
                   isAnimationActive={true}
                   animationDuration={800}

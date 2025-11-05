@@ -82,7 +82,7 @@ export default function ZcashHomePageClient({
     blockTime: 0,
     difficultyRetarget: 0,
     volume: 0,
-    price:0,
+    price: 0,
   });
 
   useEffect(() => {
@@ -95,7 +95,7 @@ export default function ZcashHomePageClient({
         blockTime: statsData.blockTime,
         difficultyRetarget: statsData.difficultyRetarget,
         volume: statsData.volume,
-        price: statsData.price
+        price: statsData.price,
       });
     }
     if (difficultyData) {
@@ -133,9 +133,10 @@ export default function ZcashHomePageClient({
           href="https://z.cash/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-primary hover:underline"
+          className="text-primary hover:underline inline-flex items-center gap-1 break-all"
         >
-          zcash.z <ExternalLink className="h-4 w-4 inline ml-1" />
+          <span> zcash.z</span>
+          <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
         </a>
       ),
     },
@@ -146,9 +147,10 @@ export default function ZcashHomePageClient({
           href="https://github.com/zcash/zcash/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-primary hover:underline"
+          className="text-primary hover:underline inline-flex items-center gap-1"
         >
-          Github <ExternalLink className="h-4 w-4 inline ml-1" />
+          <span>Github</span>
+          <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
         </a>
       ),
     },
@@ -159,9 +161,10 @@ export default function ZcashHomePageClient({
           href="https://forum.z.cash/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-primary hover:underline"
+          className="text-primary hover:underline inline-flex items-center gap-1"
         >
-          Zcash Forum <ExternalLink className="h-4 w-4 inline ml-1" />
+          <span>Bitcointalk</span>
+          <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
         </a>
       ),
     },
@@ -203,21 +206,23 @@ export default function ZcashHomePageClient({
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <ZcashNavigation />
 
         {/* Page Header */}
-        <div className="w-full mb-4 pt-8">
-          <div className="w-full flex items-center gap-4 mb-4">
+        <div className="w-full mb-4 sm:mb-6 pt-6 sm:pt-8">
+          <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
             <img
               src={getCmcImageUrl(1437)}
               alt="Zcash Logo"
-              className="w-10 h-10 rounded"
+              className="w-8 h-8 sm:w-10 sm:h-10 rounded flex-shrink-0"
             />
-            <h1 className="font-bold animate-fade-in">Zcash Mining</h1>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold animate-fade-in">
+              Zcash Mining
+            </h1>
           </div>
-          <p className="text-xl pl-14">
-            Zcash mining information - including a Zcash mining calculator,
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl pl-11 sm:pl-14 text-muted-foreground leading-relaxed">
+                  Zcash mining information - including a Zcash mining calculator,
             a list of Zcash mining hardware, Zcash difficulty with
             historical charts, Zcash hashrate charts, as well as the current
             Zcash price.
@@ -225,23 +230,23 @@ export default function ZcashHomePageClient({
         </div>
 
         {/* Basic Info Table */}
-        <Card className="mb-12 animate-slide-in-from-bottom">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Hash className="h-5 w-5" />
+        <Card className="mb-8 sm:mb-10 lg:mb-12 animate-slide-in-from-bottom">
+          <CardHeader className="px-4 sm:px-6">
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+              <Hash className="h-4 w-4 sm:h-5 sm:w-5" />
               Zcash Information
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
+          <CardContent className="px-4 sm:px-6">
+            <div className="overflow-x-auto -mx-4 sm:mx-0">
               <Table>
                 <TableBody>
                   {basicInfo.map((item, idx) => (
                     <TableRow key={idx} className="border-b border-border/50">
-                      <TableCell className="font-medium text-muted-foreground w-1/2">
+                      <TableCell className="font-medium text-muted-foreground w-[40%] sm:w-1/2 text-xs sm:text-sm py-3 sm:py-4 px-3 sm:px-4">
                         {item.key}
                       </TableCell>
-                      <TableCell className="font-semibold">
+                      <TableCell className="font-semibold text-xs sm:text-sm py-3 sm:py-4 px-3 sm:px-4 break-words">
                         {item.value}
                       </TableCell>
                     </TableRow>
@@ -253,68 +258,73 @@ export default function ZcashHomePageClient({
         </Card>
 
         {/* Mining Summary */}
-        <Card className="mb-12 animate-slide-in-from-bottom animation-delay-200">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Zap className="h-5 w-5" />
+        <Card className="mb-8 sm:mb-10 lg:mb-12 animate-slide-in-from-bottom animation-delay-200">
+          <CardHeader className="px-4 sm:px-6">
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+              <Zap className="h-4 w-4 sm:h-5 sm:w-5" />
               Zcash Mining Summary
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto mb-6">
+          <CardContent className="px-4 sm:px-6">
+            <div className="overflow-x-auto mb-4 sm:mb-6 -mx-4 sm:mx-0">
               <Table>
                 <TableBody>
                   <TableRow className="border-b border-border/50">
-                    <TableCell className="font-medium text-muted-foreground">
+                    <TableCell className="font-medium text-muted-foreground text-xs sm:text-sm py-3 sm:py-4 px-3 sm:px-4">
                       P2P Port
                     </TableCell>
-                    <TableCell className="font-semibold">8233</TableCell>
+                    <TableCell className="font-semibold text-xs sm:text-sm py-3 sm:py-4 px-3 sm:px-4">
+                      8233
+                    </TableCell>
                   </TableRow>
                   <TableRow className="border-b border-border/50">
-                    <TableCell className="font-medium text-muted-foreground">
+                    <TableCell className="font-medium text-muted-foreground text-xs sm:text-sm py-3 sm:py-4 px-3 sm:px-4">
                       RPC Port
                     </TableCell>
-                    <TableCell className="font-semibold">8232</TableCell>
+                    <TableCell className="font-semibold text-xs sm:text-sm py-3 sm:py-4 px-3 sm:px-4">
+                      8232
+                    </TableCell>
                   </TableRow>
                   <TableRow className="border-b border-border/50">
-                    <TableCell className="font-medium text-muted-foreground">
+                    <TableCell className="font-medium text-muted-foreground text-xs sm:text-sm py-3 sm:py-4 px-3 sm:px-4">
                       Blocks
                     </TableCell>
-                    <TableCell className="font-semibold">
+                    <TableCell className="font-semibold text-xs sm:text-sm py-3 sm:py-4 px-3 sm:px-4">
                       {stats.blockCount}
                     </TableCell>
                   </TableRow>
                   <TableRow className="border-b border-border/50">
-                    <TableCell className="font-medium text-muted-foreground">
+                    <TableCell className="font-medium text-muted-foreground text-xs sm:text-sm py-3 sm:py-4 px-3 sm:px-4">
                       Network Hashrate
                     </TableCell>
-                    <TableCell className="font-semibold">
+                    <TableCell className="font-semibold text-xs sm:text-sm py-3 sm:py-4 px-3 sm:px-4 break-words">
                       {formatHashrate(stats.networkHashrate)}
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell className="font-medium text-muted-foreground">
+                    <TableCell className="font-medium text-muted-foreground text-xs sm:text-sm py-3 sm:py-4 px-3 sm:px-4">
                       Zcash Difficulty
                     </TableCell>
-                    <TableCell className="font-semibold">
+                    <TableCell className="font-semibold text-xs sm:text-sm py-3 sm:py-4 px-3 sm:px-4 break-words">
                       {formatDifficulty(stats.difficulty)}
                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
             </div>
-            <p className="text-muted-foreground mb-6">
-              Calculate your Zcash mining profitability and daily Zcash
+            <p className="text-muted-foreground mb-4 sm:mb-6 text-xs sm:text-sm leading-relaxed">
+          Calculate your Zcash mining profitability and daily Zcash
               mining rewards with our Zcash mining calculator
             </p>
             <Button
               asChild
               size="lg"
-              className="interactive-element bg-zcash hover:bg-zcash-dark"
+              className="interactive-element bg-zcash hover:bg-zcash-dark w-full sm:w-auto text-sm sm:text-base"
             >
-              <Link href="/zcash/calculator">
+              <Link href="/zcash/calculator" className="flex items-center justify-center">
                 <Calculator className="mr-2 h-4 w-4" />
-                Zcash Mining Calculator
+                <span className="hidden sm:inline">Zcash Mining Calculator</span>
+                <span className="sm:hidden">Mining Calculator</span>
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
