@@ -41,6 +41,7 @@ import {
 import { BitcoinStats } from "@/types";
 
 const HALVING_INTERVAL = 210_000;
+const SECONDS_PER_DAY = 86_400;
 
 interface BitcoinHalvingPageClientProps {
   statsData: BitcoinStats;
@@ -84,15 +85,15 @@ export default function BitcoinHalvingPageClient({
       const era = Math.floor(stats.blockCount / HALVING_INTERVAL);
       const nextHalving = (era + 1) * HALVING_INTERVAL;
       const blocksLeft = nextHalving - stats.blockCount;
-      const totalSec = blocksLeft * stats.blockTime;
+      const totalSec = blocksLeft * (stats.blockTime || 600);
 
       const now = Date.now();
-      const msSinceEpoch = now % (stats.blockTime * 1_000);
-      const frac = msSinceEpoch / (stats.blockTime * 1_000);
-      const remainingSec = totalSec - frac * stats.blockTime;
+      const msSinceEpoch = now % ((stats.blockTime || 600) * 1_000);
+      const frac = msSinceEpoch / ((stats.blockTime || 600) * 1_000);
+      const remainingSec = totalSec - frac * (stats.blockTime || 600);
 
-      const days = Math.floor(remainingSec / 86_400);
-      const hours = Math.floor((remainingSec % 86_400) / 3_600);
+      const days = Math.floor(remainingSec / SECONDS_PER_DAY);
+      const hours = Math.floor((remainingSec % SECONDS_PER_DAY) / 3_600);
       const minutes = Math.floor((remainingSec % 3_600) / 60);
       const seconds = Math.floor(remainingSec % 60);
       const milliseconds = Math.floor((remainingSec % 1) * 1_000);
@@ -104,7 +105,7 @@ export default function BitcoinHalvingPageClient({
 
     tick();
     return () => cancelAnimationFrame(raf);
-  }, [stats]);
+  }, [stats.blockCount, stats.blockTime]);
 
   const currentEra = Math.floor(stats.blockCount / HALVING_INTERVAL);
   const nextHalvingBlock = (currentEra + 1) * HALVING_INTERVAL;
@@ -113,7 +114,7 @@ export default function BitcoinHalvingPageClient({
 
   const estimatedHalvingMs =
     Date.now() +
-    countdown.days * 86_400_000 +
+    countdown.days * SECONDS_PER_DAY * 1_000 +
     countdown.hours * 3_600_000 +
     countdown.minutes * 60_000 +
     countdown.seconds * 1_000 +
@@ -131,44 +132,49 @@ export default function BitcoinHalvingPageClient({
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <BitcoinNavigation />
 
-        {/* Header */}
-        <section className="pt-8">
-          <div className="flex items-start justify-between">
+        {/* Page Header */}
+        <div className="w-full mb-4 sm:mb-6 pt-6 sm:pt-8">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
             <div className="flex flex-col">
-              <div className="flex items-center mb-4 gap-4">
+              <div className="flex items-center mb-3 sm:mb-4 gap-3 sm:gap-4">
                 <img
                   src={getCmcImageUrl(1)}
                   alt="Bitcoin"
-                  className="w-10 h-10 rounded"
+                  className="w-8 h-8 sm:w-10 sm:h-10 rounded flex-shrink-0"
                 />
-                <h1 className="text-3xl font-bold">Bitcoin Halving Countdown</h1>
+                <h1 className="text-2xl sm:text-3xl font-bold animate-fade-in">
+                  Bitcoin Halving Countdown
+                </h1>
               </div>
-              <p className="text-xl pl-14 text-muted-foreground">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl pl-11 sm:pl-14 text-muted-foreground leading-relaxed">
                 Live countdown to the next Bitcoin halving event
               </p>
             </div>
-            <Badge variant="secondary" className="self-start">
+            <Badge
+              variant="secondary"
+              className="self-start text-xs sm:text-sm whitespace-nowrap"
+            >
               Updated: {new Date().toLocaleDateString()}
             </Badge>
           </div>
-        </section>
+        </div>
 
-        {/* Live Countdown  */}
-        <Card className="mt-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-bitcoin" />
+        {/* Live Countdown */}
+        <Card className="mb-8 sm:mb-10 lg:mb-12 animate-slide-in-from-bottom">
+          <CardHeader className="px-4 sm:px-6">
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+              <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-bitcoin" />
               Next Halving Countdown
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-xs sm:text-sm">
               Estimated time until block {nextHalvingBlock.toLocaleString()}
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+          <CardContent className="px-4 sm:px-6">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 mb-5 sm:mb-6">
               {[
                 { label: "Days", value: countdown.days },
                 { label: "Hours", value: countdown.hours },
@@ -176,14 +182,20 @@ export default function BitcoinHalvingPageClient({
                 { label: "Seconds", value: countdown.seconds },
                 {
                   label: "MS",
-                  value: String(countdown.milliseconds).padStart(3, "0").slice(0, 2) + "0",
+                  value:
+                    String(countdown.milliseconds)
+                      .padStart(3, "0")
+                      .slice(0, 2) + "0",
                 },
               ].map((item, idx) => (
                 <div key={idx} className="text-center">
-                  <div className="text-4xl md:text-5xl font-bold text-bitcoin">
-                    {String(item.value).padStart(item.label === "MS" ? 3 : 2, "0")}
+                  <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-bitcoin font-mono">
+                    {String(item.value).padStart(
+                      item.label === "MS" ? 3 : 2,
+                      "0"
+                    )}
                   </div>
-                  <div className="text-sm text-muted-foreground uppercase tracking-wider">
+                  <div className="text-xs sm:text-sm text-muted-foreground uppercase tracking-widest mt-1">
                     {item.label}
                   </div>
                 </div>
@@ -191,59 +203,73 @@ export default function BitcoinHalvingPageClient({
             </div>
 
             <div className="space-y-3">
-              <div className="flex justify-between text-sm">
+              <div className="flex justify-between text-xs sm:text-sm">
                 <span>Era {currentEra + 1} Progress</span>
                 <span className="font-mono">
                   {blocksInEra.toLocaleString()} / 210,000
                 </span>
               </div>
               <Progress value={progress} className="h-3" />
-              <p className="text-center text-sm text-muted-foreground">
-                {progress.toFixed(2)}% complete • {nextHalvingBlock - stats.blockCount} blocks remaining
+              <p className="text-center text-xs sm:text-sm text-muted-foreground">
+                {progress.toFixed(2)}% complete •{" "}
+                {nextHalvingBlock - stats.blockCount} blocks remaining
               </p>
             </div>
           </CardContent>
         </Card>
 
         {/* 2024 Halving Summary */}
-        <Card className="mt-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <CheckCircle className="h-5 w-5 text-green-600" />
+        <Card className="mb-8 sm:mb-10 lg:mb-12 animate-slide-in-from-bottom animation-delay-200">
+          <CardHeader className="px-4 sm:px-6">
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+              <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
               Bitcoin Halving 2024
             </CardTitle>
-            <CardDescription>Completed on April 20, 2024</CardDescription>
+            <CardDescription className="text-xs sm:text-sm">
+              Completed on April 20, 2024
+            </CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="flex items-center justify-center gap-8 text-center">
+          <CardContent className="px-4 sm:px-6 text-center">
+            <div className="flex items-center justify-center gap-6 sm:gap-8 text-center py-4">
               <div>
-                <p className="text-2xl font-bold">6.25 BTC</p>
-                <p className="text-sm text-muted-foreground">Previous Reward</p>
+                <p className="text-xl sm:text-2xl font-bold">6.25 BTC</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">
+                  Previous Reward
+                </p>
               </div>
-              <div className="text-3xl">→</div>
+              <div className="text-2xl sm:text-3xl font-bold text-bitcoin">
+                →
+              </div>
               <div>
-                <p className="text-2xl font-bold text-bitcoin">3.125 BTC</p>
-                <p className="text-sm text-muted-foreground">New Reward</p>
+                <p className="text-xl sm:text-2xl font-bold text-bitcoin">
+                  3.125 BTC
+                </p>
+                <p className="text-xs sm:text-sm text-muted-foreground">
+                  New Reward
+                </p>
               </div>
             </div>
-            <p className="text-center mt-4 text-sm text-muted-foreground">
-              Occurred at block <strong>840,000</strong> — Reward halved from 6.25 to 3.125 BTC
+            <p className="text-xs sm:text-sm text-muted-foreground mt-3">
+              Occurred at block <strong>840,000</strong> — Reward halved from
+              6.25 to 3.125 BTC
             </p>
           </CardContent>
         </Card>
 
         {/* 2028 Prediction */}
-        <Card className="mt-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Calendar className="h-5 w-5 text-bitcoin" />
+        <Card className="mb-8 sm:mb-10 lg:mb-12 animate-slide-in-from-bottom animation-delay-300">
+          <CardHeader className="px-4 sm:px-6">
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+              <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-bitcoin" />
               Next Halving Prediction (2028)
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="bg-muted/50 p-6 rounded-lg text-center mb-6">
-              <p className="text-sm text-muted-foreground mb-1">Estimated Date</p>
-              <p className="text-2xl font-bold">
+          <CardContent className="px-4 sm:px-6">
+            <div className="bg-muted/50 p-4 sm:p-6 rounded-lg text-center mb-5 sm:mb-6">
+              <p className="text-xs sm:text-sm text-muted-foreground mb-1">
+                Estimated Date
+              </p>
+              <p className="text-lg sm:text-xl md:text-2xl font-bold">
                 {estimatedHalvingDate.toLocaleDateString("en-US", {
                   weekday: "long",
                   year: "numeric",
@@ -251,22 +277,26 @@ export default function BitcoinHalvingPageClient({
                   day: "numeric",
                 })}
               </p>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                 Block {nextHalvingBlock.toLocaleString()}
               </p>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 text-center text-sm">
+            <div className="grid grid-cols-3 gap-3 sm:gap-4 text-center text-xs sm:text-sm">
               <div>
-                <p className="font-mono text-lg">~9.8 min</p>
+                <p className="font-mono text-base sm:text-lg">
+                  ~{(stats.blockTime / 60).toFixed(1)} min
+                </p>
                 <p className="text-muted-foreground">Avg Block Time</p>
               </div>
               <div>
-                <p className="font-mono text-lg">3.125 → 1.5625</p>
+                <p className="font-mono text-base sm:text-lg">3.125 → 1.5625</p>
                 <p className="text-muted-foreground">Next Reward</p>
               </div>
               <div>
-                <p className="font-mono text-lg">Era {currentEra + 2}</p>
+                <p className="font-mono text-base sm:text-lg">
+                  Era {currentEra + 2}
+                </p>
                 <p className="text-muted-foreground">Halving Cycle</p>
               </div>
             </div>
@@ -274,82 +304,109 @@ export default function BitcoinHalvingPageClient({
         </Card>
 
         {/* All Halving Dates Table */}
-        <Card className="mt-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-bitcoin" />
+        {/* All Halving Dates Table */}
+        <Card className="mb-8 sm:mb-10 lg:mb-12 animate-slide-in-from-bottom animation-delay-400">
+          <CardHeader className="px-4 sm:px-6">
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+              <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-bitcoin" />
               Bitcoin Halving History
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-xs sm:text-sm">
               All past and future halving events
             </CardDescription>
           </CardHeader>
+
           <CardContent className="p-0">
-            <div className="rounded-md border">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Halving</TableHead>
-                    <TableHead>Year</TableHead>
-                    <TableHead>Block Height</TableHead>
-                    <TableHead>Reward</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Status</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {visibleHalvings.map((h) => (
-                    <TableRow
-                      key={h.era}
-                      className={h.status === "present" ? "bg-muted/50" : ""}
-                    >
-                      <TableCell className="font-medium">
-                        {h.era === 0 ? "Genesis" : `Halving ${h.era}`}
-                      </TableCell>
-                      <TableCell>{h.year}</TableCell>
-                      <TableCell className="font-mono">
-                        {h.height === 0 ? "0" : h.height.toLocaleString()}
-                        {h.height === 0 && " (Genesis)"}
-                      </TableCell>
-                      <TableCell className="font-mono">
-                        {h.reward.toFixed(8)} BTC
-                      </TableCell>
-                      <TableCell className="text-sm">
-                        {h.date ? formatDateTime(h.date) : "Estimated"}
-                      </TableCell>
-                      <TableCell>
-                        {h.status === "past" && (
-                          <Badge variant="outline" className="text-green-600">
-                            Completed
-                          </Badge>
-                        )}
-                        {h.status === "present" && (
-                          <Badge className="bg-bitcoin text-white">
-                            Upcoming
-                          </Badge>
-                        )}
-                        {h.status === "future" && (
-                          <Badge variant="secondary">Future</Badge>
-                        )}
-                      </TableCell>
+            {/* Scrollable area – stays INSIDE the card */}
+            <div className="overflow-x-auto">
+              <div className="px-4 sm:px-6">
+                <Table className="min-w-full">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-xs sm:text-sm whitespace-nowrap">
+                        Halving
+                      </TableHead>
+                      <TableHead className="text-xs sm:text-sm whitespace-nowrap">
+                        Year
+                      </TableHead>
+                      <TableHead className="text-xs sm:text-sm whitespace-nowrap">
+                        Block Height
+                      </TableHead>
+                      <TableHead className="text-xs sm:text-sm whitespace-nowrap">
+                        Reward
+                      </TableHead>
+                      <TableHead className="text-xs sm:text-sm whitespace-nowrap">
+                        Date
+                      </TableHead>
+                      <TableHead className="text-xs sm:text-sm whitespace-nowrap">
+                        Status
+                      </TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+
+                  <TableBody>
+                    {visibleHalvings.map((h) => (
+                      <TableRow
+                        key={h.era}
+                        className={h.status === "present" ? "bg-muted/50" : ""}
+                      >
+                        <TableCell className="font-medium text-xs sm:text-sm whitespace-nowrap">
+                          {h.era === 0 ? "Genesis" : `Halving ${h.era}`}
+                        </TableCell>
+                        <TableCell className="text-xs sm:text-sm whitespace-nowrap">
+                          {h.year}
+                        </TableCell>
+                        <TableCell className="font-mono text-xs sm:text-sm whitespace-nowrap">
+                          {h.height === 0 ? "0" : h.height.toLocaleString()}
+                          {h.height === 0 && " (Genesis)"}
+                        </TableCell>
+                        <TableCell className="font-mono text-xs sm:text-sm whitespace-nowrap">
+                          {h.reward.toFixed(8)} BTC
+                        </TableCell>
+                        <TableCell className="text-xs sm:text-sm whitespace-nowrap">
+                          {h.date ? formatDateTime(h.date) : "Estimated"}
+                        </TableCell>
+                        <TableCell className="whitespace-nowrap">
+                          {h.status === "past" && (
+                            <Badge
+                              variant="outline"
+                              className="text-green-600 text-xs"
+                            >
+                              Completed
+                            </Badge>
+                          )}
+                          {h.status === "present" && (
+                            <Badge className="bg-bitcoin text-white text-xs">
+                              Upcoming
+                            </Badge>
+                          )}
+                          {h.status === "future" && (
+                            <Badge variant="secondary" className="text-xs">
+                              Future
+                            </Badge>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </div>
 
+            {/* View All Button */}
             {hasMore && (
-              <div className="px-6 pb-4 pt-2">
+              <div className="px-4 sm:px-6 pb-4 pt-2 border-t">
                 <Button
                   variant="ghost"
-                  className="w-full text-sm"
+                  className="w-full text-xs sm:text-sm"
                   onClick={() => setShowAllHalvings(!showAllHalvings)}
                 >
                   {showAllHalvings ? (
                     <>Collapse Future Halvings</>
                   ) : (
                     <>
-                      View All Halvings ({allHalvings.length - shownCount} future)
+                      View All Halvings ({allHalvings.length - shownCount}{" "}
+                      future)
                       <ChevronDown className="ml-1 h-4 w-4" />
                     </>
                   )}
@@ -360,15 +417,17 @@ export default function BitcoinHalvingPageClient({
         </Card>
 
         {/* Halving Reward Chart */}
-        <Card className="mt-8">
-          <CardHeader>
-            <CardTitle>Bitcoin Reward Halving Chart</CardTitle>
-            <CardDescription>
+        <Card className="mb-8 sm:mb-10 lg:mb-12 animate-slide-in-from-bottom animation-delay-500">
+          <CardHeader className="px-4 sm:px-6">
+            <CardTitle className="text-lg sm:text-xl">
+              Bitcoin Reward Halving Chart
+            </CardTitle>
+            <CardDescription className="text-xs sm:text-sm">
               Visual representation of block reward reduction over time
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
+          <CardContent className="px-4 sm:px-6">
+            <div className="space-y-3 sm:space-y-4">
               {allHalvings
                 .filter((h) => h.status === "past" || h.status === "present")
                 .map((h) => {
@@ -377,19 +436,22 @@ export default function BitcoinHalvingPageClient({
                   const isCurrent = h.status === "present";
 
                   return (
-                    <div key={h.era} className="flex items-center gap-4">
-                      <div className="w-24 text-right font-mono text-sm">
+                    <div
+                      key={h.era}
+                      className="flex items-center gap-3 sm:gap-4"
+                    >
+                      <div className="w-16 sm:w-20 text-right font-mono text-xs sm:text-sm">
                         {h.reward} BTC
                       </div>
-                      <div className="flex-1 relative h-12 bg-muted/20 rounded overflow-hidden">
+                      <div className="flex-1 relative h-10 sm:h-12 bg-muted/20 rounded overflow-hidden">
                         <div
                           className={`absolute inset-y-0 left-0 h-full rounded transition-all ${
                             isCurrent ? "bg-orange-400" : "bg-bitcoin"
                           }`}
                           style={{ width: `${barWidth}%` }}
                         />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="text-sm font-medium text-white drop-shadow">
+                        <div className="absolute inset-0 flex items-center justify-center px-2">
+                          <span className="text-xs sm:text-sm font-medium text-white drop-shadow truncate">
                             {h.era === 0 ? "2009 Genesis" : `Halving ${h.year}`}
                           </span>
                         </div>
@@ -398,24 +460,29 @@ export default function BitcoinHalvingPageClient({
                   );
                 })}
             </div>
-            <p className="text-center mt-6 text-sm text-muted-foreground">
-              Current Block: {stats.blockCount.toLocaleString()} • Era {currentEra + 1}
+            <p className="text-center mt-5 sm:mt-6 text-xs sm:text-sm text-muted-foreground">
+              Current Block: {stats.blockCount.toLocaleString()} • Era{" "}
+              {currentEra + 1}
             </p>
           </CardContent>
         </Card>
 
         {/* FAQ */}
-        <Card className="mt-8 mb-12">
-          <CardHeader>
-            <CardTitle>Bitcoin Halving FAQs</CardTitle>
+        <Card className="mb-8 sm:mb-10 lg:mb-12 animate-slide-in-from-bottom animation-delay-600">
+          <CardHeader className="px-4 sm:px-6">
+            <CardTitle className="text-lg sm:text-xl">
+              Bitcoin Halving FAQs
+            </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-4 sm:px-6">
             <Accordion type="single" collapsible className="w-full">
               {bitcoinHalvingFaqs.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-lg">{faq.question}</AccordionTrigger>
+                  <AccordionTrigger className="text-sm sm:text-base lg:text-lg text-left">
+                    {faq.question}
+                  </AccordionTrigger>
                   <AccordionContent>
-                    <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
+                    <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm text-muted-foreground">
                       {faq.answer.map((point, i) => (
                         <li key={i}>{point}</li>
                       ))}

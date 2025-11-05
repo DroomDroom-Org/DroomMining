@@ -199,7 +199,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             description="Calculate mining profitability for Bitcoin, Zcash, Litecoin, and Monero. Track hash rates, power usage, difficulty, rewards, and earnings in real-time to maximize crypto mining profits."
           />
 
-          <div className="relative flex min-h-screen flex-col antialiased bg-background text-foreground">
+          <div className="relative flex min-h-screen w-full flex-col antialiased bg-background text-foreground">
             <Header menus={menus} tokens={tokens} />
             <main className="flex-1 w-full">{children}</main>
             <Footer footerData={footerData} />
