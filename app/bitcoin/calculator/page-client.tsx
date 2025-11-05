@@ -705,7 +705,7 @@ export default function BitcoinCalculatorPageClient({
             <Accordion type="single" collapsible className="w-full">
               {bitcoinCalculatorFaqs.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-lg">
+                  <AccordionTrigger className="text-lg text-left">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent>
