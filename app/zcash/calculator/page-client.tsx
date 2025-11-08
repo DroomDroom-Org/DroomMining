@@ -48,6 +48,7 @@ import ZcashNavigation from "@/components/zcash-navigation";
 import { ZcashStats, ZcashCalculator } from "@/types";
 import { formatDifficulty, formatHashrate } from "@/lib/format";
 import { zcashCalculatorFaqs } from "@/constants/zcash";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 interface ZcashCalculatorPageClientProps {
   statsData: ZcashStats;
@@ -101,12 +102,13 @@ export default function ZcashCalculatorPageClient({
     setLoading(true);
     const { hashrate, power, electricityCost, poolFee } = state;
 
-    const zecPrice = stats.price 
-    const blockReward = stats.blockReward
-    const avgBlockTime = stats.blockTime
-    const networkHashrate = stats.networkHashrate
+    const zecPrice = stats.price;
+    const blockReward = stats.blockReward;
+    const avgBlockTime = stats.blockTime;
+    const networkHashrate = stats.networkHashrate;
 
-    const zecPerSecond = (hashrate / networkHashrate) * (blockReward / avgBlockTime);
+    const zecPerSecond =
+      (hashrate / networkHashrate) * (blockReward / avgBlockTime);
 
     const secondsPerDay = 86400;
     const zecPerDay = zecPerSecond * secondsPerDay;
@@ -131,7 +133,7 @@ export default function ZcashCalculatorPageClient({
         : "0.00";
 
     setResults({
-      zecPerDay: Number(zecPerDay.toFixed(10)), 
+      zecPerDay: Number(zecPerDay.toFixed(10)),
       revenuePerDay: Number(revenuePerDay.toFixed(2)),
       elecPerDay: Number(electricityCostPerDay.toFixed(2)),
       feesPerDay: Number(poolFeePerDay.toFixed(2)),
@@ -155,13 +157,21 @@ export default function ZcashCalculatorPageClient({
   const feesPerPeriod = (h: number) => per("feesPerDay", h);
   const profitPerPeriod = (h: number) => per("profitPerDay", h);
 
+  const breadcrumbs = [
+    { name: "Home", href: "/" },
+    { name: "Zcash Mining Calculator", href: "/zcash/calculator" },
+  ];
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <ZcashNavigation />
 
         {/*Page Header */}
-        <div className="w-full mb-4 sm:mb-6 pt-6 sm:pt-8">
+        <div className="w-full mb-4 sm:mb-6 pt-6">
+          <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+            <Breadcrumbs items={breadcrumbs} className="text-zcash" />
+          </div>
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
             <div className="flex flex-col">
               <div className="flex items-center mb-3 sm:mb-4 gap-3 sm:gap-4">
@@ -548,7 +558,7 @@ export default function ZcashCalculatorPageClient({
               </CardContent>
             </Card>
           </div>
-        )} 
+        )}
 
         {/* FAQ */}
         <Card className="mt-6 sm:mt-8 mb-8 sm:mb-10 lg:mb-12">

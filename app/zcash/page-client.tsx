@@ -36,6 +36,7 @@ import ZcashChart from "@/components/zcash-chart";
 import { ChartDataPoint, ZcashStats } from "@/types";
 import { formatDifficulty, formatPrice, formatHashrate } from "@/lib/format";
 import useZcash from "@/hooks/use-zcash";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 interface ZcashHomePageClientProps {
   statsData: ZcashStats;
@@ -189,6 +190,11 @@ export default function ZcashHomePageClient({
     },
   ];
 
+  const breadcrumbs = [
+    { name: "Home", href: "/" },
+    { name: "Zcash Mining", href: "/zcash" },
+  ];
+
   const handleDifficultyTimeRangeChange = (newTimeRange: string) => {
     setDiffcultyCurrentTimerange(newTimeRange);
     fetchDifficultyChart(newTimeRange);
@@ -210,7 +216,10 @@ export default function ZcashHomePageClient({
         <ZcashNavigation />
 
         {/* Page Header */}
-        <div className="w-full mb-4 sm:mb-6 pt-6 sm:pt-8">
+        <div className="w-full mb-4 sm:mb-6 pt-6">
+          <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+            <Breadcrumbs items={breadcrumbs} className="text-zcash" />
+          </div>
           <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
             <img
               src={getCmcImageUrl(1437)}
@@ -222,10 +231,9 @@ export default function ZcashHomePageClient({
             </h1>
           </div>
           <p className="text-sm sm:text-base md:text-lg lg:text-xl pl-11 sm:pl-14 text-muted-foreground leading-relaxed">
-                  Zcash mining information - including a Zcash mining calculator,
-            a list of Zcash mining hardware, Zcash difficulty with
-            historical charts, Zcash hashrate charts, as well as the current
-            Zcash price.
+            Zcash mining information - including a Zcash mining calculator, a
+            list of Zcash mining hardware, Zcash difficulty with historical
+            charts, Zcash hashrate charts, as well as the current Zcash price.
           </p>
         </div>
 
@@ -313,17 +321,22 @@ export default function ZcashHomePageClient({
               </Table>
             </div>
             <p className="text-muted-foreground mb-4 sm:mb-6 text-xs sm:text-sm leading-relaxed">
-          Calculate your Zcash mining profitability and daily Zcash
-              mining rewards with our Zcash mining calculator
+              Calculate your Zcash mining profitability and daily Zcash mining
+              rewards with our Zcash mining calculator
             </p>
             <Button
               asChild
               size="lg"
               className="interactive-element bg-zcash hover:bg-zcash-dark w-full sm:w-auto text-sm sm:text-base"
             >
-              <Link href="/zcash/calculator" className="flex items-center justify-center">
+              <Link
+                href="/zcash/calculator"
+                className="flex items-center justify-center"
+              >
                 <Calculator className="mr-2 h-4 w-4" />
-                <span className="hidden sm:inline">Zcash Mining Calculator</span>
+                <span className="hidden sm:inline">
+                  Zcash Mining Calculator
+                </span>
                 <span className="sm:hidden">Mining Calculator</span>
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Link>
