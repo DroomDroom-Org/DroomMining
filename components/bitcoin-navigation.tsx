@@ -17,7 +17,7 @@ export default function BitcoinNavigation() {
 
   return (
     <nav className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="border-b flex items-center  space-x-6 py-4 overflow-x-auto">
+      <div className="border-b flex items-center  space-x-6 py-3 overflow-x-auto">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
 

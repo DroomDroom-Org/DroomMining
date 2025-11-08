@@ -37,6 +37,7 @@ import useBitcoin from "@/hooks/use-bitcoin";
 import BitcoinChart from "@/components/bitcoin-chart";
 import { ChartDataPoint, BitcoinStats } from "@/types";
 import { formatDifficulty, formatPrice, formatHashrate } from "@/lib/format";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 interface BitcoinHomePageClientProps {
   statsData: BitcoinStats;
@@ -190,6 +191,11 @@ export default function BitcoinHomePageClient({
     },
   ];
 
+  const breadcrumbs = [
+    { name: "Home", href: "/" },
+    { name: "Bitcoin Mining", href: "/bitcoin" },
+  ];
+
   const handleDifficultyTimeRangeChange = (newTimeRange: string) => {
     console.log(newTimeRange);
     setDiffcultyCurrentTimerange(newTimeRange);
@@ -212,7 +218,10 @@ export default function BitcoinHomePageClient({
         <BitcoinNavigation />
 
         {/* Page Header */}
-        <div className="w-full mb-4 sm:mb-6 pt-6 sm:pt-8">
+        <div className="w-full mb-4 sm:mb-6 pt-6">
+          <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+            <Breadcrumbs items={breadcrumbs} className="text-bitcoin" />
+          </div>
           <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
             <img
               src={getCmcImageUrl(1)}
@@ -323,9 +332,14 @@ export default function BitcoinHomePageClient({
               size="lg"
               className="interactive-element bg-bitcoin hover:bg-bitcoin-dark w-full sm:w-auto text-sm sm:text-base"
             >
-              <Link href="/bitcoin/calculator" className="flex items-center justify-center">
+              <Link
+                href="/bitcoin/calculator"
+                className="flex items-center justify-center"
+              >
                 <Calculator className="mr-2 h-4 w-4" />
-                <span className="hidden sm:inline">Bitcoin Mining Calculator</span>
+                <span className="hidden sm:inline">
+                  Bitcoin Mining Calculator
+                </span>
                 <span className="sm:hidden">Mining Calculator</span>
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Link>
