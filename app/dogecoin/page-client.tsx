@@ -36,6 +36,7 @@ import DogecoinChart from "@/components/dogecoin-chart";
 import { ChartDataPoint, DogecoinStats } from "@/types";
 import { formatDifficulty, formatPrice, formatHashrate } from "@/lib/format";
 import useDogecoin from "@/hooks/use-dogecoin";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 interface DogecoinHomePageClientProps {
   statsData: DogecoinStats;
@@ -82,7 +83,7 @@ export default function DogecoinHomePageClient({
     blockTime: 0,
     difficultyRetarget: 0,
     volume: 0,
-    price:0,
+    price: 0,
   });
 
   useEffect(() => {
@@ -95,7 +96,7 @@ export default function DogecoinHomePageClient({
         blockTime: statsData.blockTime,
         difficultyRetarget: statsData.difficultyRetarget,
         volume: statsData.volume,
-        price: statsData.price
+        price: statsData.price,
       });
     }
     if (difficultyData) {
@@ -161,7 +162,8 @@ export default function DogecoinHomePageClient({
           rel="noopener noreferrer"
           className="text-primary hover:underline"
         >
-          Bitcointalk<ExternalLink className="h-4 w-4 inline ml-1" />
+          Bitcointalk
+          <ExternalLink className="h-4 w-4 inline ml-1" />
         </a>
       ),
     },
@@ -186,6 +188,11 @@ export default function DogecoinHomePageClient({
     },
   ];
 
+  const breadcrumbs = [
+    { name: "Home", href: "/" },
+    { name: "Dogecoin Mining", href: "/dogecoin" },
+  ];
+
   const handleDifficultyTimeRangeChange = (newTimeRange: string) => {
     setDiffcultyCurrentTimerange(newTimeRange);
     fetchDifficultyChart(newTimeRange);
@@ -207,7 +214,10 @@ export default function DogecoinHomePageClient({
         <DogecoinNavigation />
 
         {/* Page Header */}
-        <div className="w-full mb-4 pt-8">
+        <div className="w-full mb-4 pt-6">
+          <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+            <Breadcrumbs items={breadcrumbs} className="text-dogecoin" />
+          </div>
           <div className="w-full flex items-center gap-4 mb-4">
             <img
               src={getCmcImageUrl(74)}
@@ -217,10 +227,10 @@ export default function DogecoinHomePageClient({
             <h1 className="font-bold animate-fade-in">Dogecoin Mining</h1>
           </div>
           <p className="text-xl pl-14">
-            Dogecoin mining information - including a Dogecoin mining calculator,
-            a list of Dogecoin mining hardware, Dogecoin difficulty with
-            historical charts, Dogecoin hashrate charts, as well as the current
-            Dogecoin price.
+            Dogecoin mining information - including a Dogecoin mining
+            calculator, a list of Dogecoin mining hardware, Dogecoin difficulty
+            with historical charts, Dogecoin hashrate charts, as well as the
+            current Dogecoin price.
           </p>
         </div>
 
@@ -268,7 +278,7 @@ export default function DogecoinHomePageClient({
                     <TableCell className="font-medium text-muted-foreground">
                       P2P Port
                     </TableCell>
-                    <TableCell className="font-semibold">22556	</TableCell>
+                    <TableCell className="font-semibold">22556 </TableCell>
                   </TableRow>
                   <TableRow className="border-b border-border/50">
                     <TableCell className="font-medium text-muted-foreground">

@@ -48,6 +48,7 @@ import DogecoinNavigation from "@/components/dogecoin-navigation";
 import { DogecoinStats, DogecoinCalculator } from "@/types";
 import { formatDifficulty, formatHashrate } from "@/lib/format";
 import { dogecoinCalculatorFaqs } from "@/constants/dogecoin";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 interface DogecoinCalculatorPageClientProps {
   statsData: DogecoinStats;
@@ -102,12 +103,13 @@ export default function DogecoinCalculatorPageClient({
 
     const { hashrate, power, electricityCost, poolFee } = state;
 
-    const dogePrice = stats.price 
-    const blockReward = stats.blockReward
-    const avgBlockTime = stats.blockTime
-    const networkHashrate = stats.networkHashrate
+    const dogePrice = stats.price;
+    const blockReward = stats.blockReward;
+    const avgBlockTime = stats.blockTime;
+    const networkHashrate = stats.networkHashrate;
 
-    const dogePerSecond = (hashrate / networkHashrate) * (blockReward / avgBlockTime);
+    const dogePerSecond =
+      (hashrate / networkHashrate) * (blockReward / avgBlockTime);
 
     const secondsPerDay = 86400;
     const dogePerDay = dogePerSecond * secondsPerDay;
@@ -132,7 +134,7 @@ export default function DogecoinCalculatorPageClient({
         : "0.00";
 
     setResults({
-      dogePerDay: Number(dogePerDay.toFixed(10)), 
+      dogePerDay: Number(dogePerDay.toFixed(10)),
       revenuePerDay: Number(revenuePerDay.toFixed(2)),
       elecPerDay: Number(electricityCostPerDay.toFixed(2)),
       feesPerDay: Number(poolFeePerDay.toFixed(2)),
@@ -156,13 +158,21 @@ export default function DogecoinCalculatorPageClient({
   const feesPerPeriod = (h: number) => per("feesPerDay", h);
   const profitPerPeriod = (h: number) => per("profitPerDay", h);
 
+  const breadcrumbs = [
+    { name: "Home", href: "/" },
+    { name: "Dogecoin Mining Calculator", href: "/dogecoin/calculator" },
+  ];
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-4">
         <DogecoinNavigation />
 
-        {/* Header */}
-        <section className="pt-8">
+        {/*Page Header */}
+        <div className="w-full mb-4 pt-6">
+          <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+            <Breadcrumbs items={breadcrumbs} className="text-dogecoin" />
+          </div>
           <div className="flex items-start justify-between">
             <div className="flex flex-col">
               <div className="flex items-center mb-4 gap-4">
@@ -171,7 +181,9 @@ export default function DogecoinCalculatorPageClient({
                   alt="Dogecoin Logo"
                   className="w-10 h-10 rounded"
                 />
-                <h1 className="text-3xl font-bold">Dogecoin Mining Calculator</h1>
+                <h1 className="text-3xl font-bold">
+                  Dogecoin Mining Calculator
+                </h1>
               </div>
               <p className="text-xl pl-14 text-muted-foreground">
                 Calculate DOGE mining profitability in real time
@@ -181,7 +193,7 @@ export default function DogecoinCalculatorPageClient({
               Updated: {new Date().toLocaleDateString()}
             </Badge>
           </div>
-        </section>
+        </div>
 
         {/* Upper Calculator + Summary Card */}
         <Card className="mt-8">
