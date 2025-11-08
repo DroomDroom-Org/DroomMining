@@ -36,6 +36,7 @@ import LitecoinChart from "@/components/litecoin-chart";
 import { ChartDataPoint, LitecoinStats } from "@/types";
 import { formatDifficulty, formatPrice, formatHashrate } from "@/lib/format";
 import useLitecoin from "@/hooks/use-litecoin";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 interface LitecoinHomePageClientProps {
   statsData: LitecoinStats;
@@ -82,7 +83,7 @@ export default function LitecoinHomePageClient({
     blockTime: 0,
     difficultyRetarget: 0,
     volume: 0,
-    price:0,
+    price: 0,
   });
 
   useEffect(() => {
@@ -95,7 +96,7 @@ export default function LitecoinHomePageClient({
         blockTime: statsData.blockTime,
         difficultyRetarget: statsData.difficultyRetarget,
         volume: statsData.volume,
-        price: statsData.price
+        price: statsData.price,
       });
     }
     if (difficultyData) {
@@ -186,6 +187,11 @@ export default function LitecoinHomePageClient({
     },
   ];
 
+  const breadcrumbs = [
+    { name: "Home", href: "/" },
+    { name: "Litecoin Mining", href: "/litecoin" },
+  ];
+
   const handleDifficultyTimeRangeChange = (newTimeRange: string) => {
     setDiffcultyCurrentTimerange(newTimeRange);
     fetchDifficultyChart(newTimeRange);
@@ -207,7 +213,10 @@ export default function LitecoinHomePageClient({
         <LitecoinNavigation />
 
         {/* Page Header */}
-        <div className="w-full mb-4 pt-8">
+        <div className="w-full mb-4 pt-6">
+          <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+            <Breadcrumbs items={breadcrumbs} className="text-litecoin" />
+          </div>
           <div className="w-full flex items-center gap-4 mb-4">
             <img
               src={getCmcImageUrl(2)}
@@ -217,10 +226,10 @@ export default function LitecoinHomePageClient({
             <h1 className="font-bold animate-fade-in">Litecoin Mining</h1>
           </div>
           <p className="text-xl pl-14">
-            Litecoin mining information - including a litecoin mining calculator,
-            a list of Litecoin mining hardware, Litecoin difficulty with
-            historical charts, Litecoin hashrate charts, as well as the current
-            Litecoin price.
+            Litecoin mining information - including a litecoin mining
+            calculator, a list of Litecoin mining hardware, Litecoin difficulty
+            with historical charts, Litecoin hashrate charts, as well as the
+            current Litecoin price.
           </p>
         </div>
 

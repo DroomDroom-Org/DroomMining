@@ -48,6 +48,7 @@ import LitecoinNavigation from "@/components/litecoin-navigation";
 import { LitecoinStats, LitecoinCalculator } from "@/types";
 import { formatDifficulty, formatHashrate } from "@/lib/format";
 import { litecoinCalculatorFaqs } from "@/constants/litecoin";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 interface LitecoinCalculatorPageClientProps {
   statsData: LitecoinStats;
@@ -72,7 +73,7 @@ export default function LitecoinCalculatorPageClient({
     hashrateValue: 170_000_000,
     hashrateUnit: "KH/s",
     power: 3450,
-    electricityCost: 0.10,
+    electricityCost: 0.1,
     poolFee: 1,
   });
 
@@ -158,13 +159,21 @@ export default function LitecoinCalculatorPageClient({
   const feesPerPeriod = (h: number) => per("feesPerDay", h);
   const profitPerPeriod = (h: number) => per("profitPerDay", h);
 
+  const breadcrumbs = [
+    { name: "Home", href: "/" },
+    { name: "Litecoin Mining Calculator", href: "/litecoin/calculator" },
+  ];
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-4">
         <LitecoinNavigation />
 
-        {/* Header */}
-        <section className="pt-8">
+        {/* Page Header */}
+        <div className="w-full mb-4 pt-6">
+          <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+            <Breadcrumbs items={breadcrumbs} className="text-litecoin" />
+          </div>
           <div className="flex items-start justify-between">
             <div className="flex flex-col">
               <div className="flex items-center mb-4 gap-4">
@@ -185,7 +194,7 @@ export default function LitecoinCalculatorPageClient({
               Updated: {new Date().toLocaleDateString()}
             </Badge>
           </div>
-        </section>
+        </div>
 
         {/* Upper Calculator + Summary Card */}
         <Card className="mt-8">
