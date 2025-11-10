@@ -45,14 +45,14 @@ import {
 } from "@/components/ui/accordion";
 import { getCmcImageUrl } from "@/lib/config";
 import BitcoinNavigation from "@/components/bitcoin-navigation";
-import { BitcoinStats, BitcoinMiner, BitcoinCalculator } from "@/types";
+import { BitcoinStats, BitcoinMiner, BitcoinCalculator, Faq } from "@/types";
 import { formatDifficulty, formatHashrate } from "@/lib/format";
-import { bitcoinCalculatorFaqs } from "@/constants/bitcoin";
 import Breadcrumbs from "@/components/breadcrumbs";
 
 interface BitcoinCalculatorPageClientProps {
   statsData: BitcoinStats;
   minersData: BitcoinMiner[];
+  faqsData: Faq[];
 }
 
 const unitMultipliers: Record<string, number> = {
@@ -70,6 +70,7 @@ const fromHashrate = (hashrate: number, unit: string): number =>
 export default function BitcoinCalculatorPageClient({
   statsData,
   minersData,
+  faqsData,
 }: BitcoinCalculatorPageClientProps) {
   const [state, setState] = useState<BitcoinCalculator>({
     hashrate: 390_000_000_000_000,
@@ -752,11 +753,17 @@ export default function BitcoinCalculatorPageClient({
         {/* FAQ */}
         <Card className="mt-6 sm:mt-8 mb-8 sm:mb-10 lg:mb-12">
           <CardHeader className="px-4 sm:px-6">
-            <CardTitle className="text-lg sm:text-xl">FAQs</CardTitle>
+            <CardTitle className="text-lg sm:text-xl">
+              Bitcoin Mining Frequently Asked Questions
+            </CardTitle>
           </CardHeader>
           <CardContent className="px-4 sm:px-6">
-            <Accordion type="single" collapsible className="w-full">
-              {bitcoinCalculatorFaqs.map((faq, index) => (
+            <Accordion
+              type="multiple"
+              defaultValue={faqsData.map((_, index) => `item-${index}`)}
+              className="w-full"
+            >
+              {faqsData.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`}>
                   <AccordionTrigger className="text-sm sm:text-base lg:text-lg text-left">
                     {faq.question}

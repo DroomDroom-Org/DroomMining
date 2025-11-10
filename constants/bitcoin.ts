@@ -411,6 +411,99 @@ export const bitcoinHalvingFaqs = [
     },
 ];
 
+export const bitcoinCalculatorFaqs = [
+  {
+    question: "How do I use the Bitcoin mining calculator?",
+    answer: [
+      "Enter your hashrate (TH/s), power consumption (W), electricity cost ($/kWh), and pool fee (%).",
+      "Or click any miner from the 'Popular Miners' table to auto-fill specs.",
+      "Click 'Calculate Profit' to see real-time earnings, ROI, and break-even time.",
+      "All inputs are preloaded with top ASIC miner specs and live network data.",
+      "Results update instantly with current Bitcoin price, difficulty, and block reward.",
+    ],
+  },
+  {
+    question: "How does Bitcoin mining work?",
+    answer: [
+      "Miners compete to solve complex math puzzles (hashes) to validate transactions.",
+      "The first to solve the puzzle adds a new block and earns the block reward.",
+      "Current reward: 3.125 BTC per block (post-2024 halving).",
+      "Requires massive computing power — measured in EH/s (exahashes per second).",
+      "Network hashrate is currently over 600 EH/s globally.",
+    ],
+  },
+  {
+    question: "What hardware do I need to mine Bitcoin?",
+    answer: [
+      "You need an ASIC (Application-Specific Integrated Circuit) miner.",
+      "CPUs, GPUs, and FPGAs are no longer profitable for Bitcoin mining.",
+      "Top models: Bitmain Antminer S21, MicroBT Whatsminer M60S, etc.",
+      "Most require 220V+ power and 20+ AMP circuits.",
+      "Check wattage: e.g., 3,500W per S21 unit.",
+    ],
+  },
+  {
+    question: "How do I set up a Bitcoin mining rig?",
+    answer: [
+      "1. Buy ASIC miner(s) from reputable vendors.",
+      "2. Ensure 220V+ power with sufficient amperage (e.g., 200A service = ~33kW usable).",
+      "3. Connect to stable internet and cooling system.",
+      "4. Join a mining pool (e.g., F2Pool, AntPool, ViaBTC).",
+      "5. Configure miner with pool URL, worker name, and password.",
+      "6. Monitor via pool dashboard or miner interface.",
+    ],
+  },
+  {
+    question: "What are Bitcoin mining pools and should I join one?",
+    answer: [
+      "Solo mining is statistically impossible due to 600+ EH/s network hashrate.",
+      "Pools combine hashrate from thousands of miners to find blocks faster.",
+      "Rewards are split proportionally (PPS, FPPS, PPLNS payout models).",
+      "Fees: 1–4% (e.g., F2Pool: 2.5%, SlushPool: 2%).",
+      "Popular pools: F2Pool, AntPool, ViaBTC, BTC.com, Poolin, SlushPool.",
+    ],
+  },
+  {
+    question: "Is Bitcoin mining still profitable in 2025?",
+    answer: [
+      "Yes — with efficient hardware (95+ TH/s), cheap power (<$0.05/kWh), and scale.",
+      "Profit depends on: hashrate, electricity cost, BTC price, and difficulty.",
+      "Example: 390 TH/s at $0.05/kWh → ~$8–$12/day profit (at $110k BTC).",
+      "Profitability changes daily — use this calculator to check real-time ROI.",
+      "Industrial miners in Texas, Iceland, or with renewable energy dominate.",
+    ],
+  },
+  {
+    question: "How many Bitcoin can I mine in a day?",
+    answer: [
+      "Depends on your hashrate and network difficulty.",
+      "Example: 390 TH/s → ~0.000157 BTC/day (~$17 revenue at $110k).",
+      "After ~$8.50 in electricity → ~$8.50 net profit.",
+      "Use the calculator above to get your exact daily output.",
+    ],
+  },
+  {
+    question: "How long does it take to mine 1 Bitcoin?",
+    answer: [
+      "At 390 TH/s: ~6,362 days (~17.4 years) to mine 1 BTC.",
+      "At 1 PH/s: ~2,500 days (~6.8 years).",
+      "At 10 PH/s (data center): ~250 days.",
+      "Does NOT account for difficulty increases or halvings.",
+      "Most miners sell BTC daily, not HODL for 1 full coin.",
+    ],
+  },
+  {
+    question: "How much electricity do I need to mine Bitcoin?",
+    answer: [
+      "Calculate: Hashrate × Efficiency (J/TH) = Watts.",
+      "Example: 390 TH/s × 18.5 J/TH = ~7,215W.",
+      "200 AMP × 220V service = 44kW → ~33kW safe → ~11 × S17+ miners.",
+      "Never exceed 75% of circuit capacity to avoid tripping breakers.",
+      "Use PDUs, cooling, and monitoring for 24/7 uptime.",
+    ],
+  },
+];
+
 export const bitcoinMiners = [
     {   
         id: 1,
@@ -666,95 +759,3 @@ export const bitcoinMiners = [
     },
 ];
 
-export const bitcoinCalculatorFaqs = [
-  {
-    question: "How do I use the Bitcoin mining calculator?",
-    answer: [
-      "Enter your hashrate (TH/s), power consumption (W), electricity cost ($/kWh), and pool fee (%).",
-      "Or click any miner from the 'Popular Miners' table to auto-fill specs.",
-      "Click 'Calculate Profit' to see real-time earnings, ROI, and break-even time.",
-      "All inputs are preloaded with top ASIC miner specs and live network data.",
-      "Results update instantly with current Bitcoin price, difficulty, and block reward.",
-    ],
-  },
-  {
-    question: "How does Bitcoin mining work?",
-    answer: [
-      "Miners compete to solve complex math puzzles (hashes) to validate transactions.",
-      "The first to solve the puzzle adds a new block and earns the block reward.",
-      "Current reward: 3.125 BTC per block (post-2024 halving).",
-      "Requires massive computing power — measured in EH/s (exahashes per second).",
-      "Network hashrate is currently over 600 EH/s globally.",
-    ],
-  },
-  {
-    question: "What hardware do I need to mine Bitcoin?",
-    answer: [
-      "You need an ASIC (Application-Specific Integrated Circuit) miner.",
-      "CPUs, GPUs, and FPGAs are no longer profitable for Bitcoin mining.",
-      "Top models: Bitmain Antminer S21, MicroBT Whatsminer M60S, etc.",
-      "Most require 220V+ power and 20+ AMP circuits.",
-      "Check wattage: e.g., 3,500W per S21 unit.",
-    ],
-  },
-  {
-    question: "How do I set up a Bitcoin mining rig?",
-    answer: [
-      "1. Buy ASIC miner(s) from reputable vendors.",
-      "2. Ensure 220V+ power with sufficient amperage (e.g., 200A service = ~33kW usable).",
-      "3. Connect to stable internet and cooling system.",
-      "4. Join a mining pool (e.g., F2Pool, AntPool, ViaBTC).",
-      "5. Configure miner with pool URL, worker name, and password.",
-      "6. Monitor via pool dashboard or miner interface.",
-    ],
-  },
-  {
-    question: "What are Bitcoin mining pools and should I join one?",
-    answer: [
-      "Solo mining is statistically impossible due to 600+ EH/s network hashrate.",
-      "Pools combine hashrate from thousands of miners to find blocks faster.",
-      "Rewards are split proportionally (PPS, FPPS, PPLNS payout models).",
-      "Fees: 1–4% (e.g., F2Pool: 2.5%, SlushPool: 2%).",
-      "Popular pools: F2Pool, AntPool, ViaBTC, BTC.com, Poolin, SlushPool.",
-    ],
-  },
-  {
-    question: "Is Bitcoin mining still profitable in 2025?",
-    answer: [
-      "Yes — with efficient hardware (95+ TH/s), cheap power (<$0.05/kWh), and scale.",
-      "Profit depends on: hashrate, electricity cost, BTC price, and difficulty.",
-      "Example: 390 TH/s at $0.05/kWh → ~$8–$12/day profit (at $110k BTC).",
-      "Profitability changes daily — use this calculator to check real-time ROI.",
-      "Industrial miners in Texas, Iceland, or with renewable energy dominate.",
-    ],
-  },
-  {
-    question: "How many Bitcoin can I mine in a day?",
-    answer: [
-      "Depends on your hashrate and network difficulty.",
-      "Example: 390 TH/s → ~0.000157 BTC/day (~$17 revenue at $110k).",
-      "After ~$8.50 in electricity → ~$8.50 net profit.",
-      "Use the calculator above to get your exact daily output.",
-    ],
-  },
-  {
-    question: "How long does it take to mine 1 Bitcoin?",
-    answer: [
-      "At 390 TH/s: ~6,362 days (~17.4 years) to mine 1 BTC.",
-      "At 1 PH/s: ~2,500 days (~6.8 years).",
-      "At 10 PH/s (data center): ~250 days.",
-      "Does NOT account for difficulty increases or halvings.",
-      "Most miners sell BTC daily, not HODL for 1 full coin.",
-    ],
-  },
-  {
-    question: "How much electricity do I need to mine Bitcoin?",
-    answer: [
-      "Calculate: Hashrate × Efficiency (J/TH) = Watts.",
-      "Example: 390 TH/s × 18.5 J/TH = ~7,215W.",
-      "200 AMP × 220V service = 44kW → ~33kW safe → ~11 × S17+ miners.",
-      "Never exceed 75% of circuit capacity to avoid tripping breakers.",
-      "Use PDUs, cooling, and monitoring for 24/7 uptime.",
-    ],
-  },
-];

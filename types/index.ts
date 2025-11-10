@@ -30,9 +30,9 @@ export interface BitcoinMiner {
 
 
 export interface BitcoinCalculator {
-  hashrate: number;        
-  hashrateValue: number;   
-  hashrateUnit: string;    
+  hashrate: number;
+  hashrateValue: number;
+  hashrateUnit: string;
   power: number;
   electricityCost: number;
   poolFee: number;
@@ -50,9 +50,9 @@ export interface ZcashStats {
 };
 
 export interface ZcashCalculator {
-  hashrate: number;        
-  hashrateValue: number;   
-  hashrateUnit: string;    
+  hashrate: number;
+  hashrateValue: number;
+  hashrateUnit: string;
   power: number;
   electricityCost: number;
   poolFee: number;
@@ -70,9 +70,9 @@ export interface LitecoinStats {
 };
 
 export interface LitecoinCalculator {
-  hashrate: number;        
-  hashrateValue: number;   
-  hashrateUnit: string;    
+  hashrate: number;
+  hashrateValue: number;
+  hashrateUnit: string;
   power: number;
   electricityCost: number;
   poolFee: number;
@@ -90,10 +90,15 @@ export interface DogecoinStats {
 };
 
 export interface DogecoinCalculator {
-  hashrate: number;        
-  hashrateValue: number;   
-  hashrateUnit: string;    
+  hashrate: number;
+  hashrateValue: number;
+  hashrateUnit: string;
   power: number;
   electricityCost: number;
   poolFee: number;
+}
+
+export interface Faq{
+  question: string;
+  answer: string[];
 }

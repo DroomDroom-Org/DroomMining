@@ -30,7 +30,7 @@ import {
 } from "lucide-react";
 import { getCmcImageUrl } from "@/lib/config";
 import BitcoinNavigation from "@/components/bitcoin-navigation";
-import { bitcoinHalvingFaqs, bitcoinAllHalvings } from "@/constants/bitcoin";
+import { bitcoinAllHalvings } from "@/constants/bitcoin";
 import { formatDateTime } from "@/lib/format";
 import {
   Accordion,
@@ -38,7 +38,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { BitcoinStats } from "@/types";
+import { BitcoinStats, Faq } from "@/types";
 import Breadcrumbs from "@/components/breadcrumbs";
 
 const HALVING_INTERVAL = 210_000;
@@ -46,10 +46,12 @@ const SECONDS_PER_DAY = 86_400;
 
 interface BitcoinHalvingPageClientProps {
   statsData: BitcoinStats;
+  faqsData: Faq[];
 }
 
 export default function BitcoinHalvingPageClient({
   statsData,
+  faqsData,
 }: BitcoinHalvingPageClientProps) {
   const [stats, setStats] = useState<BitcoinStats>({
     blockCount: 0,
@@ -480,12 +482,16 @@ export default function BitcoinHalvingPageClient({
         <Card className="mb-8 sm:mb-10 lg:mb-12 animate-slide-in-from-bottom animation-delay-600">
           <CardHeader className="px-4 sm:px-6">
             <CardTitle className="text-lg sm:text-xl">
-              Bitcoin Halving FAQs
+              Bitcoin Halving Frequently Asked Questions
             </CardTitle>
           </CardHeader>
           <CardContent className="px-4 sm:px-6">
-            <Accordion type="single" collapsible className="w-full">
-              {bitcoinHalvingFaqs.map((faq, index) => (
+            <Accordion
+              type="multiple"
+              defaultValue={faqsData.map((_, index) => `item-${index}`)}
+              className="w-full"
+            >
+              {faqsData.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`}>
                   <AccordionTrigger className="text-sm sm:text-base lg:text-lg text-left">
                     {faq.question}

@@ -7,27 +7,32 @@ import BitcoinHalvingPageClient from "./page-client";
 
 async function fetchInitialData() {
   try {
-    const statsResponse = await axios.get(getApiUrl("/bitcoin/stats"));
+    const [statsResponse, faqsResponse] =
+      await Promise.all([
+        axios.get(getApiUrl("/bitcoin/stats")),
+        axios.get(getApiUrl(`/bitcoin/faqs/halving`)),
+      ]);
+
     return {
       statsData: statsResponse.data.data,
+      faqsData: faqsResponse.data.data
     };
   } catch (error) {
     console.error("Error fetching initial data:", error);
     return {
-      statsData: {
-        
-      },
+      statsData: null,
+      faqsData: []
     };
   }
 }
 
 export default async function BitcoinHomePage() {
   const data = await fetchInitialData();
-  const { statsData } = data;
+  const { statsData , faqsData } = data;
 
   return (
     <Suspense fallback={<BitcoinHalvingPageShimmer />}>
-      <BitcoinHalvingPageClient statsData={statsData} />
+      <BitcoinHalvingPageClient statsData={statsData} faqsData={faqsData} />
     </Suspense>
   );
 }
