@@ -7,25 +7,31 @@ import ZcashCalculatorPageClient from "./page-client";
 
 async function fetchInitialData() {
   try {
-    const statsResponse = await axios.get(getApiUrl("/zcash/stats"));
+    const [statsResponse, faqsResponse] = await Promise.all([
+      axios.get(getApiUrl("/zcash/stats")),
+      axios.get(getApiUrl(`/zcash/faqs/calculator`)),
+    ]);
+
     return {
       statsData: statsResponse.data.data,
+      faqsData: faqsResponse.data.data,
     };
   } catch (error) {
     console.error("Error fetching initial data:", error);
     return {
       statsData: null,
+      faqsData: [],
     };
   }
 }
 
 export default async function ZcashCalculatorPage() {
   const data = await fetchInitialData();
-  const { statsData } = data;
+  const { statsData , faqsData} = data;
 
   return (
     <Suspense fallback={<ZcashCalculatorPageClientShimmer />}>
-      <ZcashCalculatorPageClient statsData={statsData} />
+      <ZcashCalculatorPageClient statsData={statsData} faqsData={faqsData} />
     </Suspense>
   );
 }

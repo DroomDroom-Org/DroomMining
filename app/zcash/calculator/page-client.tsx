@@ -45,13 +45,14 @@ import {
 } from "@/components/ui/accordion";
 import { getCmcImageUrl } from "@/lib/config";
 import ZcashNavigation from "@/components/zcash-navigation";
-import { ZcashStats, ZcashCalculator } from "@/types";
+import { ZcashStats, ZcashCalculator, Faq } from "@/types";
 import { formatDifficulty, formatHashrate } from "@/lib/format";
 import { zcashCalculatorFaqs } from "@/constants/zcash";
 import Breadcrumbs from "@/components/breadcrumbs";
 
 interface ZcashCalculatorPageClientProps {
   statsData: ZcashStats;
+  faqsData: Faq[];
 }
 
 const unitMultipliers: Record<string, number> = {
@@ -66,6 +67,7 @@ const fromHashrate = (hashrate: number, unit: string): number =>
 
 export default function ZcashCalculatorPageClient({
   statsData,
+  faqsData,
 }: ZcashCalculatorPageClientProps) {
   const [state, setState] = useState<ZcashCalculator>({
     hashrate: 840_000,
@@ -563,10 +565,16 @@ export default function ZcashCalculatorPageClient({
         {/* FAQ */}
         <Card className="mt-6 sm:mt-8 mb-8 sm:mb-10 lg:mb-12">
           <CardHeader className="px-4 sm:px-6">
-            <CardTitle className="text-lg sm:text-xl">FAQs</CardTitle>
+            <CardTitle className="text-lg sm:text-xl">
+              Zcash Mining Frequently Asked Questions
+            </CardTitle>
           </CardHeader>
           <CardContent className="px-4 sm:px-6">
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion
+              type="multiple"
+              defaultValue={faqsData.map((_, index) => `item-${index}`)}
+              className="w-full"
+            >
               {zcashCalculatorFaqs.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`}>
                   <AccordionTrigger className="text-sm sm:text-base lg:text-lg text-left">
