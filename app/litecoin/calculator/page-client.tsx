@@ -45,13 +45,14 @@ import {
 } from "@/components/ui/accordion";
 import { getCmcImageUrl } from "@/lib/config";
 import LitecoinNavigation from "@/components/litecoin-navigation";
-import { LitecoinStats, LitecoinCalculator } from "@/types";
+import { LitecoinStats, LitecoinCalculator, Faq } from "@/types";
 import { formatDifficulty, formatHashrate } from "@/lib/format";
 import { litecoinCalculatorFaqs } from "@/constants/litecoin";
 import Breadcrumbs from "@/components/breadcrumbs";
 
 interface LitecoinCalculatorPageClientProps {
   statsData: LitecoinStats;
+  faqsData: Faq[];
 }
 
 const unitMultipliers: Record<string, number> = {
@@ -67,6 +68,7 @@ const fromHashrate = (hashrate: number, unit: string): number =>
 
 export default function LitecoinCalculatorPageClient({
   statsData,
+  faqsData,
 }: LitecoinCalculatorPageClientProps) {
   const [state, setState] = useState<LitecoinCalculator>({
     hashrate: 170_000_000,
@@ -522,11 +524,15 @@ export default function LitecoinCalculatorPageClient({
         {/* FAQ */}
         <Card className="mt-8 mb-12">
           <CardHeader>
-            <CardTitle>FAQs</CardTitle>
+            <CardTitle>Litecoin Mining Frequently Asked Questions</CardTitle>
           </CardHeader>
           <CardContent>
-            <Accordion type="single" collapsible className="w-full">
-              {litecoinCalculatorFaqs.map((faq, index) => (
+            <Accordion
+              type="multiple"
+              defaultValue={faqsData.map((_, index) => `item-${index}`)}
+              className="w-full"
+            >
+              {faqsData.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`}>
                   <AccordionTrigger className="text-lg">
                     {faq.question}
