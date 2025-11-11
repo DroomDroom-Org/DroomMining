@@ -48,9 +48,13 @@ export default function Header({
   const [mounted, setMounted] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [dropdownStates, setDropdownStates] = useState<Record<string, boolean>>({});
+  const [dropdownStates, setDropdownStates] = useState<Record<string, boolean>>(
+    {}
+  );
   const dropdownTimeoutRefs = useRef<Record<string, NodeJS.Timeout>>({});
-  const [hoveringDropdowns, setHoveringDropdowns] = useState<Record<string, boolean>>({});
+  const [hoveringDropdowns, setHoveringDropdowns] = useState<
+    Record<string, boolean>
+  >({});
 
   useEffect(() => {
     setMounted(true);
@@ -68,7 +72,7 @@ export default function Header({
 
   useEffect(() => {
     return () => {
-      Object.values(dropdownTimeoutRefs.current).forEach(timeout => {
+      Object.values(dropdownTimeoutRefs.current).forEach((timeout) => {
         if (timeout) clearTimeout(timeout);
       });
     };
@@ -86,15 +90,15 @@ export default function Header({
       clearTimeout(dropdownTimeoutRefs.current[menuText]);
       delete dropdownTimeoutRefs.current[menuText];
     }
-    setHoveringDropdowns(prev => ({ ...prev, [menuText]: true }));
-    setDropdownStates(prev => ({ ...prev, [menuText]: true }));
+    setHoveringDropdowns((prev) => ({ ...prev, [menuText]: true }));
+    setDropdownStates((prev) => ({ ...prev, [menuText]: true }));
   };
 
   const handleDropdownLeave = (menuText: string) => {
-    setHoveringDropdowns(prev => ({ ...prev, [menuText]: false }));
+    setHoveringDropdowns((prev) => ({ ...prev, [menuText]: false }));
     dropdownTimeoutRefs.current[menuText] = setTimeout(() => {
       if (!hoveringDropdowns[menuText]) {
-        setDropdownStates(prev => ({ ...prev, [menuText]: false }));
+        setDropdownStates((prev) => ({ ...prev, [menuText]: false }));
       }
     }, 300);
   };
@@ -104,13 +108,13 @@ export default function Header({
       clearTimeout(dropdownTimeoutRefs.current[menuText]);
       delete dropdownTimeoutRefs.current[menuText];
     }
-    setHoveringDropdowns(prev => ({ ...prev, [menuText]: true }));
+    setHoveringDropdowns((prev) => ({ ...prev, [menuText]: true }));
   };
 
   const handleDropdownContentLeave = (menuText: string) => {
-    setHoveringDropdowns(prev => ({ ...prev, [menuText]: false }));
+    setHoveringDropdowns((prev) => ({ ...prev, [menuText]: false }));
     dropdownTimeoutRefs.current[menuText] = setTimeout(() => {
-      setDropdownStates(prev => ({ ...prev, [menuText]: false }));
+      setDropdownStates((prev) => ({ ...prev, [menuText]: false }));
     }, 150);
   };
 
@@ -123,12 +127,11 @@ export default function Header({
     window.open(url, "_blank");
   };
 
-
   return (
     <header className="sticky top-0 z-50">
       <div className="bg-background">
         <div className="bg-background border-b border-border px-10">
-          <Flex justify="center" align="center" className="py-3 md:py-4">
+          <Flex justify="center" align="center" className="py-2">
             <div
               className="absolute left-10
                          cursor-pointer"
@@ -184,13 +187,16 @@ export default function Header({
 
         <div className="w-full bg-background border-b border-border overflow-x-auto scrollbar-hide">
           <div className="w-full px-2 sm:px-4">
-            <nav className="flex justify-start sm:justify-center items-center py-3">
+            <nav className="flex justify-start sm:justify-center items-center py-1">
               <ul className="flex items-center space-x-1 sm:space-x-2 md:space-x-4 lg:space-x-6 xl:space-x-8 min-w-max whitespace-nowrap">
                 {menus.length > 0 &&
                   menus.map((item, index) => {
                     if (item.type === "link") {
                       return (
-                        <li key={`${item.text}-${index}`} className="flex-shrink-0">
+                        <li
+                          key={`${item.text}-${index}`}
+                          className="flex-shrink-0"
+                        >
                           <button
                             onClick={() => handleNavClick(item.url!)}
                             className={cn(
@@ -205,18 +211,34 @@ export default function Header({
                           </button>
                         </li>
                       );
-                    } else if (item.type === "dropdown" && item.items && item.items.length > 0) {
+                    } else if (
+                      item.type === "dropdown" &&
+                      item.items &&
+                      item.items.length > 0
+                    ) {
                       const isOpen = dropdownStates[item.text] || false;
                       return (
-                        <li key={`${item.text}-${index}`} className="flex-shrink-0 relative">
+                        <li
+                          key={`${item.text}-${index}`}
+                          className="flex-shrink-0 relative"
+                        >
                           <DropdownMenu
                             open={isOpen}
-                            onOpenChange={(open) => setDropdownStates(prev => ({ ...prev, [item.text]: open }))}
+                            onOpenChange={(open) =>
+                              setDropdownStates((prev) => ({
+                                ...prev,
+                                [item.text]: open,
+                              }))
+                            }
                           >
                             <DropdownMenuTrigger asChild>
                               <button
-                                onMouseEnter={() => handleDropdownEnter(item.text)}
-                                onMouseLeave={() => handleDropdownLeave(item.text)}
+                                onMouseEnter={() =>
+                                  handleDropdownEnter(item.text)
+                                }
+                                onMouseLeave={() =>
+                                  handleDropdownLeave(item.text)
+                                }
                                 className="relative font-bold text-sm sm:text-base md:text-lg whitespace-nowrap px-2 py-1 flex items-center group
                                      text-foreground hover:text-primary transition-all duration-300 ease-in-out border-none outline-none"
                               >
@@ -245,10 +267,18 @@ export default function Header({
                                 "relative overflow-hidden"
                               )}
                               sideOffset={2}
-                              onMouseEnter={() => handleDropdownContentEnter(item.text)}
-                              onMouseLeave={() => handleDropdownContentLeave(item.text)}
-                              onPointerEnter={() => handleDropdownContentEnter(item.text)}
-                              onPointerLeave={() => handleDropdownContentLeave(item.text)}
+                              onMouseEnter={() =>
+                                handleDropdownContentEnter(item.text)
+                              }
+                              onMouseLeave={() =>
+                                handleDropdownContentLeave(item.text)
+                              }
+                              onPointerEnter={() =>
+                                handleDropdownContentEnter(item.text)
+                              }
+                              onPointerLeave={() =>
+                                handleDropdownContentLeave(item.text)
+                              }
                             >
                               <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-30 pointer-events-none" />
                               {item.items.map((subItem) => (
