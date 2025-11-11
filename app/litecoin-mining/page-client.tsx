@@ -188,8 +188,8 @@ export default function LitecoinHomePageClient({
   ];
 
   const breadcrumbs = [
-    { name: "Home", href: "/" },
-    { name: "Litecoin Mining", href: "/litecoin" },
+    { name: "Home", href: "/mining" },
+    { name: "Litecoin Mining", href: "/litecoin-mining" },
   ];
 
   const handleDifficultyTimeRangeChange = (newTimeRange: string) => {

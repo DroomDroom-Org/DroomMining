@@ -162,8 +162,8 @@ export default function LitecoinCalculatorPageClient({
   const profitPerPeriod = (h: number) => per("profitPerDay", h);
 
   const breadcrumbs = [
-    { name: "Home", href: "/" },
-    { name: "Litecoin Mining Calculator", href: "/litecoin/calculator" },
+    { name: "Home", href: "/mining" },
+    { name: "Litecoin Mining Calculator", href: "/litecoin-mining-calculator" },
   ];
 
   return (
