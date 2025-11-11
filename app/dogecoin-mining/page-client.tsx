@@ -131,33 +131,33 @@ export default function DogecoinHomePageClient({
     {
       key: "Website",
       value: (
-        <a
+        <CompoundCustomLink
           href="http://dogecoin.com/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-primary hover:underline"
         >
           dogecoin.com <ExternalLink className="h-4 w-4 inline ml-1" />
-        </a>
+        </CompoundCustomLink>
       ),
     },
     {
       key: "Github / Source Code",
       value: (
-        <a
+        <CompoundCustomLink
           href="https://github.com/dogecoin/dogecoin"
           target="_blank"
           rel="noopener noreferrer"
           className="text-primary hover:underline"
         >
           Github <ExternalLink className="h-4 w-4 inline ml-1" />
-        </a>
+        </CompoundCustomLink>
       ),
     },
     {
       key: "Forum",
       value: (
-        <a
+        <CompoundCustomLink
           href="https://bitcointalk.org/index.php?topic=361813.0"
           target="_blank"
           rel="noopener noreferrer"
@@ -165,7 +165,7 @@ export default function DogecoinHomePageClient({
         >
           Bitcointalk
           <ExternalLink className="h-4 w-4 inline ml-1" />
-        </a>
+        </CompoundCustomLink>
       ),
     },
     {

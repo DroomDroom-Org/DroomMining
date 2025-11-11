@@ -131,7 +131,7 @@ export default function ZcashHomePageClient({
     {
       key: "Website",
       value: (
-        <a
+        <CompoundCustomLink
           href="https://z.cash/"
           target="_blank"
           rel="noopener noreferrer"
@@ -139,13 +139,13 @@ export default function ZcashHomePageClient({
         >
           <span> zcash.z</span>
           <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
-        </a>
+        </CompoundCustomLink>
       ),
     },
     {
       key: "Github / Source Code",
       value: (
-        <a
+        <CompoundCustomLink
           href="https://github.com/zcash/zcash/"
           target="_blank"
           rel="noopener noreferrer"
@@ -153,13 +153,13 @@ export default function ZcashHomePageClient({
         >
           <span>Github</span>
           <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
-        </a>
+        </CompoundCustomLink>
       ),
     },
     {
       key: "Forum",
       value: (
-        <a
+        <CompoundCustomLink
           href="https://forum.z.cash/"
           target="_blank"
           rel="noopener noreferrer"
@@ -167,7 +167,7 @@ export default function ZcashHomePageClient({
         >
           <span>Bitcointalk</span>
           <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
-        </a>
+        </CompoundCustomLink>
       ),
     },
     {

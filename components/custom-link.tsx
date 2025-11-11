@@ -12,6 +12,8 @@ interface BaseCustomLinkProps {
   style?: CSSProperties;
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   title?: string;
+  target?: React.HTMLAttributeAnchorTarget;
+  rel?: string;
 }
 
 // Extend LinkProps but make href required
@@ -52,6 +54,8 @@ const CustomLink = React.forwardRef<HTMLAnchorElement, CustomLinkProps>(({
   style,
   onClick,
   title,
+  target,
+  rel,
   ...props
 }, ref) => {
   // If href is undefined, render children in a span
@@ -73,8 +77,8 @@ const CustomLink = React.forwardRef<HTMLAnchorElement, CustomLinkProps>(({
         style={style}
         onClick={onClick}
         title={title}
-        target="_blank"
-        rel="noopener noreferrer nofollow"
+        target={target || "_blank"}
+        rel={rel || "noopener noreferrer nofollow"}
         {...props}
       >
         {children}
@@ -92,8 +96,8 @@ const CustomLink = React.forwardRef<HTMLAnchorElement, CustomLinkProps>(({
         style={style}
         onClick={onClick}
         title={title}
-        target="_blank"
-        rel="noopener noreferrer"
+        target={target || "_blank"}
+        rel={rel || "noopener noreferrer"}
         {...props}
       >
         {children}
@@ -113,6 +117,8 @@ const CustomLink = React.forwardRef<HTMLAnchorElement, CustomLinkProps>(({
       style={style}
       onClick={onClick}
       title={title}
+      target={target}
+      rel={rel}
       {...props}
     >
       {children}
@@ -128,6 +134,8 @@ const CustomLinkLink = React.forwardRef<HTMLAnchorElement, CustomLinkProps>(({
   style,
   onClick,
   title,
+  target,
+  rel,
   ...props
 }, ref) => {
   // Handle external links
@@ -140,8 +148,8 @@ const CustomLinkLink = React.forwardRef<HTMLAnchorElement, CustomLinkProps>(({
         style={style}
         onClick={onClick}
         title={title}
-        target="_blank"
-        rel="noopener noreferrer nofollow"
+        target={target || "_blank"}
+        rel={rel || "noopener noreferrer nofollow"}
         {...props}
       >
         {children}
@@ -159,8 +167,8 @@ const CustomLinkLink = React.forwardRef<HTMLAnchorElement, CustomLinkProps>(({
         style={style}
         onClick={onClick}
         title={title}
-        target="_blank"
-        rel="noopener noreferrer"
+        target={target || "_blank"}
+        rel={rel || "noopener noreferrer"}
         {...props}
       >
         {children}
@@ -180,6 +188,8 @@ const CustomLinkLink = React.forwardRef<HTMLAnchorElement, CustomLinkProps>(({
       style={style}
       onClick={onClick}
       title={title}
+      target={target}
+      rel={rel}
       {...props}
     >
       {children}
@@ -195,6 +205,8 @@ const CustomLinkAnchor = React.forwardRef<HTMLAnchorElement, CustomLinkProps>(({
   style,
   onClick,
   title,
+  target,
+  rel,
   ...props
 }, ref) => {
   return (
@@ -205,8 +217,8 @@ const CustomLinkAnchor = React.forwardRef<HTMLAnchorElement, CustomLinkProps>(({
       style={style}
       onClick={onClick}
       title={title}
-      target="_blank"
-      rel="noopener noreferrer nofollow"
+      target={target || "_blank"}
+      rel={rel || "noopener noreferrer nofollow"}
       {...props}
     >
       {children}

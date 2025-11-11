@@ -132,7 +132,7 @@ export default function BitcoinHomePageClient({
     {
       key: "Website",
       value: (
-        <a
+        <CompoundCustomLink
           href="https://bitcoin.org"
           target="_blank"
           rel="noopener noreferrer"
@@ -140,13 +140,13 @@ export default function BitcoinHomePageClient({
         >
           <span>bitcoin.org</span>
           <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
-        </a>
+        </CompoundCustomLink>
       ),
     },
     {
       key: "Github / Source Code",
       value: (
-        <a
+        <CompoundCustomLink
           href="https://github.com/bitcoin/bitcoin"
           target="_blank"
           rel="noopener noreferrer"
@@ -154,13 +154,13 @@ export default function BitcoinHomePageClient({
         >
           <span>Github</span>
           <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
-        </a>
+        </CompoundCustomLink>
       ),
     },
     {
       key: "Forum",
       value: (
-        <a
+        <CompoundCustomLink
           href="https://bitcointalk.org"
           target="_blank"
           rel="noopener noreferrer"
@@ -168,7 +168,7 @@ export default function BitcoinHomePageClient({
         >
           <span>Bitcointalk</span>
           <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
-        </a>
+        </CompoundCustomLink>
       ),
     },
     {

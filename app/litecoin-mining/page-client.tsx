@@ -131,40 +131,40 @@ export default function LitecoinHomePageClient({
     {
       key: "Website",
       value: (
-        <a
+        <CompoundCustomLink
           href="https://litecoin.org/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-primary hover:underline"
         >
           litecoin.org <ExternalLink className="h-4 w-4 inline ml-1" />
-        </a>
+        </CompoundCustomLink>
       ),
     },
     {
       key: "Github / Source Code",
       value: (
-        <a
+        <CompoundCustomLink
           href="https://github.com/litecoin-project/litecoin"
           target="_blank"
           rel="noopener noreferrer"
           className="text-primary hover:underline"
         >
           Github <ExternalLink className="h-4 w-4 inline ml-1" />
-        </a>
+        </CompoundCustomLink>
       ),
     },
     {
       key: "Forum",
       value: (
-        <a
+        <CompoundCustomLink
           href="http://forum.litecoin.net/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-primary hover:underline"
         >
           Litecoin Forum <ExternalLink className="h-4 w-4 inline ml-1" />
-        </a>
+        </CompoundCustomLink>
       ),
     },
     {
