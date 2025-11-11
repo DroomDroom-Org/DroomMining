@@ -191,8 +191,8 @@ export default function ZcashHomePageClient({
   ];
 
   const breadcrumbs = [
-    { name: "Home", href: "/" },
-    { name: "Zcash Mining", href: "/zcash" },
+    { name: "Home", href: "/mining" },
+    { name: "Zcash Mining", href: "/zcash-mining" },
   ];
 
   const handleDifficultyTimeRangeChange = (newTimeRange: string) => {

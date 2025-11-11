@@ -5,8 +5,8 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { name: "Zcash Mining", href: "/zcash" },
-  { name: "Zcash Mining Calculator", href: "/zcash/calculator" },
+  { name: "Zcash Mining", href: "/zcash-mining" },
+  { name: "Zcash Mining Calculator", href: "/zcash-mining-calculator" },
 ];
 
 export default function ZcashNavigation() {

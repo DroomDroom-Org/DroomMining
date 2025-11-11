@@ -160,8 +160,8 @@ export default function ZcashCalculatorPageClient({
   const profitPerPeriod = (h: number) => per("profitPerDay", h);
 
   const breadcrumbs = [
-    { name: "Home", href: "/" },
-    { name: "Zcash Mining Calculator", href: "/zcash/calculator" },
+    { name: "Home", href: "/mining" },
+    { name: "Zcash Mining Calculator", href: "/zcash-mining-calculator" },
   ];
 
   return (
