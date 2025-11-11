@@ -159,8 +159,8 @@ export default function DogecoinCalculatorPageClient({
   const profitPerPeriod = (h: number) => per("profitPerDay", h);
 
   const breadcrumbs = [
-    { name: "Home", href: "/" },
-    { name: "Dogecoin Mining Calculator", href: "/dogecoin/calculator" },
+    { name: "Home", href: "/mining" },
+    { name: "Dogecoin Mining Calculator", href: "/dogecoin-mining-calculator" },
   ];
 
   return (

@@ -189,8 +189,8 @@ export default function DogecoinHomePageClient({
   ];
 
   const breadcrumbs = [
-    { name: "Home", href: "/" },
-    { name: "Dogecoin Mining", href: "/dogecoin" },
+    { name: "Home", href: "/mining" },
+    { name: "Dogecoin Mining", href: "/dogecoin-mining" },
   ];
 
   const handleDifficultyTimeRangeChange = (newTimeRange: string) => {

@@ -5,8 +5,8 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { name: "Dogecoin Mining", href: "/dogecoin" },
-  { name: "Dogecoin Mining Calculator", href: "/dogecoin/calculator" },
+  { name: "Dogecoin Mining", href: "/dogecoin-mining" },
+  { name: "Dogecoin Mining Calculator", href: "/dogecoin-mining-calculator" },
 ];
 
 export default function DogecoinNavigation() {
