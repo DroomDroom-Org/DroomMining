@@ -150,7 +150,7 @@ async function fetchFooterData(): Promise<FooterData> {
 const fetchTokens = async (): Promise<Token[]> => {
   try {
     const response = await fetch(
-      `https://droomdroom.com/price/api/marquee-tokens`,
+      `https://droomdroom.com/price/api/marquee-coins`,
       {
         next: { revalidate: 120 },
       }
