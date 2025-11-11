@@ -67,21 +67,21 @@ const cryptoList: CryptoData[] = [
     algorithm: "Scrypt",
     logo: getCmcImageUrl(74),
   },
-  {
-    id: "5",
-    cmcId: 2577,
-    name: "Ravencoin",
-    symbol: "RVN",
-    price: 0.032,
-    change24h: -0.8,
-    blockReward: 2500,
-    blockTime: 1,
-    difficulty: "98.12K",
-    hashrate: "7.34 TH/s",
-    profitability: 0.000987,
-    algorithm: "KawPow",
-    logo: getCmcImageUrl(2577),
-  },
+  // {
+  //   id: "5",
+  //   cmcId: 2577,
+  //   name: "Ravencoin",
+  //   symbol: "RVN",
+  //   price: 0.032,
+  //   change24h: -0.8,
+  //   blockReward: 2500,
+  //   blockTime: 1,
+  //   difficulty: "98.12K",
+  //   hashrate: "7.34 TH/s",
+  //   profitability: 0.000987,
+  //   algorithm: "KawPow",
+  //   logo: getCmcImageUrl(2577),
+  // },
   {
     id: "6",
     cmcId: 1437,
@@ -97,36 +97,36 @@ const cryptoList: CryptoData[] = [
     algorithm: "Equihash",
     logo: getCmcImageUrl(1437),
   },
-  {
-    id: "7",
-    cmcId: 328,
-    name: "Monero",
-    symbol: "XMR",
-    price: 148.9,
-    change24h: -2.1,
-    blockReward: 0.6,
-    blockTime: 120,
-    difficulty: "298.45G",
-    hashrate: "2.48 GH/s",
-    profitability: 0.000123,
-    algorithm: "RandomX",
-    logo: getCmcImageUrl(328),
-  },
-  {
-    id: "8",
-    cmcId: 1698,
-    name: "Horizen",
-    symbol: "ZEN",
-    price: 12.34,
-    change24h: 0.9,
-    blockReward: 3.75,
-    blockTime: 150,
-    difficulty: "45.23M",
-    hashrate: "1.23 GH/s",
-    profitability: 0.000078,
-    algorithm: "Equihash",
-    logo: getCmcImageUrl(1698),
-  },
+  // {
+  //   id: "7",
+  //   cmcId: 328,
+  //   name: "Monero",
+  //   symbol: "XMR",
+  //   price: 148.9,
+  //   change24h: -2.1,
+  //   blockReward: 0.6,
+  //   blockTime: 120,
+  //   difficulty: "298.45G",
+  //   hashrate: "2.48 GH/s",
+  //   profitability: 0.000123,
+  //   algorithm: "RandomX",
+  //   logo: getCmcImageUrl(328),
+  // },
+  // {
+  //   id: "8",
+  //   cmcId: 1698,
+  //   name: "Horizen",
+  //   symbol: "ZEN",
+  //   price: 12.34,
+  //   change24h: 0.9,
+  //   blockReward: 3.75,
+  //   blockTime: 150,
+  //   difficulty: "45.23M",
+  //   hashrate: "1.23 GH/s",
+  //   profitability: 0.000078,
+  //   algorithm: "Equihash",
+  //   logo: getCmcImageUrl(1698),
+  // },
 ];
 
 export default function MiningCalculatorPage() {
@@ -167,15 +167,19 @@ export default function MiningCalculatorPage() {
               Mining Calculators
             </h2>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4 md:gap-6">
+            <div className="flex flex-wrap justify-center gap-4 md:gap-6">
               {cryptoList.map((coin, idx) => (
                 <Link
                   key={coin.id}
                   href={`/${coin.name.toLowerCase()}-mining-calculator`}
                 >
                   <Card
-                    key={coin.id}
-                    className="card-hover interactive-element group cursor-pointer overflow-hidden border border-border/50 bg-card/95 backdrop-blur-sm h-48 flex flex-col justify-between"
+                    className="
+              card-hover interactive-element group cursor-pointer
+              overflow-hidden border border-border/50 bg-card/95 backdrop-blur-sm
+              h-48 w-36 sm:w-40 md:w-44 lg:w-48
+              flex flex-col justify-between
+            "
                     style={{ animationDelay: `${idx * 50}ms` }}
                   >
                     <CardHeader className="pb-3 pt-4 px-3 flex-shrink-0">
@@ -184,7 +188,10 @@ export default function MiningCalculatorPage() {
                           <img
                             src={coin.logo}
                             alt={coin.name}
-                            className="w-12 h-12 md:w-16 md:h-16 object-contain rounded-full ring-2 ring-primary/20 group-hover:ring-primary/50 transition-all"
+                            className="
+                      w-12 h-12 md:w-16 md:h-16 object-contain rounded-full
+                      ring-2 ring-primary/20 group-hover:ring-primary/50 transition-all
+                    "
                             loading="lazy"
                           />
                         </div>
@@ -203,8 +210,7 @@ export default function MiningCalculatorPage() {
 
             <div className="mt-12 text-center">
               <p className="text-muted-foreground max-w-3xl mx-auto mb-6">
-                Calculate profitability for Bitcoin, Litecoin, Dogecoin, Monero,
-                Zcash, Ravencoin.
+                Calculate profitability for Bitcoin, Litecoin, Dogecoin, Zcash.
               </p>
             </div>
           </div>
