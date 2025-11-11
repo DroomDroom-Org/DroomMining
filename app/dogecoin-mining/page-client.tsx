@@ -37,6 +37,7 @@ import { ChartDataPoint, Stats } from "@/types";
 import { formatDifficulty, formatPrice, formatHashrate } from "@/lib/format";
 import useDogecoin from "@/hooks/use-dogecoin";
 import Breadcrumbs from "@/components/breadcrumbs";
+import CompoundCustomLink from "@/components/custom-link";
 
 interface DogecoinHomePageClientProps {
   statsData: Stats;
@@ -322,11 +323,11 @@ export default function DogecoinHomePageClient({
               size="lg"
               className="interactive-element bg-dogecoin hover:bg-dogecoin-dark"
             >
-              <Link href="/dogecoin/calculator">
+              <CompoundCustomLink href="/dogecoin-mining-calculator">
                 <Calculator className="mr-2 h-4 w-4" />
                 Dogecoin Mining Calculator
                 <ChevronRight className="ml-2 h-4 w-4" />
-              </Link>
+              </CompoundCustomLink>
             </Button>
           </CardContent>
         </Card>

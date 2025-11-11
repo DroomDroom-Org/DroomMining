@@ -37,6 +37,7 @@ import { ChartDataPoint, Stats } from "@/types";
 import { formatDifficulty, formatPrice, formatHashrate } from "@/lib/format";
 import useZcash from "@/hooks/use-zcash";
 import Breadcrumbs from "@/components/breadcrumbs";
+import CompoundCustomLink from "@/components/custom-link";
 
 interface ZcashHomePageClientProps {
   statsData: Stats;
@@ -329,17 +330,14 @@ export default function ZcashHomePageClient({
               size="lg"
               className="interactive-element bg-zcash hover:bg-zcash-dark w-full sm:w-auto text-sm sm:text-base"
             >
-              <Link
-                href="/zcash/calculator"
-                className="flex items-center justify-center"
-              >
+              <CompoundCustomLink href="/zcash-mining-calculator">
                 <Calculator className="mr-2 h-4 w-4" />
                 <span className="hidden sm:inline">
                   Zcash Mining Calculator
                 </span>
                 <span className="sm:hidden">Mining Calculator</span>
                 <ChevronRight className="ml-2 h-4 w-4" />
-              </Link>
+              </CompoundCustomLink>
             </Button>
           </CardContent>
         </Card>

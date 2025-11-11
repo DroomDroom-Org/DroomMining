@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import CompoundCustomLink from "./custom-link";
 
 const navItems = [
   { name: "Dogecoin Mining", href: "/dogecoin-mining" },
@@ -19,7 +20,7 @@ export default function DogecoinNavigation() {
           const isActive = pathname === item.href;
 
           return (
-            <Link
+            <CompoundCustomLink
               key={item.name}
               href={item.href}
               className={cn(
@@ -36,7 +37,7 @@ export default function DogecoinNavigation() {
                   aria-hidden="true"
                 />
               )}
-            </Link>
+            </CompoundCustomLink>
           );
         })}
       </div>

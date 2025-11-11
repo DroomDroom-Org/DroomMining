@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '', 
+  basePath: '/mining', 
 
   publicRuntimeConfig: {
-    basePath: '',
+    basePath: '/mining',
     apiPath: '/api',
     cmcImageUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64',
   },

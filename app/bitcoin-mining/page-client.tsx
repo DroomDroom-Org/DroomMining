@@ -38,6 +38,7 @@ import BitcoinChart from "@/components/bitcoin-chart";
 import { ChartDataPoint, Stats } from "@/types";
 import { formatDifficulty, formatPrice, formatHashrate } from "@/lib/format";
 import Breadcrumbs from "@/components/breadcrumbs";
+import CompoundCustomLink from "@/components/custom-link";
 
 interface BitcoinHomePageClientProps {
   statsData: Stats;
@@ -332,8 +333,8 @@ export default function BitcoinHomePageClient({
               size="lg"
               className="interactive-element bg-bitcoin hover:bg-bitcoin-dark w-full sm:w-auto text-sm sm:text-base"
             >
-              <Link
-                href="/bitcoin/calculator"
+              <CompoundCustomLink
+                href="/bitcoin-mining-calculator"
                 className="flex items-center justify-center"
               >
                 <Calculator className="mr-2 h-4 w-4" />
@@ -342,7 +343,7 @@ export default function BitcoinHomePageClient({
                 </span>
                 <span className="sm:hidden">Mining Calculator</span>
                 <ChevronRight className="ml-2 h-4 w-4" />
-              </Link>
+              </CompoundCustomLink>
             </Button>
           </CardContent>
         </Card>

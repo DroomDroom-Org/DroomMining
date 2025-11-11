@@ -37,6 +37,7 @@ import { ChartDataPoint, Stats } from "@/types";
 import { formatDifficulty, formatPrice, formatHashrate } from "@/lib/format";
 import useLitecoin from "@/hooks/use-litecoin";
 import Breadcrumbs from "@/components/breadcrumbs";
+import CompoundCustomLink from "@/components/custom-link";
 
 interface LitecoinHomePageClientProps {
   statsData: Stats;
@@ -321,11 +322,11 @@ export default function LitecoinHomePageClient({
               size="lg"
               className="interactive-element bg-litecoin hover:bg-litecoin-dark"
             >
-              <Link href="/litecoin/calculator">
+              <CompoundCustomLink href="/litecoin-mining-calculator">
                 <Calculator className="mr-2 h-4 w-4" />
                 Litecoin Mining Calculator
                 <ChevronRight className="ml-2 h-4 w-4" />
-              </Link>
+              </CompoundCustomLink>
             </Button>
           </CardContent>
         </Card>

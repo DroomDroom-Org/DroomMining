@@ -5,6 +5,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { FadeIn } from "@/components/ui";
 import { usePathname } from "next/navigation";
+import CompoundCustomLink from "./custom-link";
 
 interface BreadcrumbItem {
   name: string;
@@ -38,7 +39,7 @@ export default function Breadcrumbs({ items, className }: BreadcrumbsProps) {
             return (
               <li key={index} className="flex items-center">
                 {item.href ? (
-                  <Link
+                  <CompoundCustomLink
                     href={item.href}
                     className={cn(
                       "transition-colors duration-200 font-medium",
@@ -49,7 +50,7 @@ export default function Breadcrumbs({ items, className }: BreadcrumbsProps) {
                     aria-current={isActive ? "page" : undefined}
                   >
                     {item.name}
-                  </Link>
+                  </CompoundCustomLink>
                 ) : (
                   <span
                     className="font-medium text-gray-900 dark:text-white"

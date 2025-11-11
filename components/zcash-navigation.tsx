@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import CompoundCustomLink from "./custom-link";
 
 const navItems = [
   { name: "Zcash Mining", href: "/zcash-mining" },
@@ -19,7 +20,7 @@ export default function ZcashNavigation() {
           const isActive = pathname === item.href;
 
           return (
-            <Link
+            <CompoundCustomLink
               key={item.name}
               href={item.href}
               className={cn(
@@ -36,7 +37,7 @@ export default function ZcashNavigation() {
                   aria-hidden="true"
                 />
               )}
-            </Link>
+            </CompoundCustomLink>
           );
         })}
       </div>

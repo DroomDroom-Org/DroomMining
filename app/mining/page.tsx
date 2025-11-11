@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getCmcImageUrl } from "@/lib/config";
 import Link from "next/link";
+import CompoundCustomLink from "@/components/custom-link";
 
 interface CryptoData {
   id: string;
@@ -149,11 +150,11 @@ export default function MiningCalculatorPage() {
                   size="lg"
                   className="interactive-element bg-bitcoin hover:bg-bitcoin-dark"
                 >
-                  <Link href="/bitcoin-mining-calculator">
+                  <CompoundCustomLink href="/bitcoin-mining-calculator">
                     <Calculator className="mr-2 h-4 w-4" />
                     Bitcoin Mining Calculator
                     <ChevronRight className="ml-2 h-4 w-4" />
-                  </Link>
+                  </CompoundCustomLink>
                 </Button>
               </div>
             </div>
@@ -169,7 +170,7 @@ export default function MiningCalculatorPage() {
 
             <div className="flex flex-wrap justify-center gap-4 md:gap-6">
               {cryptoList.map((coin, idx) => (
-                <Link
+                <CompoundCustomLink
                   key={coin.id}
                   href={`/${coin.name.toLowerCase()}-mining-calculator`}
                 >
@@ -204,7 +205,7 @@ export default function MiningCalculatorPage() {
                       </p>
                     </CardContent>
                   </Card>
-                </Link>
+                </CompoundCustomLink>
               ))}
             </div>
 
