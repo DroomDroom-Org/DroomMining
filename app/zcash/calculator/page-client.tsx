@@ -7,7 +7,7 @@ import {
   Clock,
   TrendingUp,
   Settings,
-  Calculator,
+  Calculator as CalculatorIcon,
   ChevronRight,
   ChevronsDown,
 } from "lucide-react";
@@ -45,13 +45,13 @@ import {
 } from "@/components/ui/accordion";
 import { getCmcImageUrl } from "@/lib/config";
 import ZcashNavigation from "@/components/zcash-navigation";
-import { ZcashStats, ZcashCalculator, Faq } from "@/types";
+import { Stats, Calculator, Faq } from "@/types";
 import { formatDifficulty, formatHashrate } from "@/lib/format";
 import { zcashCalculatorFaqs } from "@/constants/zcash";
 import Breadcrumbs from "@/components/breadcrumbs";
 
 interface ZcashCalculatorPageClientProps {
-  statsData: ZcashStats;
+  statsData: Stats;
   faqsData: Faq[];
 }
 
@@ -69,7 +69,7 @@ export default function ZcashCalculatorPageClient({
   statsData,
   faqsData,
 }: ZcashCalculatorPageClientProps) {
-  const [state, setState] = useState<ZcashCalculator>({
+  const [state, setState] = useState<Calculator>({
     hashrate: 840_000,
     hashrateValue: 840_000,
     hashrateUnit: "H/s",
@@ -81,7 +81,7 @@ export default function ZcashCalculatorPageClient({
   const [results, setResults] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
-  const [stats, setStats] = useState<ZcashStats>({
+  const [stats, setStats] = useState<Stats>({
     blockCount: 0,
     difficulty: 0,
     networkHashrate: 0,
@@ -203,7 +203,7 @@ export default function ZcashCalculatorPageClient({
         <Card className="mt-6 sm:mt-8">
           <CardHeader className="px-4 sm:px-6">
             <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-              <Calculator className="h-4 w-4 sm:h-5 sm:w-5" />
+              <CalculatorIcon className="h-4 w-4 sm:h-5 sm:w-5" />
               ZEC Mining Calculator
             </CardTitle>
           </CardHeader>

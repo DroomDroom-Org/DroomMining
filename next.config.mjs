@@ -2,10 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  basePath: '/mining',
+  basePath: '',
   publicRuntimeConfig: {
-    basePath: '/mining',
-    apiPath: '/mining/api',
+    basePath: '',
+    apiPath: '/api',
     cmcImageUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64',
   },
   images: {

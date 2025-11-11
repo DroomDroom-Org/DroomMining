@@ -33,13 +33,13 @@ import { Badge } from "@/components/ui/badge";
 import { getCmcImageUrl } from "@/lib/config";
 import LitecoinNavigation from "@/components/litecoin-navigation";
 import LitecoinChart from "@/components/litecoin-chart";
-import { ChartDataPoint, LitecoinStats } from "@/types";
+import { ChartDataPoint, Stats } from "@/types";
 import { formatDifficulty, formatPrice, formatHashrate } from "@/lib/format";
 import useLitecoin from "@/hooks/use-litecoin";
 import Breadcrumbs from "@/components/breadcrumbs";
 
 interface LitecoinHomePageClientProps {
-  statsData: LitecoinStats;
+  statsData: Stats;
   difficultyData: ChartDataPoint[];
   hashrateData: ChartDataPoint[];
   priceData?: ChartDataPoint[];

@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { name: "Bitcoin Mining", href: "/bitcoin" },
-  { name: "Bitcoin Halving", href: "/bitcoin/halving" },
-  { name: "Bitcoin Mining Calculator", href: "/bitcoin/calculator" },
+  { name: "Bitcoin Mining", href: "/bitcoin-mining" },
+  { name: "Bitcoin Halving", href: "/bitcoin-halving" },
+  { name: "Bitcoin Mining Calculator", href: "/bitcoin-mining-calculator" },
 ];
 
 export default function BitcoinNavigation() {

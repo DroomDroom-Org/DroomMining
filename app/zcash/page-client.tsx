@@ -33,13 +33,13 @@ import { Badge } from "@/components/ui/badge";
 import { getCmcImageUrl } from "@/lib/config";
 import ZcashNavigation from "@/components/zcash-navigation";
 import ZcashChart from "@/components/zcash-chart";
-import { ChartDataPoint, ZcashStats } from "@/types";
+import { ChartDataPoint, Stats } from "@/types";
 import { formatDifficulty, formatPrice, formatHashrate } from "@/lib/format";
 import useZcash from "@/hooks/use-zcash";
 import Breadcrumbs from "@/components/breadcrumbs";
 
 interface ZcashHomePageClientProps {
-  statsData: ZcashStats;
+  statsData: Stats;
   difficultyData: ChartDataPoint[];
   hashrateData: ChartDataPoint[];
   priceData?: ChartDataPoint[];

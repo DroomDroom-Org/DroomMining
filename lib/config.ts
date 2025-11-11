@@ -1,6 +1,6 @@
 export const config = {
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH || ' https://droomdroom.com/mining',
-  apiPath: process.env.NEXT_PUBLIC_API_PATH || ' https://droomdroom.com/mining/api',
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || ' https://droomdroom.com',
+  apiPath: process.env.NEXT_PUBLIC_API_PATH || ' https://droomdroom.com/api',
   cmcImageUrl: process.env.NEXT_PUBLIC_CMC_IMAGE_URL || 'https://s2.coinmarketcap.com/static/img/coins/64x64',
 } as const;
 

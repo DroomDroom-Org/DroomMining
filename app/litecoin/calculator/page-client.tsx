@@ -7,7 +7,7 @@ import {
   Clock,
   TrendingUp,
   Settings,
-  Calculator,
+  Calculator as CalculatorIcon,
   ChevronRight,
   ChevronsDown,
 } from "lucide-react";
@@ -45,13 +45,13 @@ import {
 } from "@/components/ui/accordion";
 import { getCmcImageUrl } from "@/lib/config";
 import LitecoinNavigation from "@/components/litecoin-navigation";
-import { LitecoinStats, LitecoinCalculator, Faq } from "@/types";
+import { Stats, Calculator, Faq } from "@/types";
 import { formatDifficulty, formatHashrate } from "@/lib/format";
 import { litecoinCalculatorFaqs } from "@/constants/litecoin";
 import Breadcrumbs from "@/components/breadcrumbs";
 
 interface LitecoinCalculatorPageClientProps {
-  statsData: LitecoinStats;
+  statsData: Stats;
   faqsData: Faq[];
 }
 
@@ -70,7 +70,7 @@ export default function LitecoinCalculatorPageClient({
   statsData,
   faqsData,
 }: LitecoinCalculatorPageClientProps) {
-  const [state, setState] = useState<LitecoinCalculator>({
+  const [state, setState] = useState<Calculator>({
     hashrate: 170_000_000,
     hashrateValue: 170_000_000,
     hashrateUnit: "KH/s",
@@ -82,7 +82,7 @@ export default function LitecoinCalculatorPageClient({
   const [results, setResults] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
-  const [stats, setStats] = useState<LitecoinStats>({
+  const [stats, setStats] = useState<Stats>({
     blockCount: 0,
     difficulty: 0,
     networkHashrate: 0,
@@ -202,7 +202,7 @@ export default function LitecoinCalculatorPageClient({
         <Card className="mt-8">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Calculator className="h-5 w-5" />
+              <CalculatorIcon className="h-5 w-5" />
               LTC Mining Calculator
             </CardTitle>
           </CardHeader>

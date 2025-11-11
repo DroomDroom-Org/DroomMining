@@ -7,7 +7,7 @@ import {
   Clock,
   TrendingUp,
   Settings,
-  Calculator,
+  Calculator as CalculatorIcon,
   ChevronRight,
   ChevronsDown,
 } from "lucide-react";
@@ -45,13 +45,13 @@ import {
 } from "@/components/ui/accordion";
 import { getCmcImageUrl } from "@/lib/config";
 import DogecoinNavigation from "@/components/dogecoin-navigation";
-import { DogecoinStats, DogecoinCalculator } from "@/types";
+import { Stats, Calculator } from "@/types";
 import { formatDifficulty, formatHashrate } from "@/lib/format";
 import { dogecoinCalculatorFaqs } from "@/constants/dogecoin";
 import Breadcrumbs from "@/components/breadcrumbs";
 
 interface DogecoinCalculatorPageClientProps {
-  statsData: DogecoinStats;
+  statsData: Stats;
 }
 
 const unitMultipliers: Record<string, number> = {
@@ -67,7 +67,7 @@ const fromHashrate = (hashrate: number, unit: string): number =>
 export default function DogecoinCalculatorPageClient({
   statsData,
 }: DogecoinCalculatorPageClientProps) {
-  const [state, setState] = useState<DogecoinCalculator>({
+  const [state, setState] = useState<Calculator>({
     hashrate: 840_000,
     hashrateValue: 840_000,
     hashrateUnit: "H/s",
@@ -79,7 +79,7 @@ export default function DogecoinCalculatorPageClient({
   const [results, setResults] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
-  const [stats, setStats] = useState<DogecoinStats>({
+  const [stats, setStats] = useState<Stats>({
     blockCount: 0,
     difficulty: 0,
     networkHashrate: 0,
@@ -199,7 +199,7 @@ export default function DogecoinCalculatorPageClient({
         <Card className="mt-8">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Calculator className="h-5 w-5" />
+              <CalculatorIcon className="h-5 w-5" />
               DOGE Mining Calculator
             </CardTitle>
           </CardHeader>

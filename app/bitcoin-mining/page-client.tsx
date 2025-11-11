@@ -35,12 +35,12 @@ import { getCmcImageUrl } from "@/lib/config";
 import BitcoinNavigation from "@/components/bitcoin-navigation";
 import useBitcoin from "@/hooks/use-bitcoin";
 import BitcoinChart from "@/components/bitcoin-chart";
-import { ChartDataPoint, BitcoinStats } from "@/types";
+import { ChartDataPoint, Stats } from "@/types";
 import { formatDifficulty, formatPrice, formatHashrate } from "@/lib/format";
 import Breadcrumbs from "@/components/breadcrumbs";
 
 interface BitcoinHomePageClientProps {
-  statsData: BitcoinStats;
+  statsData: Stats;
   difficultyData: ChartDataPoint[];
   hashrateData: ChartDataPoint[];
   priceData?: ChartDataPoint[];
@@ -192,8 +192,8 @@ export default function BitcoinHomePageClient({
   ];
 
   const breadcrumbs = [
-    { name: "Home", href: "/" },
-    { name: "Bitcoin Mining", href: "/bitcoin" },
+    { name: "Home", href: "/mining" },
+    { name: "Bitcoin Mining", href: "/bitcoin-mining" },
   ];
 
   const handleDifficultyTimeRangeChange = (newTimeRange: string) => {

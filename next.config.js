@@ -1,11 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '/mining',
+  basePath: '', 
+
   publicRuntimeConfig: {
-    basePath: '/mining',
-    apiPath: '/mining/api',
+    basePath: '',
+    apiPath: '/api',
     cmcImageUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64',
   },
+
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
@@ -19,10 +21,12 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
+
   output: 'standalone',
   experimental: {
     serverComponentsExternalPackages: ['@prisma/client'],
   },
+
   async headers() {
     return [
       {
@@ -36,6 +40,6 @@ const nextConfig = {
       },
     ];
   },
-}
+};
 
 module.exports = nextConfig 

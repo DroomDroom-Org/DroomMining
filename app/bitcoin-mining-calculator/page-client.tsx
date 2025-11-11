@@ -7,7 +7,7 @@ import {
   Clock,
   TrendingUp,
   Settings,
-  Calculator,
+  Calculator as CalculatorIcon,
   ChevronRight,
   ChevronsDown,
 } from "lucide-react";
@@ -45,13 +45,13 @@ import {
 } from "@/components/ui/accordion";
 import { getCmcImageUrl } from "@/lib/config";
 import BitcoinNavigation from "@/components/bitcoin-navigation";
-import { BitcoinStats, BitcoinMiner, BitcoinCalculator, Faq } from "@/types";
+import { Stats, Miner, Calculator, Faq } from "@/types";
 import { formatDifficulty, formatHashrate } from "@/lib/format";
 import Breadcrumbs from "@/components/breadcrumbs";
 
 interface BitcoinCalculatorPageClientProps {
-  statsData: BitcoinStats;
-  minersData: BitcoinMiner[];
+  statsData: Stats;
+  minersData: Miner[];
   faqsData: Faq[];
 }
 
@@ -72,7 +72,7 @@ export default function BitcoinCalculatorPageClient({
   minersData,
   faqsData,
 }: BitcoinCalculatorPageClientProps) {
-  const [state, setState] = useState<BitcoinCalculator>({
+  const [state, setState] = useState<Calculator>({
     hashrate: 390_000_000_000_000,
     hashrateValue: 390,
     hashrateUnit: "TH/s",
@@ -83,10 +83,10 @@ export default function BitcoinCalculatorPageClient({
 
   const [results, setResults] = useState<any>(null);
   const [loading, setLoading] = useState(false);
-  const [selectedMiner, setSelectedMiner] = useState<BitcoinMiner | null>(null);
+  const [selectedMiner, setSelectedMiner] = useState<Miner | null>(null);
   const [showAllMiners, setShowAllMiners] = useState(false);
 
-  const [stats, setStats] = useState<BitcoinStats>({
+  const [stats, setStats] = useState<Stats>({
     blockCount: 0,
     difficulty: 0,
     networkHashrate: 0,
@@ -167,7 +167,7 @@ export default function BitcoinCalculatorPageClient({
     setTimeout(() => setLoading(false), 300);
   };
 
-  const loadMiner = (miner: BitcoinMiner) => {
+  const loadMiner = (miner: Miner) => {
     setSelectedMiner(miner);
     setLoading(true);
     setTimeout(() => calculateProfit(), 150);
@@ -185,8 +185,8 @@ export default function BitcoinCalculatorPageClient({
     showAllMiners && minersData ? minersData : minersData.slice(0, 10);
 
   const breadcrumbs = [
-    { name: "Home", href: "/" },
-    { name: "Bitcoin Mining Calculator", href: "/bitcoin/calculator" },
+    { name: "Home", href: "/mining" },
+    { name: "Bitcoin Mining Calculator", href: "/bitcoin-mining-calculator" },
   ];
 
   return (
@@ -228,7 +228,7 @@ export default function BitcoinCalculatorPageClient({
         <Card className="mt-6 sm:mt-8">
           <CardHeader className="px-4 sm:px-6">
             <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-              <Calculator className="h-4 w-4 sm:h-5 sm:w-5" />
+              <CalculatorIcon className="h-4 w-4 sm:h-5 sm:w-5" />
               BTC Mining Calculator
             </CardTitle>
           </CardHeader>

@@ -33,13 +33,13 @@ import { Badge } from "@/components/ui/badge";
 import { getCmcImageUrl } from "@/lib/config";
 import DogecoinNavigation from "@/components/dogecoin-navigation";
 import DogecoinChart from "@/components/dogecoin-chart";
-import { ChartDataPoint, DogecoinStats } from "@/types";
+import { ChartDataPoint, Stats } from "@/types";
 import { formatDifficulty, formatPrice, formatHashrate } from "@/lib/format";
 import useDogecoin from "@/hooks/use-dogecoin";
 import Breadcrumbs from "@/components/breadcrumbs";
 
 interface DogecoinHomePageClientProps {
-  statsData: DogecoinStats;
+  statsData: Stats;
   difficultyData: ChartDataPoint[];
   hashrateData: ChartDataPoint[];
   priceData?: ChartDataPoint[];

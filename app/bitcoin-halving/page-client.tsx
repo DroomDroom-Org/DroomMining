@@ -38,14 +38,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { BitcoinStats, Faq } from "@/types";
+import { Stats, Faq } from "@/types";
 import Breadcrumbs from "@/components/breadcrumbs";
 
 const HALVING_INTERVAL = 210_000;
 const SECONDS_PER_DAY = 86_400;
 
 interface BitcoinHalvingPageClientProps {
-  statsData: BitcoinStats;
+  statsData: Stats;
   faqsData: Faq[];
 }
 
@@ -53,7 +53,7 @@ export default function BitcoinHalvingPageClient({
   statsData,
   faqsData,
 }: BitcoinHalvingPageClientProps) {
-  const [stats, setStats] = useState<BitcoinStats>({
+  const [stats, setStats] = useState<Stats>({
     blockCount: 0,
     difficulty: 0,
     networkHashrate: 0,
@@ -134,8 +134,8 @@ export default function BitcoinHalvingPageClient({
   const hasMore = allHalvings.length > shownCount;
 
   const breadcrumbs = [
-    { name: "Home", href: "/" },
-    { name: "Bitcoin Halving", href: "/bitcoin/halving" },
+    { name: "Home", href: "/mining" },
+    { name: "Bitcoin Halving", href: "/bitcoin-halving" },
   ];
 
   return (
