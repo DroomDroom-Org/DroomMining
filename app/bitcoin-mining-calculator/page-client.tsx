@@ -10,6 +10,7 @@ import {
   Calculator as CalculatorIcon,
   ChevronRight,
   ChevronsDown,
+  CircleCheckBig,
 } from "lucide-react";
 import {
   Card,
@@ -193,7 +194,7 @@ export default function BitcoinCalculatorPageClient({
       <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <BitcoinNavigation />
 
-        {/*Page Header */}
+        {/* Page Header */}
         <div className="w-full mb-4 sm:mb-6 pt-6">
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
             <div className="flex flex-col">
@@ -220,25 +221,194 @@ export default function BitcoinCalculatorPageClient({
           </div>
         </div>
 
-        {/* Upper Calculator + Summary Card */}
-        <Card className="mt-6 sm:mt-8">
+        {/* STEP 1: Select Miner */}
+        <div className="mt-6 sm:mt-8">
+          <div className="mb-2 flex items-center gap-3">
+            <CircleCheckBig className="h-6 w-6 text-bitcoin" />
+            <h2 className="text-xl font-bold">Select a Miner</h2>
+          </div>
+          <p className="text-muted-foreground mb-2 text-sm">
+            Click any miner to auto-fill hashrate, power, and estimated profit
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
+            {displayedMiners.map((miner) => {
+              const minerHashrate = toHashrate(
+                miner.hashrateValue,
+                miner.hashrateUnit
+              );
+              const isSelected = selectedMiner?.name === miner.name;
+
+              // Pre-calculate daily profit for display
+              const btcPerSecond =
+                ((minerHashrate / stats.networkHashrate) * stats.blockReward) /
+                (stats.blockTime || 600);
+              const btcPerDay = btcPerSecond * 86400;
+              const revenuePerDay = btcPerDay * (stats.price || 111747);
+              const kwhPerDay = (miner.power * 24) / 1000;
+              const electricityCostPerDay =
+                kwhPerDay * (state.electricityCost || 0.05);
+              const poolFeePerDay = revenuePerDay * (state.poolFee / 100);
+              const profitPerDay =
+                revenuePerDay - electricityCostPerDay - poolFeePerDay;
+
+              return (
+                <Card
+                  key={miner.id}
+                  onClick={() => loadMiner(miner)}
+                  className={`cursor-pointer transition-all hover:shadow-lg ${
+                    isSelected
+                      ? "ring-2 ring-bitcoin shadow-lg"
+                      : "hover:ring-1 hover:ring-muted"
+                  }`}
+                >
+                  <CardContent className="p-0">
+                    {/* Thumbnail */}
+                    <div className="relative h-40 sm:h-48 bg-gradient-to-br from-muted to-muted/50 rounded-t-lg overflow-hidden">
+                      {miner.thumbnail ? (
+                        <img
+                          src={miner.thumbnail}
+                          alt={miner.name}
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center h-full">
+                          <Zap className="h-12 w-12 sm:h-16 sm:w-16 text-muted-foreground/30" />
+                        </div>
+                      )}
+                      {isSelected && (
+                        <Badge className="absolute top-2 right-2 bg-bitcoin text-white text-xs">
+                          Selected
+                        </Badge>
+                      )}
+                    </div>
+
+                    {/* Card Details */}
+                    <div className="p-3 sm:p-4 space-y-2 sm:space-y-3">
+                      <div>
+                        <h3 className="font-semibold text-sm sm:text-base lg:text-lg leading-tight line-clamp-1">
+                          {miner.name}
+                        </h3>
+                        <p className="text-xs sm:text-sm text-muted-foreground">
+                          {miner.manufacturer}
+                        </p>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm">
+                        <div>
+                          <p className="text-muted-foreground">Hashrate</p>
+                          <p className="font-semibold font-mono text-xs sm:text-sm">
+                            {formatHashrate(minerHashrate)}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground">Power</p>
+                          <p className="font-semibold font-mono text-xs sm:text-sm">
+                            {miner.power}W
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Daily Profit */}
+                      <div className="bg-muted/50 rounded p-2 text-center">
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs sm:text-sm text-muted-foreground">
+                            Est. Profit / Day
+                          </p>
+                          <p
+                            className={`text-xs sm:text-sm font-bold ${
+                              profitPerDay >= 0
+                                ? "text-green-600"
+                                : "text-red-600"
+                            }`}
+                          >
+                            ${profitPerDay.toFixed(2)}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-2 border-t">
+                        <div>
+                          <p className="text-[10px] sm:text-xs text-muted-foreground">
+                            Price
+                          </p>
+                          <p className="text-lg sm:text-xl font-bold text-bitcoin">
+                            ${miner.cost.toLocaleString()}
+                          </p>
+                        </div>
+                        {miner.buyUrl && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              window.open(miner.buyUrl, "_blank");
+                            }}
+                            className="gap-1 text-xs"
+                          >
+                            Buy
+                            <ChevronRight className="h-3 w-3" />
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+
+          {/* View All Button */}
+          {minersData.length > 10 && (
+            <div className="mt-6 text-center">
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={() => setShowAllMiners(!showAllMiners)}
+                className="min-w-[200px]"
+              >
+                {showAllMiners ? (
+                  <>
+                    Show Less{" "}
+                    <ChevronsDown className="ml-2 h-4 w-4 rotate-180" />
+                  </>
+                ) : (
+                  <>
+                    View All Miners ({minersData.length}){" "}
+                    <ChevronsDown className="ml-2 h-4 w-4" />
+                  </>
+                )}
+              </Button>
+            </div>
+          )}
+        </div>
+
+        {/* STEP 2: Calculator */}
+        <Card className="mt-8 sm:mt-10">
           <CardHeader className="px-4 sm:px-6">
-            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-              <CalculatorIcon className="h-4 w-4 sm:h-5 sm:w-5" />
-              BTC Mining Calculator
-            </CardTitle>
+            <div className="flex items-center gap-3 mb-2">
+              <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+                <CalculatorIcon className="h-6 w-6 text-bitcoin" />
+                Configure & Calculate
+              </CardTitle>
+            </div>
+            <CardDescription>
+              {selectedMiner
+                ? `Using: ${selectedMiner.name}`
+                : "Select a miner first or enter values manually"}
+            </CardDescription>
           </CardHeader>
           <CardContent className="px-4 sm:px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
               {/* Left: Inputs */}
               <div className="space-y-4">
                 {selectedMiner && (
-                  <div className="flex items-center justify-between p-2 sm:p-3 rounded bg-muted/50 text-sm border-1 gap-2">
+                  <div className="flex items-center justify-between p-3 rounded bg-muted/50 text-sm border">
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium truncate text-xs sm:text-sm">
+                      <p className="font-medium truncate">
                         {selectedMiner.name}
                       </p>
-                      <p className="text-[10px] sm:text-xs text-muted-foreground">
+                      <p className="text-xs text-muted-foreground">
                         {formatHashrate(
                           toHashrate(
                             selectedMiner.hashrateValue,
@@ -257,16 +427,14 @@ export default function BitcoinCalculatorPageClient({
                       }}
                       className="gap-1 text-xs"
                     >
-                      Buy
-                      <ChevronRight className="h-3 w-3" />
+                      Buy <ChevronRight className="h-3 w-3" />
                     </Button>
                   </div>
                 )}
+
                 {/* Hashrate */}
                 <div className="space-y-2">
-                  <Label htmlFor="hashrate" className="text-sm sm:text-base">
-                    Hashrate
-                  </Label>
+                  <Label htmlFor="hashrate">Hashrate</Label>
                   <div className="flex gap-2">
                     <Input
                       id="hashrate"
@@ -282,7 +450,6 @@ export default function BitcoinCalculatorPageClient({
                           hashrate: toHashrate(val, s.hashrateUnit),
                         }));
                       }}
-                      className="flex-1 text-sm sm:text-base"
                     />
                     <Select
                       value={state.hashrateUnit}
@@ -295,8 +462,8 @@ export default function BitcoinCalculatorPageClient({
                         }));
                       }}
                     >
-                      <SelectTrigger className="w-[80px] sm:w-[100px] text-sm">
-                        <SelectValue placeholder="Unit" />
+                      <SelectTrigger className="w-[100px]">
+                        <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
                         {Object.keys(unitMultipliers).map((unit) => (
@@ -307,16 +474,13 @@ export default function BitcoinCalculatorPageClient({
                       </SelectContent>
                     </Select>
                   </div>
-                  <p className="text-[10px] sm:text-xs text-muted-foreground">
+                  <p className="text-xs text-muted-foreground">
                     {formatHashrate(state.hashrate)} H/s
                   </p>
                 </div>
 
-                {/* Power */}
                 <div className="space-y-2">
-                  <Label htmlFor="power" className="text-sm sm:text-base">
-                    Power Consumption (W)
-                  </Label>
+                  <Label htmlFor="power">Power Consumption (W)</Label>
                   <Input
                     id="power"
                     type="number"
@@ -328,15 +492,11 @@ export default function BitcoinCalculatorPageClient({
                         power: Number(e.target.value) || 0,
                       }))
                     }
-                    className="text-sm sm:text-base"
                   />
                 </div>
 
-                {/* Electricity */}
                 <div className="space-y-2">
-                  <Label htmlFor="elec-cost" className="text-sm sm:text-base">
-                    Electricity Cost ($/kWh)
-                  </Label>
+                  <Label htmlFor="elec-cost">Electricity Cost ($/kWh)</Label>
                   <Input
                     id="elec-cost"
                     type="number"
@@ -349,15 +509,11 @@ export default function BitcoinCalculatorPageClient({
                         electricityCost: Number(e.target.value) || 0,
                       }))
                     }
-                    className="text-sm sm:text-base"
                   />
                 </div>
 
-                {/* Pool Fee */}
                 <div className="space-y-2">
-                  <Label htmlFor="pool-fee" className="text-sm sm:text-base">
-                    Pool Fee (%)
-                  </Label>
+                  <Label htmlFor="pool-fee">Pool Fee (%)</Label>
                   <Input
                     id="pool-fee"
                     type="number"
@@ -370,13 +526,12 @@ export default function BitcoinCalculatorPageClient({
                         poolFee: Number(e.target.value) || 0,
                       }))
                     }
-                    className="text-sm sm:text-base"
                   />
                 </div>
 
                 <Button
                   onClick={calculateProfit}
-                  className="w-full bg-bitcoin hover:bg-bitcoin/90 text-white text-sm sm:text-base"
+                  className="w-full bg-bitcoin hover:bg-bitcoin/90 text-white"
                   disabled={loading}
                   size="lg"
                 >
@@ -499,275 +654,132 @@ export default function BitcoinCalculatorPageClient({
           </CardContent>
         </Card>
 
-        {/* Forecast Table */}
+        {/* Forecast Table, KPIs, FAQ - unchanged below */}
         {results && (
-          <Card className="mt-6 sm:mt-8">
-            <CardHeader className="px-4 sm:px-6">
-              <CardTitle className="text-lg sm:text-xl">
-                Mining Reward Forecast
-              </CardTitle>
-              <CardDescription className="text-xs sm:text-sm">
-                Projected earnings over time
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="px-2 sm:px-4 lg:px-6">
-              <div className="overflow-x-auto -mx-2 sm:mx-0">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="text-xs sm:text-sm">
-                        Period
-                      </TableHead>
-                      <TableHead className="text-xs sm:text-sm">BTC</TableHead>
-                      <TableHead className="text-xs sm:text-sm">
-                        Revenue
-                      </TableHead>
-                      <TableHead className="text-xs sm:text-sm hidden sm:table-cell">
-                        Power Cost
-                      </TableHead>
-                      <TableHead className="text-xs sm:text-sm hidden md:table-cell">
-                        Fees
-                      </TableHead>
-                      <TableHead className="text-xs sm:text-sm">
-                        Profit
-                      </TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {[
-                      { label: "Hourly", h: 1 },
-                      { label: "Daily", h: 24 },
-                      { label: "Weekly", h: 168 },
-                      { label: "Monthly", h: 730 },
-                      { label: "Yearly", h: 8760 },
-                    ].map((p) => (
-                      <TableRow key={p.label}>
-                        <TableCell className="text-xs sm:text-sm font-medium">
-                          {p.label}
-                        </TableCell>
-                        <TableCell className="text-xs sm:text-sm font-mono">
-                          {btcPerPeriod(p.h).toFixed(8)}
-                        </TableCell>
-                        <TableCell className="text-xs sm:text-sm">
-                          ${revenuePerPeriod(p.h).toFixed(2)}
-                        </TableCell>
-                        <TableCell className="text-xs sm:text-sm hidden sm:table-cell">
-                          ${costPerPeriod(p.h).toFixed(2)}
-                        </TableCell>
-                        <TableCell className="text-xs sm:text-sm hidden md:table-cell">
-                          ${feesPerPeriod(p.h).toFixed(2)}
-                        </TableCell>
-                        <TableCell className="text-xs sm:text-sm font-semibold">
-                          ${profitPerPeriod(p.h).toFixed(2)}
-                        </TableCell>
+          <>
+            {/* Forecast Table */}
+            <Card className="mt-6 sm:mt-8">
+              <CardHeader className="px-4 sm:px-6">
+                <CardTitle className="text-lg sm:text-xl">
+                  Mining Reward Forecast
+                </CardTitle>
+                <CardDescription>Projected earnings over time</CardDescription>
+              </CardHeader>
+              <CardContent className="px-2 sm:px-4 lg:px-6">
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Period</TableHead>
+                        <TableHead>BTC</TableHead>
+                        <TableHead>Revenue</TableHead>
+                        <TableHead className="hidden sm:table-cell">
+                          Power Cost
+                        </TableHead>
+                        <TableHead className="hidden md:table-cell">
+                          Fees
+                        </TableHead>
+                        <TableHead>Profit</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* KPI Cards */}
-        {results && (
-          <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            <Card>
-              <CardHeader className="text-center pb-2 sm:pb-3 px-4">
-                <CardTitle className="text-base sm:text-lg">
-                  Profit Margin
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center px-4">
-                <div className="text-2xl sm:text-3xl font-bold text-green-600">
-                  +{results.profitMargin}%
+                    </TableHeader>
+                    <TableBody>
+                      {[
+                        { label: "Hourly", h: 1 },
+                        { label: "Daily", h: 24 },
+                        { label: "Weekly", h: 168 },
+                        { label: "Monthly", h: 730 },
+                        { label: "Yearly", h: 8760 },
+                      ].map((p) => (
+                        <TableRow key={p.label}>
+                          <TableCell className="font-medium">
+                            {p.label}
+                          </TableCell>
+                          <TableCell className="font-mono">
+                            {btcPerPeriod(p.h).toFixed(8)}
+                          </TableCell>
+                          <TableCell>
+                            ${revenuePerPeriod(p.h).toFixed(2)}
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            ${costPerPeriod(p.h).toFixed(2)}
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            ${feesPerPeriod(p.h).toFixed(2)}
+                          </TableCell>
+                          <TableCell className="font-semibold">
+                            ${profitPerPeriod(p.h).toFixed(2)}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
                 </div>
               </CardContent>
             </Card>
-            <Card>
-              <CardHeader className="text-center pb-2 sm:pb-3 px-4">
-                <CardTitle className="text-base sm:text-lg flex items-center justify-center gap-2">
-                  <Clock className="h-4 w-4 sm:h-5 sm:w-5" /> Days to 1 BTC
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center px-4">
-                <div className="text-2xl sm:text-3xl font-bold">
-                  {results.daysTo1Btc.toFixed(1)}
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="text-center pb-2 sm:pb-3 px-4">
-                <CardTitle className="text-base sm:text-lg flex items-center justify-center gap-2">
-                  <Zap className="h-4 w-4 sm:h-5 sm:w-5" /> ROI (Days)
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center px-4">
-                <div className="text-2xl sm:text-3xl font-bold">
-                  {results.roiDays === Infinity
-                    ? "Never"
-                    : results.roiDays.toFixed(1)}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        )}
 
-        {/* Popular Miners Table with View All */}
-        <div className="mt-6 sm:mt-8">
-          <div className="mb-4 sm:mb-6">
-            <h2 className="text-xl sm:text-2xl font-bold flex items-center gap-2">
-              <Settings className="h-5 w-5 sm:h-6 sm:w-6 text-bitcoin" />
-              Popular Miners
-            </h2>
-            <p className="text-muted-foreground mt-1 text-xs sm:text-sm">
-              Click a card to auto-fill calculator
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
-            {displayedMiners.map((miner) => {
-              const minerHashrate = toHashrate(
-                miner.hashrateValue,
-                miner.hashrateUnit
-              );
-              const isSelected = selectedMiner?.name === miner.name;
-
-              return (
-                <Card
-                  key={miner.id}
-                  onClick={() => loadMiner(miner)}
-                  className={`cursor-pointer transition-all hover:shadow-lg ${
-                    isSelected
-                      ? "ring-2 ring-bitcoin shadow-lg"
-                      : "hover:ring-1 hover:ring-muted"
-                  }`}
-                >
-                  <CardContent className="p-0">
-                    {/* Thumbnail */}
-                    <div className="relative h-40 sm:h-48 bg-gradient-to-br from-muted to-muted/50 rounded-t-lg overflow-hidden">
-                      {miner.thumbnail ? (
-                        <img
-                          src={miner.thumbnail}
-                          alt={miner.name}
-                          className="w-full h-full object-contain"
-                        />
-                      ) : (
-                        <div className="flex items-center justify-center h-full">
-                          <Zap className="h-12 w-12 sm:h-16 sm:w-16 text-muted-foreground/30" />
-                        </div>
-                      )}
-                      {isSelected && (
-                        <Badge className="absolute top-2 right-2 bg-bitcoin text-white text-xs">
-                          Selected
-                        </Badge>
-                      )}
-                    </div>
-
-                    {/* Card Details */}
-                    <div className="p-3 sm:p-4 space-y-2 sm:space-y-3">
-                      <div>
-                        <h3 className="font-semibold text-sm sm:text-base lg:text-lg leading-tight line-clamp-1">
-                          {miner.name}
-                        </h3>
-                        <p className="text-xs sm:text-sm text-muted-foreground">
-                          {miner.manufacturer}
-                        </p>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm">
-                        <div>
-                          <p className="text-muted-foreground">Hashrate</p>
-                          <p className="font-semibold font-mono text-xs sm:text-sm">
-                            {formatHashrate(minerHashrate)}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-muted-foreground">Power</p>
-                          <p className="font-semibold font-mono text-xs sm:text-sm">
-                            {miner.power}W
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between pt-2 border-t">
-                        <div>
-                          <p className="text-[10px] sm:text-xs text-muted-foreground">
-                            Price
-                          </p>
-                          <p className="text-lg sm:text-xl font-bold text-bitcoin">
-                            ${miner.cost.toLocaleString()}
-                          </p>
-                        </div>
-                        {miner.buyUrl && (
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              window.open(miner.buyUrl, "_blank");
-                            }}
-                            className="gap-1 text-xs"
-                          >
-                            Buy
-                            <ChevronRight className="h-3 w-3" />
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-
-          {/* View All / Collapse Button */}
-          {minersData.length > 5 && (
-            <div className="mt-4 sm:mt-6 text-center">
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => setShowAllMiners(!showAllMiners)}
-                className="min-w-[180px] sm:min-w-[200px] text-sm sm:text-base"
-              >
-                {showAllMiners ? (
-                  <>
-                    Show Less
-                    <ChevronsDown className="ml-2 h-4 w-4 rotate-180" />
-                  </>
-                ) : (
-                  <>
-                    View All Miners ({minersData.length})
-                    <ChevronsDown className="ml-2 h-4 w-4" />
-                  </>
-                )}
-              </Button>
+            {/* KPI Cards */}
+            <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+              <Card>
+                <CardHeader className="text-center pb-3">
+                  <CardTitle className="text-lg">Profit Margin</CardTitle>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <div className="text-3xl font-bold text-green-600">
+                    +{results.profitMargin}%
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="text-center pb-3">
+                  <CardTitle className="text-lg flex items-center justify-center gap-2">
+                    <Clock className="h-5 w-5" /> Days to 1 BTC
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <div className="text-3xl font-bold">
+                    {results.daysTo1Btc.toFixed(1)}
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="text-center pb-3">
+                  <CardTitle className="text-lg flex items-center justify-center gap-2">
+                    <Zap className="h-5 w-5" /> ROI (Days)
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <div className="text-3xl font-bold">
+                    {results.roiDays === Infinity
+                      ? "Never"
+                      : results.roiDays.toFixed(1)}
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-          )}
-        </div>
+          </>
+        )}
 
         {/* FAQ */}
-        <Card className="mt-6 sm:mt-8 mb-8 sm:mb-10 lg:mb-12">
+        <Card className="mt-8 mb-10 lg:mb-12">
           <CardHeader className="px-4 sm:px-6">
-            <CardTitle className="text-lg sm:text-xl">
-              Bitcoin Mining Frequently Asked Questions
+            <CardTitle className="text-xl">
+              Frequently Asked Questions
             </CardTitle>
           </CardHeader>
           <CardContent className="px-4 sm:px-6">
             <Accordion
               type="multiple"
-              defaultValue={faqsData.map((_, index) => `item-${index}`)}
-              className="w-full"
+              defaultValue={faqsData.map((_, i) => `item-${i}`)}
             >
-              {faqsData.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-sm sm:text-base lg:text-lg text-left">
+              {faqsData.map((faq, i) => (
+                <AccordionItem key={i} value={`item-${i}`}>
+                  <AccordionTrigger className="text-left">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent>
                     <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-                      {faq.answer.map((point, i) => (
-                        <li key={i}>{point}</li>
+                      {faq.answer.map((point, j) => (
+                        <li key={j}>{point}</li>
                       ))}
                     </ul>
                   </AccordionContent>
