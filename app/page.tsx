@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getCmcImageUrl } from "@/lib/config";
 import Link from "next/link";
-import CompoundCustomLink from "@/components/custom-link";
 
 interface CryptoData {
   id: string;
@@ -20,6 +19,7 @@ interface CryptoData {
   profitability: number;
   algorithm: string;
   logo: string;
+  href: string;
 }
 
 const cryptoList: CryptoData[] = [
@@ -37,6 +37,7 @@ const cryptoList: CryptoData[] = [
     profitability: 0.00001234,
     algorithm: "SHA-256",
     logo: getCmcImageUrl(1),
+    href: "https://droomdroom.com/bitcoin-mining-calculator",
   },
   {
     id: "3",
@@ -52,6 +53,7 @@ const cryptoList: CryptoData[] = [
     profitability: 0.00023456,
     algorithm: "Scrypt",
     logo: getCmcImageUrl(2),
+    href: "https://droomdroom.com/litecoin-mining-calculator",
   },
   {
     id: "4",
@@ -67,6 +69,7 @@ const cryptoList: CryptoData[] = [
     profitability: 0.00123456,
     algorithm: "Scrypt",
     logo: getCmcImageUrl(74),
+    href: "https://droomdroom.com/dogecoin-mining-calculator",
   },
   // {
   //   id: "5",
@@ -97,6 +100,7 @@ const cryptoList: CryptoData[] = [
     profitability: 0.000056,
     algorithm: "Equihash",
     logo: getCmcImageUrl(1437),
+    href: "https://droomdroom.com/zcash-mining-calculator",
   },
   // {
   //   id: "7",
@@ -138,7 +142,7 @@ export default function MiningCalculatorPage() {
           <div className="page-container">
             <div className="text-center max-w-4xl mx-auto">
               <h1 className="section-title text-4xl md:text-5xl lg:text-6xl animate-fade-in">
-                Calculate Bitcoin mining profits accurately.
+                Calculate mining profits accurately.
               </h1>
               <p className="section-subtitle mt-4 text-lg md:text-xl text-muted-foreground animate-slide-in-from-bottom animation-delay-200">
                 Calculate mining profits with real-time data. Analyze rewards,
@@ -150,11 +154,11 @@ export default function MiningCalculatorPage() {
                   size="lg"
                   className="interactive-element bg-bitcoin hover:bg-bitcoin-dark"
                 >
-                  <CompoundCustomLink href="/bitcoin-mining-calculator">
+                  <Link href="https://droomdroom.com/bitcoin-mining-calculator">
                     <Calculator className="mr-2 h-4 w-4" />
                     Bitcoin Mining Calculator
                     <ChevronRight className="ml-2 h-4 w-4" />
-                  </CompoundCustomLink>
+                  </Link>
                 </Button>
               </div>
             </div>
@@ -170,10 +174,7 @@ export default function MiningCalculatorPage() {
 
             <div className="flex flex-wrap justify-center gap-4 md:gap-6">
               {cryptoList.map((coin, idx) => (
-                <CompoundCustomLink
-                  key={coin.id}
-                  href={`/${coin.name.toLowerCase()}-mining-calculator`}
-                >
+                <Link key={coin.id} href={`${coin.href}`}>
                   <Card
                     className="
               card-hover interactive-element group cursor-pointer
@@ -205,7 +206,7 @@ export default function MiningCalculatorPage() {
                       </p>
                     </CardContent>
                   </Card>
-                </CompoundCustomLink>
+                </Link>
               ))}
             </div>
 

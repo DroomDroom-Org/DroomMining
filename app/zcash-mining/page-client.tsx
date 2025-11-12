@@ -36,7 +36,6 @@ import ZcashChart from "@/components/zcash-chart";
 import { ChartDataPoint, Stats } from "@/types";
 import { formatDifficulty, formatPrice, formatHashrate } from "@/lib/format";
 import useZcash from "@/hooks/use-zcash";
-import Breadcrumbs from "@/components/breadcrumbs";
 import CompoundCustomLink from "@/components/custom-link";
 
 interface ZcashHomePageClientProps {
@@ -218,9 +217,6 @@ export default function ZcashHomePageClient({
 
         {/* Page Header */}
         <div className="w-full mb-4 sm:mb-6 pt-6">
-          <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-            <Breadcrumbs items={breadcrumbs} className="text-zcash" />
-          </div>
           <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
             <img
               src={getCmcImageUrl(1437)}

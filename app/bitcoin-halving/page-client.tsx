@@ -39,7 +39,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Stats, Faq } from "@/types";
-import Breadcrumbs from "@/components/breadcrumbs";
 
 const HALVING_INTERVAL = 210_000;
 const SECONDS_PER_DAY = 86_400;
@@ -145,9 +144,6 @@ export default function BitcoinHalvingPageClient({
 
         {/* Page Header */}
         <div className="w-full mb-4 sm:mb-6 pt-6">
-          <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-            <Breadcrumbs items={breadcrumbs} className="text-bitcoin" />
-          </div>
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
             <div className="flex flex-col">
               <div className="flex items-center mb-3 sm:mb-4 gap-3 sm:gap-4">

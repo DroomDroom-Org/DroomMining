@@ -37,7 +37,6 @@ import useBitcoin from "@/hooks/use-bitcoin";
 import BitcoinChart from "@/components/bitcoin-chart";
 import { ChartDataPoint, Stats } from "@/types";
 import { formatDifficulty, formatPrice, formatHashrate } from "@/lib/format";
-import Breadcrumbs from "@/components/breadcrumbs";
 import CompoundCustomLink from "@/components/custom-link";
 
 interface BitcoinHomePageClientProps {
@@ -220,9 +219,6 @@ export default function BitcoinHomePageClient({
 
         {/* Page Header */}
         <div className="w-full mb-4 sm:mb-6 pt-6">
-          <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-            <Breadcrumbs items={breadcrumbs} className="text-bitcoin" />
-          </div>
           <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
             <img
               src={getCmcImageUrl(1)}

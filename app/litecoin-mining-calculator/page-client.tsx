@@ -47,8 +47,6 @@ import { getCmcImageUrl } from "@/lib/config";
 import LitecoinNavigation from "@/components/litecoin-navigation";
 import { Stats, Calculator, Faq } from "@/types";
 import { formatDifficulty, formatHashrate } from "@/lib/format";
-import { litecoinCalculatorFaqs } from "@/constants/litecoin";
-import Breadcrumbs from "@/components/breadcrumbs";
 
 interface LitecoinCalculatorPageClientProps {
   statsData: Stats;
@@ -161,11 +159,6 @@ export default function LitecoinCalculatorPageClient({
   const feesPerPeriod = (h: number) => per("feesPerDay", h);
   const profitPerPeriod = (h: number) => per("profitPerDay", h);
 
-  const breadcrumbs = [
-    { name: "Home", href: "/mining" },
-    { name: "Litecoin Mining Calculator", href: "/litecoin-mining-calculator" },
-  ];
-
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-4">
@@ -173,9 +166,6 @@ export default function LitecoinCalculatorPageClient({
 
         {/* Page Header */}
         <div className="w-full mb-4 pt-6">
-          <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-            <Breadcrumbs items={breadcrumbs} className="text-litecoin" />
-          </div>
           <div className="flex items-start justify-between">
             <div className="flex flex-col">
               <div className="flex items-center mb-4 gap-4">

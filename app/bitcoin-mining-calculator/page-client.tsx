@@ -47,7 +47,6 @@ import { getCmcImageUrl } from "@/lib/config";
 import BitcoinNavigation from "@/components/bitcoin-navigation";
 import { Stats, Miner, Calculator, Faq } from "@/types";
 import { formatDifficulty, formatHashrate } from "@/lib/format";
-import Breadcrumbs from "@/components/breadcrumbs";
 
 interface BitcoinCalculatorPageClientProps {
   statsData: Stats;
@@ -196,9 +195,6 @@ export default function BitcoinCalculatorPageClient({
 
         {/*Page Header */}
         <div className="w-full mb-4 sm:mb-6 pt-6">
-          <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-            <Breadcrumbs items={breadcrumbs} className="text-bitcoin" />
-          </div>
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
             <div className="flex flex-col">
               <div className="flex items-center mb-3 sm:mb-4 gap-3 sm:gap-4">

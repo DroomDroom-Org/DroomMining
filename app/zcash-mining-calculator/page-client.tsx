@@ -48,7 +48,6 @@ import ZcashNavigation from "@/components/zcash-navigation";
 import { Stats, Calculator, Faq } from "@/types";
 import { formatDifficulty, formatHashrate } from "@/lib/format";
 import { zcashCalculatorFaqs } from "@/constants/zcash";
-import Breadcrumbs from "@/components/breadcrumbs";
 
 interface ZcashCalculatorPageClientProps {
   statsData: Stats;
@@ -171,9 +170,6 @@ export default function ZcashCalculatorPageClient({
 
         {/*Page Header */}
         <div className="w-full mb-4 sm:mb-6 pt-6">
-          <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-            <Breadcrumbs items={breadcrumbs} className="text-zcash" />
-          </div>
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
             <div className="flex flex-col">
               <div className="flex items-center mb-3 sm:mb-4 gap-3 sm:gap-4">

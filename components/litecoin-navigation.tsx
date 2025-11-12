@@ -3,11 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import CompoundCustomLink from "./custom-link";
 
 const navItems = [
-  { name: "Litecoin Mining", href: "/litecoin-mining" },
-  { name: "Litecoin Mining Calculator", href: "/litecoin-mining-calculator" },
+  { name: "Home", href: "https://droomdroom.com/mining" },
+  { name: "Litecoin Mining", href: "https://droomdroom.com/litecoin-mining" },
+  {
+    name: "Litecoin Mining Calculator",
+    href: "https://droomdroom.com/litecoin-mining-calculator",
+  },
 ];
 
 export default function LitecoinNavigation() {
@@ -15,14 +18,22 @@ export default function LitecoinNavigation() {
 
   return (
     <nav className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="border-b flex items-center  space-x-6 py-4 overflow-x-auto">
+      <div className="border-b flex items-center space-x-6 py-3 overflow-x-auto">
         {navItems.map((item) => {
-          const isActive = pathname === item.href;
+          let hrefPath: string;
+          try {
+            hrefPath = new URL(item.href).pathname;
+          } catch {
+            hrefPath = item.href;
+          }
+
+          const isActive = pathname === hrefPath;
 
           return (
-            <CompoundCustomLink
+            <Link
               key={item.name}
               href={item.href}
+              target={item.href}
               className={cn(
                 "relative px-3 py-2 text-sm font-medium transition-colors whitespace-nowrap",
                 isActive
@@ -37,7 +48,7 @@ export default function LitecoinNavigation() {
                   aria-hidden="true"
                 />
               )}
-            </CompoundCustomLink>
+            </Link>
           );
         })}
       </div>

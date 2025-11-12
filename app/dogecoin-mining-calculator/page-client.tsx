@@ -48,7 +48,6 @@ import DogecoinNavigation from "@/components/dogecoin-navigation";
 import { Stats, Calculator } from "@/types";
 import { formatDifficulty, formatHashrate } from "@/lib/format";
 import { dogecoinCalculatorFaqs } from "@/constants/dogecoin";
-import Breadcrumbs from "@/components/breadcrumbs";
 
 interface DogecoinCalculatorPageClientProps {
   statsData: Stats;
@@ -170,9 +169,6 @@ export default function DogecoinCalculatorPageClient({
 
         {/*Page Header */}
         <div className="w-full mb-4 pt-6">
-          <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-            <Breadcrumbs items={breadcrumbs} className="text-dogecoin" />
-          </div>
           <div className="flex items-start justify-between">
             <div className="flex flex-col">
               <div className="flex items-center mb-4 gap-4">

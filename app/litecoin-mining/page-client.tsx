@@ -36,7 +36,6 @@ import LitecoinChart from "@/components/litecoin-chart";
 import { ChartDataPoint, Stats } from "@/types";
 import { formatDifficulty, formatPrice, formatHashrate } from "@/lib/format";
 import useLitecoin from "@/hooks/use-litecoin";
-import Breadcrumbs from "@/components/breadcrumbs";
 import CompoundCustomLink from "@/components/custom-link";
 
 interface LitecoinHomePageClientProps {
@@ -188,11 +187,6 @@ export default function LitecoinHomePageClient({
     },
   ];
 
-  const breadcrumbs = [
-    { name: "Home", href: "/mining" },
-    { name: "Litecoin Mining", href: "/litecoin-mining" },
-  ];
-
   const handleDifficultyTimeRangeChange = (newTimeRange: string) => {
     setDiffcultyCurrentTimerange(newTimeRange);
     fetchDifficultyChart(newTimeRange);
@@ -215,9 +209,6 @@ export default function LitecoinHomePageClient({
 
         {/* Page Header */}
         <div className="w-full mb-4 pt-6">
-          <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-            <Breadcrumbs items={breadcrumbs} className="text-litecoin" />
-          </div>
           <div className="w-full flex items-center gap-4 mb-4">
             <img
               src={getCmcImageUrl(2)}

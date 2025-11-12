@@ -36,7 +36,6 @@ import DogecoinChart from "@/components/dogecoin-chart";
 import { ChartDataPoint, Stats } from "@/types";
 import { formatDifficulty, formatPrice, formatHashrate } from "@/lib/format";
 import useDogecoin from "@/hooks/use-dogecoin";
-import Breadcrumbs from "@/components/breadcrumbs";
 import CompoundCustomLink from "@/components/custom-link";
 
 interface DogecoinHomePageClientProps {
@@ -216,9 +215,6 @@ export default function DogecoinHomePageClient({
 
         {/* Page Header */}
         <div className="w-full mb-4 pt-6">
-          <div className="w-full flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-            <Breadcrumbs items={breadcrumbs} className="text-dogecoin" />
-          </div>
           <div className="w-full flex items-center gap-4 mb-4">
             <img
               src={getCmcImageUrl(74)}
