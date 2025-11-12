@@ -4,7 +4,7 @@ const nextConfig = {
 
   publicRuntimeConfig: {
     basePath: '/mining',
-    apiPath: '/api',
+    apiPath: '/mining/api',
     cmcImageUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64',
   },
 
