@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Zap,
   DollarSign,
@@ -85,6 +85,7 @@ export default function BitcoinCalculatorPageClient({
   const [loading, setLoading] = useState(false);
   const [selectedMiner, setSelectedMiner] = useState<Miner | null>(null);
   const [showAllMiners, setShowAllMiners] = useState(false);
+  const calculatorRef = useRef<HTMLDivElement>(null);
 
   const [stats, setStats] = useState<Stats>({
     blockCount: 0,
@@ -170,7 +171,15 @@ export default function BitcoinCalculatorPageClient({
   const loadMiner = (miner: Miner) => {
     setSelectedMiner(miner);
     setLoading(true);
-    setTimeout(() => calculateProfit(), 150);
+
+    setTimeout(() => {
+      calculateProfit();
+
+      calculatorRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 150);
   };
 
   const per = (field: keyof typeof results, hours: number) =>
@@ -384,276 +393,282 @@ export default function BitcoinCalculatorPageClient({
         </div>
 
         {/* STEP 2: Calculator */}
-        <Card className="mt-8 sm:mt-10">
-          <CardHeader className="px-4 sm:px-6">
-            <div className="flex items-center gap-3 mb-2">
-              <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-                <CalculatorIcon className="h-6 w-6 text-bitcoin" />
-                Configure & Calculate
-              </CardTitle>
-            </div>
-            <CardDescription>
-              {selectedMiner
-                ? `Using: ${selectedMiner.name}`
-                : "Select a miner first or enter values manually"}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="px-4 sm:px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
-              {/* Left: Inputs */}
-              <div className="space-y-4">
-                {selectedMiner && (
-                  <div className="flex items-center justify-between p-3 rounded bg-muted/50 text-sm border">
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium truncate">
-                        {selectedMiner.name}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {formatHashrate(
-                          toHashrate(
-                            selectedMiner.hashrateValue,
-                            selectedMiner.hashrateUnit
-                          )
-                        )}{" "}
-                        • {selectedMiner.power}W
-                      </p>
+        <div className="pt-32 md:pt-36" ref={calculatorRef}>
+          <Card>
+            <CardHeader className="px-4 sm:px-6">
+              <div className="flex items-center gap-3 mb-2">
+                <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+                  <CalculatorIcon className="h-6 w-6 text-bitcoin" />
+                  Configure & Calculate
+                </CardTitle>
+              </div>
+              <CardDescription>
+                {selectedMiner
+                  ? `Using: ${selectedMiner.name}`
+                  : "Select a miner first or enter values manually"}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="px-4 sm:px-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
+                {/* Left: Inputs */}
+                <div className="space-y-4">
+                  {selectedMiner && (
+                    <div className="flex items-center justify-between p-3 rounded bg-muted/50 text-sm border">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium truncate">
+                          {selectedMiner.name}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {formatHashrate(
+                            toHashrate(
+                              selectedMiner.hashrateValue,
+                              selectedMiner.hashrateUnit
+                            )
+                          )}{" "}
+                          • {selectedMiner.power}W
+                        </p>
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(selectedMiner.buyUrl, "_blank");
+                        }}
+                        className="gap-1 text-xs"
+                      >
+                        Buy <ChevronRight className="h-3 w-3" />
+                      </Button>
                     </div>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(selectedMiner.buyUrl, "_blank");
-                      }}
-                      className="gap-1 text-xs"
-                    >
-                      Buy <ChevronRight className="h-3 w-3" />
-                    </Button>
-                  </div>
-                )}
+                  )}
 
-                {/* Hashrate */}
-                <div className="space-y-2">
-                  <Label htmlFor="hashrate">Hashrate</Label>
-                  <div className="flex gap-2">
+                  {/* Hashrate */}
+                  <div className="space-y-2">
+                    <Label htmlFor="hashrate">Hashrate</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        id="hashrate"
+                        type="number"
+                        step="0.01"
+                        placeholder="e.g. 390"
+                        value={state.hashrateValue}
+                        onChange={(e) => {
+                          const val = parseFloat(e.target.value) || 0;
+                          setState((s) => ({
+                            ...s,
+                            hashrateValue: val,
+                            hashrate: toHashrate(val, s.hashrateUnit),
+                          }));
+                        }}
+                      />
+                      <Select
+                        value={state.hashrateUnit}
+                        onValueChange={(newUnit) => {
+                          const displayed = fromHashrate(
+                            state.hashrate,
+                            newUnit
+                          );
+                          setState((s) => ({
+                            ...s,
+                            hashrateUnit: newUnit,
+                            hashrateValue: displayed,
+                          }));
+                        }}
+                      >
+                        <SelectTrigger className="w-[100px]">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {Object.keys(unitMultipliers).map((unit) => (
+                            <SelectItem key={unit} value={unit}>
+                              {unit}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      {formatHashrate(state.hashrate)} H/s
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="power">Power Consumption (W)</Label>
                     <Input
-                      id="hashrate"
+                      id="power"
+                      type="number"
+                      placeholder="e.g. 7215"
+                      value={state.power}
+                      onChange={(e) =>
+                        setState((s) => ({
+                          ...s,
+                          power: Number(e.target.value) || 0,
+                        }))
+                      }
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="elec-cost">Electricity Cost ($/kWh)</Label>
+                    <Input
+                      id="elec-cost"
                       type="number"
                       step="0.01"
-                      placeholder="e.g. 390"
-                      value={state.hashrateValue}
-                      onChange={(e) => {
-                        const val = parseFloat(e.target.value) || 0;
+                      placeholder="e.g. 0.05"
+                      value={state.electricityCost}
+                      onChange={(e) =>
                         setState((s) => ({
                           ...s,
-                          hashrateValue: val,
-                          hashrate: toHashrate(val, s.hashrateUnit),
-                        }));
-                      }}
+                          electricityCost: Number(e.target.value) || 0,
+                        }))
+                      }
                     />
-                    <Select
-                      value={state.hashrateUnit}
-                      onValueChange={(newUnit) => {
-                        const displayed = fromHashrate(state.hashrate, newUnit);
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="pool-fee">Pool Fee (%)</Label>
+                    <Input
+                      id="pool-fee"
+                      type="number"
+                      step="0.1"
+                      placeholder="e.g. 1"
+                      value={state.poolFee}
+                      onChange={(e) =>
                         setState((s) => ({
                           ...s,
-                          hashrateUnit: newUnit,
-                          hashrateValue: displayed,
-                        }));
-                      }}
-                    >
-                      <SelectTrigger className="w-[100px]">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {Object.keys(unitMultipliers).map((unit) => (
-                          <SelectItem key={unit} value={unit}>
-                            {unit}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                          poolFee: Number(e.target.value) || 0,
+                        }))
+                      }
+                    />
                   </div>
-                  <p className="text-xs text-muted-foreground">
-                    {formatHashrate(state.hashrate)} H/s
-                  </p>
+
+                  <Button
+                    onClick={calculateProfit}
+                    className="w-full bg-bitcoin hover:bg-bitcoin/90 text-white"
+                    disabled={loading}
+                    size="lg"
+                  >
+                    {loading ? (
+                      <>
+                        <Zap className="mr-2 h-4 w-4 animate-spin" />
+                        Calculating...
+                      </>
+                    ) : (
+                      <>
+                        <DollarSign className="mr-2 h-4 w-4" />
+                        Calculate Profit
+                      </>
+                    )}
+                  </Button>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="power">Power Consumption (W)</Label>
-                  <Input
-                    id="power"
-                    type="number"
-                    placeholder="e.g. 7215"
-                    value={state.power}
-                    onChange={(e) =>
-                      setState((s) => ({
-                        ...s,
-                        power: Number(e.target.value) || 0,
-                      }))
-                    }
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="elec-cost">Electricity Cost ($/kWh)</Label>
-                  <Input
-                    id="elec-cost"
-                    type="number"
-                    step="0.01"
-                    placeholder="e.g. 0.05"
-                    value={state.electricityCost}
-                    onChange={(e) =>
-                      setState((s) => ({
-                        ...s,
-                        electricityCost: Number(e.target.value) || 0,
-                      }))
-                    }
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="pool-fee">Pool Fee (%)</Label>
-                  <Input
-                    id="pool-fee"
-                    type="number"
-                    step="0.1"
-                    placeholder="e.g. 1"
-                    value={state.poolFee}
-                    onChange={(e) =>
-                      setState((s) => ({
-                        ...s,
-                        poolFee: Number(e.target.value) || 0,
-                      }))
-                    }
-                  />
-                </div>
-
-                <Button
-                  onClick={calculateProfit}
-                  className="w-full bg-bitcoin hover:bg-bitcoin/90 text-white"
-                  disabled={loading}
-                  size="lg"
-                >
-                  {loading ? (
-                    <>
-                      <Zap className="mr-2 h-4 w-4 animate-spin" />
-                      Calculating...
-                    </>
-                  ) : (
-                    <>
-                      <DollarSign className="mr-2 h-4 w-4" />
-                      Calculate Profit
-                    </>
-                  )}
-                </Button>
-              </div>
-
-              {/* Right: Live Stats + Summary */}
-              <div className="flex flex-col justify-start space-y-4 min-h-full">
-                <div className="border-b pb-2">
-                  <div className="flex items-center gap-2 text-base sm:text-lg font-semibold">
-                    <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-bitcoin" />
-                    Live BTC Stats
+                {/* Right: Live Stats + Summary */}
+                <div className="flex flex-col justify-start space-y-4 min-h-full">
+                  <div className="border-b pb-2">
+                    <div className="flex items-center gap-2 text-base sm:text-lg font-semibold">
+                      <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-bitcoin" />
+                      Live BTC Stats
+                    </div>
+                    <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm mt-3">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Price</span>
+                        <span className="font-semibold">
+                          ${stats.price.toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">
+                          Difficulty
+                        </span>
+                        <span className="font-semibold">
+                          {formatDifficulty(stats.difficulty)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">
+                          Block Reward
+                        </span>
+                        <span className="font-semibold">
+                          {stats.blockReward} BTC
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">
+                          Network Hashrate
+                        </span>
+                        <span className="font-semibold break-all">
+                          {formatHashrate(stats.networkHashrate)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">
+                          Block Height
+                        </span>
+                        <span className="font-semibold">
+                          {stats.blockCount.toLocaleString()}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm mt-3">
+
+                  <h3 className="font-semibold text-base sm:text-lg">
+                    Mining Summary
+                  </h3>
+                  <div className="flex-1 grid gap-2 sm:gap-3 content-start text-xs sm:text-sm">
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Price</span>
-                      <span className="font-semibold">
-                        ${stats.price.toLocaleString()}
+                      <span className="text-muted-foreground">
+                        Mining Revenue
+                      </span>
+                      <span className="font-medium">
+                        ${results ? results.revenuePerDay.toFixed(2) : "0.00"}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Difficulty</span>
-                      <span className="font-semibold">
-                        {formatDifficulty(stats.difficulty)}
+                      <span className="text-muted-foreground">Mining Fees</span>
+                      <span className="font-medium">
+                        ${results ? results.feesPerDay.toFixed(2) : "0.00"}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">
-                        Block Reward
+                        Electricity Costs
                       </span>
-                      <span className="font-semibold">
-                        {stats.blockReward} BTC
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">
-                        Network Hashrate
-                      </span>
-                      <span className="font-semibold break-all">
-                        {formatHashrate(stats.networkHashrate)}
+                      <span className="font-medium">
+                        ${results ? results.elecPerDay.toFixed(2) : "0.00"}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">
-                        Block Height
+                        Bitcoin mined per hour
                       </span>
-                      <span className="font-semibold">
-                        {stats.blockCount.toLocaleString()}
+                      <span className="font-medium break-all">
+                        {results ? results.btcPerHour.toFixed(8) : "0.00000000"}{" "}
+                        BTC
                       </span>
                     </div>
-                  </div>
-                </div>
-
-                <h3 className="font-semibold text-base sm:text-lg">
-                  Mining Summary
-                </h3>
-                <div className="flex-1 grid gap-2 sm:gap-3 content-start text-xs sm:text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">
-                      Mining Revenue
-                    </span>
-                    <span className="font-medium">
-                      ${results ? results.revenuePerDay.toFixed(2) : "0.00"}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Mining Fees</span>
-                    <span className="font-medium">
-                      ${results ? results.feesPerDay.toFixed(2) : "0.00"}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">
-                      Electricity Costs
-                    </span>
-                    <span className="font-medium">
-                      ${results ? results.elecPerDay.toFixed(2) : "0.00"}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">
-                      Bitcoin mined per hour
-                    </span>
-                    <span className="font-medium break-all">
-                      {results ? results.btcPerHour.toFixed(8) : "0.00000000"}{" "}
-                      BTC
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">
-                      Bitcoin mined per day
-                    </span>
-                    <span className="font-medium break-all">
-                      {results ? results.btcPerDay.toFixed(8) : "0.00000000"}{" "}
-                      BTC
-                    </span>
-                  </div>
-                  <div className="flex justify-between pt-2 border-t">
-                    <span className="font-semibold">
-                      Bitcoin mining profit per day
-                    </span>
-                    <span className="font-semibold text-green-600">
-                      ${results ? results.profitPerDay.toFixed(2) : "0.00"}
-                    </span>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">
+                        Bitcoin mined per day
+                      </span>
+                      <span className="font-medium break-all">
+                        {results ? results.btcPerDay.toFixed(8) : "0.00000000"}{" "}
+                        BTC
+                      </span>
+                    </div>
+                    <div className="flex justify-between pt-2 border-t">
+                      <span className="font-semibold">
+                        Bitcoin mining profit per day
+                      </span>
+                      <span className="font-semibold text-green-600">
+                        ${results ? results.profitPerDay.toFixed(2) : "0.00"}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-
+            </CardContent>
+          </Card>
+        </div>
         {/* Forecast Table, KPIs, FAQ - unchanged below */}
         {results && (
           <>
