@@ -1,223 +1,181 @@
-import React from "react";
-import { ChevronRight, Calculator } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import React, { Suspense } from "react";
+import axios from "axios";
+import { getApiUrl } from "@/lib/config";
+import MiningPageClient from "./page-client";
+import { Coin } from "@/types";
 import { getCmcImageUrl } from "@/lib/config";
-import Link from "next/link";
+import MiningPageShimmer from "./page-client-shimmer";
 
-interface CryptoData {
-  id: string;
-  cmcId: number;
-  name: string;
-  symbol: string;
-  price: number;
-  change24h: number;
-  blockReward: number;
-  blockTime: number;
-  difficulty: string;
-  hashrate: string;
-  profitability: number;
-  algorithm: string;
-  logo: string;
-  href: string;
+async function fetchInitialData() {
+  try {
+    const [
+      bitcoinStatsResponse,
+      litecoinStatsResponse,
+      zcashStatsResponse,
+      dogecoinStatsResponse,
+    ] = await Promise.all([
+      axios.get(getApiUrl("/bitcoin/stats")),
+      axios.get(getApiUrl("/litecoin/stats")),
+      axios.get(getApiUrl("/zcash/stats")),
+      axios.get(getApiUrl("/dogecoin/stats")),
+    ]);
+
+    return {
+      bitcoinStatsData: bitcoinStatsResponse.data.data,
+      litecoinStatsData: litecoinStatsResponse.data.data,
+      zcashStatsData: zcashStatsResponse.data.data,
+      dogecoinStatsData: dogecoinStatsResponse.data.data,
+    };
+  } catch (error) {
+    console.error("Error fetching initial data:", error);
+    return {
+      bitcoinStatsData: null,
+      litecoinStatsData: null,
+      zcashStatsData: null,
+      dogecoinStatsData: null,
+    };
+  }
 }
 
-const cryptoList: CryptoData[] = [
+const baseCoins: Coin[] = [
   {
     id: "1",
     cmcId: 1,
     name: "Bitcoin",
     symbol: "BTC",
-    price: 45234.56,
-    change24h: 2.34,
-    blockReward: 6.25,
-    blockTime: 10,
-    difficulty: "83.72T",
-    hashrate: "583.47 EH/s",
-    profitability: 0.00001234,
-    algorithm: "SHA-256",
+    blockCount: 0,
+    difficulty: 0,
+    networkHashrate: 0,
+    blockReward: 0,
+    blockTime: 0,
+    difficultyRetarget: 0,
+    volume: 0,
+    price: 0,
     logo: getCmcImageUrl(1),
-    href: "https://droomdroom.com/bitcoin-mining-calculator",
+    calculatorHref: "https://droomdroom.com/bitcoin-mining-calculator",
+    miningHref: "https://droomdroom.com/bitcoin-mining",
   },
   {
-    id: "3",
+    id: "2",
     cmcId: 2,
     name: "Litecoin",
     symbol: "LTC",
-    price: 89.45,
-    change24h: 3.45,
-    blockReward: 12.5,
-    blockTime: 2.5,
-    difficulty: "28.45M",
-    hashrate: "845.23 TH/s",
-    profitability: 0.00023456,
-    algorithm: "Scrypt",
+    blockCount: 0,
+    difficulty: 0,
+    networkHashrate: 0,
+    blockReward: 0,
+    blockTime: 0,
+    difficultyRetarget: 0,
+    volume: 0,
+    price: 0,
     logo: getCmcImageUrl(2),
-    href: "https://droomdroom.com/litecoin-mining-calculator",
+    calculatorHref: "https://droomdroom.com/litecoin-mining-calculator",
+    miningHref: "https://droomdroom.com/litecoin-mining",
   },
   {
-    id: "4",
+    id: "3",
     cmcId: 74,
     name: "Dogecoin",
     symbol: "DOGE",
-    price: 0.089,
-    change24h: 5.67,
-    blockReward: 10000,
-    blockTime: 1,
-    difficulty: "12.34M",
-    hashrate: "645.23 TH/s",
-    profitability: 0.00123456,
-    algorithm: "Scrypt",
+    blockCount: 0,
+    difficulty: 0,
+    networkHashrate: 0,
+    blockReward: 0,
+    blockTime: 0,
+    difficultyRetarget: 0,
+    volume: 0,
+    price: 0,
     logo: getCmcImageUrl(74),
-    href: "https://droomdroom.com/dogecoin-mining-calculator",
+    calculatorHref: "https://droomdroom.com/dogecoin-mining-calculator",
+    miningHref: "https://droomdroom.com/dogecoin-mining",
   },
-  // {
-  //   id: "5",
-  //   cmcId: 2577,
-  //   name: "Ravencoin",
-  //   symbol: "RVN",
-  //   price: 0.032,
-  //   change24h: -0.8,
-  //   blockReward: 2500,
-  //   blockTime: 1,
-  //   difficulty: "98.12K",
-  //   hashrate: "7.34 TH/s",
-  //   profitability: 0.000987,
-  //   algorithm: "KawPow",
-  //   logo: getCmcImageUrl(2577),
-  // },
   {
-    id: "6",
+    id: "4",
     cmcId: 1437,
     name: "Zcash",
     symbol: "ZEC",
-    price: 28.45,
-    change24h: 1.2,
-    blockReward: 3.125,
-    blockTime: 75,
-    difficulty: "78.45M",
-    hashrate: "9.12 GS/s",
-    profitability: 0.000056,
-    algorithm: "Equihash",
+    blockCount: 0,
+    difficulty: 0,
+    networkHashrate: 0,
+    blockReward: 0,
+    blockTime: 0,
+    difficultyRetarget: 0,
+    volume: 0,
+    price: 0,
     logo: getCmcImageUrl(1437),
-    href: "https://droomdroom.com/zcash-mining-calculator",
+    calculatorHref: "https://droomdroom.com/zcash-mining-calculator",
+    miningHref: "https://droomdroom.com/zcash-mining",
   },
-  // {
-  //   id: "7",
-  //   cmcId: 328,
-  //   name: "Monero",
-  //   symbol: "XMR",
-  //   price: 148.9,
-  //   change24h: -2.1,
-  //   blockReward: 0.6,
-  //   blockTime: 120,
-  //   difficulty: "298.45G",
-  //   hashrate: "2.48 GH/s",
-  //   profitability: 0.000123,
-  //   algorithm: "RandomX",
-  //   logo: getCmcImageUrl(328),
-  // },
-  // {
-  //   id: "8",
-  //   cmcId: 1698,
-  //   name: "Horizen",
-  //   symbol: "ZEN",
-  //   price: 12.34,
-  //   change24h: 0.9,
-  //   blockReward: 3.75,
-  //   blockTime: 150,
-  //   difficulty: "45.23M",
-  //   hashrate: "1.23 GH/s",
-  //   profitability: 0.000078,
-  //   algorithm: "Equihash",
-  //   logo: getCmcImageUrl(1698),
-  // },
 ];
 
-export default function MiningCalculatorPage() {
+export default async function ZcashHomePage() {
+  const data = await fetchInitialData();
+  const {
+    bitcoinStatsData,
+    litecoinStatsData,
+    zcashStatsData,
+    dogecoinStatsData,
+  } = data;
+
+  const coins: Coin[] = baseCoins.map((coin) => ({ ...coin }));
+
+  for (const coin of coins) {
+    if (coin.name === "Bitcoin" && bitcoinStatsData) {
+      Object.assign(coin, {
+        blockCount: bitcoinStatsData.blockCount ?? 0,
+        difficulty: bitcoinStatsData.difficulty ?? 0,
+        networkHashrate: bitcoinStatsData.networkHashrate ?? 0,
+        blockReward: bitcoinStatsData.blockReward ?? 0,
+        blockTime: bitcoinStatsData.blockTime ?? 0,
+        difficultyRetarget: bitcoinStatsData.difficultyRetarget ?? 0,
+        volume: bitcoinStatsData.volume ?? 0,
+        price: bitcoinStatsData.price ?? 0,
+      });
+    }
+
+    if (coin.name === "Litecoin" && litecoinStatsData) {
+      Object.assign(coin, {
+        blockCount: litecoinStatsData.blockCount ?? 0,
+        difficulty: litecoinStatsData.difficulty ?? 0,
+        networkHashrate: litecoinStatsData.networkHashrate ?? 0,
+        blockReward: litecoinStatsData.blockReward ?? 0,
+        blockTime: litecoinStatsData.blockTime ?? 0,
+        difficultyRetarget: litecoinStatsData.difficultyRetarget ?? 0,
+        volume: litecoinStatsData.volume ?? 0,
+        price: litecoinStatsData.price ?? 0,
+      });
+    }
+
+    if (coin.name === "Zcash" && zcashStatsData) {
+      Object.assign(coin, {
+        blockCount: zcashStatsData.blockCount ?? 0,
+        difficulty: zcashStatsData.difficulty ?? 0,
+        networkHashrate: zcashStatsData.networkHashrate ?? 0,
+        blockReward: zcashStatsData.blockReward ?? 0,
+        blockTime: zcashStatsData.blockTime ?? 0,
+        difficultyRetarget: zcashStatsData.difficultyRetarget ?? 0,
+        volume: zcashStatsData.volume ?? 0,
+        price: zcashStatsData.price ?? 0,
+      });
+    }
+
+    if (coin.name === "Dogecoin" && dogecoinStatsData) {
+      Object.assign(coin, {
+        blockCount: dogecoinStatsData.blockCount ?? 0,
+        difficulty: dogecoinStatsData.difficulty ?? 0,
+        networkHashrate: dogecoinStatsData.networkHashrate ?? 0,
+        blockReward: dogecoinStatsData.blockReward ?? 0,
+        blockTime: dogecoinStatsData.blockTime ?? 0,
+        difficultyRetarget: dogecoinStatsData.difficultyRetarget ?? 0,
+        volume: dogecoinStatsData.volume ?? 0,
+        price: dogecoinStatsData.price ?? 0,
+      });
+    }
+  }
+
   return (
-    <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
-      <div className="container mx-auto px-4">
-        <section className="py-16 md:py-24 lg:py-32">
-          <div className="page-container">
-            <div className="text-center max-w-4xl mx-auto">
-              <h1 className="section-title text-4xl md:text-5xl lg:text-6xl animate-fade-in">
-                Calculate mining profits accurately.
-              </h1>
-              <p className="section-subtitle mt-4 text-lg md:text-xl text-muted-foreground animate-slide-in-from-bottom animation-delay-200">
-                Calculate mining profits with real-time data. Analyze rewards,
-                difficulty, and hashrate for top PoW coins.
-              </p>
-              <div className="mt-8 animate-slide-in-from-bottom animation-delay-400">
-                <Button
-                  asChild
-                  size="lg"
-                  className="interactive-element bg-bitcoin hover:bg-bitcoin-dark"
-                >
-                  <Link href="https://droomdroom.com/bitcoin-mining-calculator">
-                    <Calculator className="mr-2 h-4 w-4" />
-                    Bitcoin Mining Calculator
-                    <ChevronRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Calculators Grid */}
-        <section className="py-16">
-          <div className="page-container">
-            <h2 className="section-title text-center mb-12 animate-fade-in">
-              Mining Calculators
-            </h2>
-
-            <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-              {cryptoList.map((coin, idx) => (
-                <Link key={coin.id} href={`${coin.href}`}>
-                  <Card
-                    className="
-              card-hover interactive-element group cursor-pointer
-              overflow-hidden border border-border/50 bg-card/95 backdrop-blur-sm
-              h-48 w-36 sm:w-40 md:w-44 lg:w-48
-              flex flex-col justify-between
-            "
-                    style={{ animationDelay: `${idx * 50}ms` }}
-                  >
-                    <CardHeader className="pb-3 pt-4 px-3 flex-shrink-0">
-                      <div className="flex justify-center">
-                        <div className="relative">
-                          <img
-                            src={coin.logo}
-                            alt={coin.name}
-                            className="
-                      w-12 h-12 md:w-16 md:h-16 object-contain rounded-full
-                      ring-2 ring-primary/20 group-hover:ring-primary/50 transition-all
-                    "
-                            loading="lazy"
-                          />
-                        </div>
-                      </div>
-                    </CardHeader>
-
-                    <CardContent className="pt-0 pb-4 px-3 text-center flex-grow flex items-center justify-center">
-                      <p className="text-base font-semibold leading-tight">
-                        {coin.name} Mining Calculator
-                      </p>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-
-            <div className="mt-12 text-center">
-              <p className="text-muted-foreground max-w-3xl mx-auto mb-6">
-                Calculate profitability for Bitcoin, Litecoin, Dogecoin, Zcash.
-              </p>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
+    <Suspense fallback={<MiningPageShimmer />}>
+      <MiningPageClient coins={coins} />
+    </Suspense>
   );
 }

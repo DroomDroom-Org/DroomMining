@@ -10,12 +10,7 @@ import {
   DollarSign,
   ChevronsDown,
 } from "lucide-react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
@@ -118,11 +113,13 @@ export default function DogecoinCalculatorShimmer() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  {["Period", "DOGE", "Revenue", "Cost", "Fees", "Profit"].map((h) => (
-                    <TableHead key={h}>
-                      <Skeleton className="h-4 w-16" />
-                    </TableHead>
-                  ))}
+                  {["Period", "DOGE", "Revenue", "Cost", "Fees", "Profit"].map(
+                    (h) => (
+                      <TableHead key={h}>
+                        <Skeleton className="h-4 w-16" />
+                      </TableHead>
+                    )
+                  )}
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -176,7 +173,10 @@ export default function DogecoinCalculatorShimmer() {
                 <TableHeader>
                   <TableRow>
                     {["Miner", "Hashrate", "Power", "Cost"].map((h) => (
-                      <TableHead key={h} className={h === "Miner" ? "" : "text-right"}>
+                      <TableHead
+                        key={h}
+                        className={h === "Miner" ? "" : "text-right"}
+                      >
                         <Skeleton className="h-4 w-16" />
                       </TableHead>
                     ))}

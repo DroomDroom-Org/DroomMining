@@ -3,6 +3,25 @@ export interface ChartDataPoint {
   y: number;
 }
 
+export interface Coin {
+  id: string;
+  cmcId: number;
+  name: string;
+  symbol: string;
+  blockCount: number;
+  difficulty: number;
+  networkHashrate: number;
+  blockReward: number;
+  blockTime: number;
+  difficultyRetarget: number;
+  volume: number;
+  price: number;
+  logo: string;
+  calculatorHref: string;
+  miningHref: string;
+}
+
+
 export interface Stats {
   blockCount: number;
   difficulty: number;
