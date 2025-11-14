@@ -15,7 +15,7 @@ export const metadata: Metadata = {
       "Track real-time mining statistics of Dogecoin (DOGE) with clear data, performance trends, and insights to support better mining decisions.",
     images: [
       {
-        url: "https://bucket.droomdroom.online/pricebucket/og-images/coin-74-1763126118964.png",
+        url: "https://bucket.droomdroom.online/eventbucket/1763145120429-Mining-statistics-Dogecoin.png",
         width: 1200,
         height: 630,
         alt: "Dogecoin Mining – Live Difficulty & Hashrate",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     description:
       "Track real-time mining statistics of Dogecoin (DOGE) with clear data, performance trends, and insights to support better mining decisions.",
     images: [
-      "https://bucket.droomdroom.online/pricebucket/og-images/coin-74-1763126118964.png",
+      "https://bucket.droomdroom.online/eventbucket/1763145120429-Mining-statistics-Dogecoin.png",
     ],
   },
 

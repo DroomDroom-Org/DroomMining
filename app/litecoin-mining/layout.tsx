@@ -15,7 +15,7 @@ export const metadata: Metadata = {
       "Track real-time mining statistics of Litecoin (LTC) with clear data, performance trends, and insights to support better mining decisions.",
     images: [
       {
-        url: "https://bucket.droomdroom.online/pricebucket/og-images/coin-2-1763126118964.png",
+        url: "https://bucket.droomdroom.online/eventbucket/1763145265157-Mining-statistics-Litecoin.png",
         width: 1200,
         height: 630,
         alt: "Litecoin Mining – Live Difficulty & Hashrate",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     description:
       "Track real-time mining statistics of Litecoin (LTC) with clear data, performance trends, and insights to support better mining decisions.",
     images: [
-      "https://bucket.droomdroom.online/pricebucket/og-images/coin-2-1763126118964.png",
+      "https://bucket.droomdroom.online/eventbucket/1763145265157-Mining-statistics-Litecoin.png",
     ],
   },
 

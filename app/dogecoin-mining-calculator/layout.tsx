@@ -14,7 +14,7 @@ export const metadata: Metadata = {
       "Calculate mining profitability instantly with accurate estimates for Dogecoin (DOGE), helping you plan smarter and optimize returns.",
     images: [
       {
-        url: "https://bucket.droomdroom.online/pricebucket/og-images/coin-74-1763126118964.png",
+        url: "https://bucket.droomdroom.online/eventbucket/1763145052162-Mining-Calculator-Dogecoin.png",
         width: 1200,
         height: 630,
         alt: "Dogecoin Mining Calculator – Live Profit & ROI Tracker",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     description:
       "Calculate mining profitability instantly with accurate estimates for Dogecoin (DOGE), helping you plan smarter and optimize returns.",
     images: [
-      "https://bucket.droomdroom.online/pricebucket/og-images/coin-74-1763126118964.png",
+      "https://bucket.droomdroom.online/eventbucket/1763145052162-Mining-Calculator-Dogecoin.png",
     ],
   },
 

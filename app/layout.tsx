@@ -42,7 +42,7 @@ export const metadata: Metadata = {
       "Explore expert mining guides, real-time insights, calculators, and essential tools to help you mine smarter and boost long-term efficiency.",
     images: [
       {
-        url: "https://bucket.droomdroom.online/eventbucket/1763124785199-219bd33b-177f-4987-9e3a-5ba52207265f.jpg",
+        url: "https://bucket.droomdroom.online/eventbucket/1763144534938-Crypto%20Mining.png",
         width: 1200,
         height: 630,
         alt: "Crypto Mining Profit Calculator",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     description:
       "Explore expert mining guides, real-time insights, calculators, and essential tools to help you mine smarter and boost long-term efficiency.",
     images: [
-      "https://bucket.droomdroom.online/eventbucket/1763124785199-219bd33b-177f-4987-9e3a-5ba52207265f.jpg",
+      "https://bucket.droomdroom.online/eventbucket/1763144534938-Crypto%20Mining.png",
     ],
   },
   robots: {
@@ -196,7 +196,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             name="Crypto Mining Statistics, Calculators & Live Insights"
             url={process.env.NEXT_PUBLIC_APP_URL || "https://droomdroom.com"}
             logo={
-              "https://bucket.droomdroom.online/eventbucket/1763124785199-219bd33b-177f-4987-9e3a-5ba52207265f.jpg"
+              "https://bucket.droomdroom.online/eventbucket/1763144534938-Crypto%20Mining.png"
             }
             description="Explore expert mining guides, real-time insights, calculators, and essential tools to help you mine smarter and boost long-term efficiency."
           />

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
       "Get a clear breakdown of Bitcoin halving, including dates, impact on supply, and market insights to help you prepare confidently.",
     images: [
       {
-        url: "https://bucket.droomdroom.online/pricebucket/og-images/coin-1-1763125753882.png",
+        url: "https://bucket.droomdroom.online/eventbucket/1763144972462-28f954c2-ee9c-4a9f-9739-44a57beaaa8c.jpg",
         width: 1200,
         height: 630,
         alt: "Bitcoin Halving 2028 – Live Countdown & History",
@@ -30,7 +30,9 @@ export const metadata: Metadata = {
     title: "Bitcoin Halving Explained: Timeline, Impact & Key Insights",
     description:
       "Get a clear breakdown of Bitcoin halving, including dates, impact on supply, and market insights to help you prepare confidently.",
-    images: ["https://bucket.droomdroom.online/pricebucket/og-images/coin-1-1763125753882.png"],
+    images: [
+      "https://bucket.droomdroom.online/eventbucket/1763144972462-28f954c2-ee9c-4a9f-9739-44a57beaaa8c.jpg",
+    ],
   },
 
   robots: {

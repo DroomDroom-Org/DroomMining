@@ -15,7 +15,7 @@ export const metadata: Metadata = {
       "Track real-time mining statistics of Bitcoin (BTC) with clear data, performance trends, and insights to support better mining decisions.",
     images: [
       {
-        url: "https://bucket.droomdroom.online/pricebucket/og-images/coin-1-1763125753882.png",
+        url: "https://bucket.droomdroom.online/eventbucket/1763144814180-Mining-statistics-Bitcoin.png",
         width: 1200,
         height: 630,
         alt: "Live Crypto Mining Statistics for Bitcoin (BTC)",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     title: "Live Crypto Mining Statistics for Bitcoin (BTC)",
     description:
       "Track real-time mining statistics of Bitcoin (BTC) with clear data, performance trends, and insights to support better mining decisions.",
-    images: ["https://bucket.droomdroom.online/pricebucket/og-images/coin-1-1763125753882.png"],
+    images: ["https://bucket.droomdroom.online/eventbucket/1763144814180-Mining-statistics-Bitcoin.png"],
   },
 
   robots: {

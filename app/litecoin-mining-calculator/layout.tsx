@@ -14,7 +14,7 @@ export const metadata: Metadata = {
       "Calculate mining profitability instantly with accurate estimates for Litecoin (LTC), helping you plan smarter and optimize returns.",
     images: [
       {
-        url: "https://bucket.droomdroom.online/pricebucket/og-images/coin-2-1763126118964.png",
+        url: "https://bucket.droomdroom.online/eventbucket/1763145203406-Mining-Calculator-Litecoin.png",
         width: 1200,
         height: 630,
         alt: "Litecoin Mining Calculator – Live Profit & ROI Tracker",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     title: "Crypto Mining Profit Calculator for Litecoin (LTC)",
     description:
       "Calculate mining profitability instantly with accurate estimates for Litecoin (LTC), helping you plan smarter and optimize returns.",
-    images: ["https://bucket.droomdroom.online/pricebucket/og-images/coin-2-1763126118964.png"],
+    images: ["https://bucket.droomdroom.online/eventbucket/1763145203406-Mining-Calculator-Litecoin.png"],
   },
 
   robots: {
