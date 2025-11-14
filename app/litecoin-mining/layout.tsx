@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Litecoin Mining – Difficulty, Hashrate & Price Charts | DroomDroom",
+  title: "Live Crypto Mining Statistics for Litecoin (LTC)",
   description:
-    "Live Litecoin mining stats: difficulty, network hashrate, block reward, price chart, and profitability calculator. Track historical trends and mining rewards in real-time.",
+    "Track real-time mining statistics of Litecoin (LTC) with clear data, performance trends, and insights to support better mining decisions.",
 
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "/litecoin/mining",
-    siteName: "Mining Profit Calculator – DroomDroom",
-    title: "Litecoin Mining Dashboard – Live Difficulty & Hashrate",
+    url: "https://droomdroom.com/litecoin-mining",
+    siteName: "DroomDroom",
+    title: "Live Crypto Mining Statistics for Litecoin (LTC)",
     description:
-      "Real-time litecoin difficulty, hashrate, block reward, price charts, and mining calculator.",
+      "Track real-time mining statistics of Litecoin (LTC) with clear data, performance trends, and insights to support better mining decisions.",
     images: [
       {
-        url: "/mining/og-litecoin-mining.jpg",
+        url: "https://bucket.droomdroom.online/pricebucket/og-images/coin-2-1763126118964.png",
         width: 1200,
         height: 630,
         alt: "Litecoin Mining – Live Difficulty & Hashrate",
@@ -27,10 +27,12 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@droomdroom",
     creator: "@droomdroom",
-    title: "Litecoin Mining Live Stats & Calculator | DroomDroom",
+    title: "Live Crypto Mining Statistics for Litecoin (LTC)",
     description:
-      "Track real-time Litecoin difficulty, hashrate, price, and mining profitability instantly.",
-    images: ["/mining/og-litecoin-mining.jpg"],
+      "Track real-time mining statistics of Litecoin (LTC) with clear data, performance trends, and insights to support better mining decisions.",
+    images: [
+      "https://bucket.droomdroom.online/pricebucket/og-images/coin-2-1763126118964.png",
+    ],
   },
 
   robots: {
@@ -38,7 +40,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "/litecoin/mining",
+    canonical: "https://droomdroom.com/litecoin-mining",
   },
 };
 
@@ -47,9 +49,5 @@ export default function LitecoinMiningLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }
