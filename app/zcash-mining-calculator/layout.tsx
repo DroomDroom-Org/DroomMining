@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Zcash Mining Calculator – Live Profitability & ROI",
+  title: "Crypto Mining Profit Calculator for Zcash (ZEC)",
   description:
-    "Calculate Zcash mining profit in real-time. Enter hashrate, power, and electricity cost. Auto-fill with top ASIC miners. See daily ZEC, revenue, ROI, and break-even time.",
+    "Calculate mining profitability instantly with accurate estimates for Zcash (ZEC), helping you plan smarter and optimize returns.",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://droomdroom.com/mining/zcash/calculator",
+    url: "https://droomdroom.com/zcash-mining-calculator",
     siteName: "DroomDroom",
-    title: "Zcash Mining Calculator – Live Profitability & ROI",
+    title: "Crypto Mining Profit Calculator for Zcash (ZEC)",
     description:
-      "Calculate Zcash mining profit in real-time. Enter hashrate, power, and electricity cost. Auto-fill with top ASIC miners. See daily ZEC, revenue, ROI, and break-even time.",
+      "Calculate mining profitability instantly with accurate estimates for Zcash (ZEC), helping you plan smarter and optimize returns.",
     images: [
       {
-        url: "https://droomdroom.com/mining/og-zcash-mining-calculator.jpg",
+        url: "https://bucket.droomdroom.online/pricebucket/og-images/coin-1437-1763126118964.png",
         width: 1200,
         height: 630,
         alt: "Zcash Mining Calculator – Live Profit & ROI Tracker",
@@ -27,10 +27,12 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@droomdroom",
     creator: "@droomdroom",
-    title: "Zcash Mining Calculator – Live Profitability & ROI",
+    title: "Crypto Mining Profit Calculator for Zcash (ZEC)",
     description:
-      "Calculate Zcash mining profit in real-time. Enter hashrate, power, and electricity cost. Auto-fill with top ASIC miners. See daily ZEC, revenue, ROI, and break-even time.",
-    images: ["https://droomdroom.com/mining/og-zcash-mining-calculator.jpg"],
+      "Calculate mining profitability instantly with accurate estimates for Zcash (ZEC), helping you plan smarter and optimize returns.",
+    images: [
+      "https://bucket.droomdroom.online/pricebucket/og-images/coin-1437-1763126118964.png",
+    ],
   },
 
   robots: {
@@ -45,7 +47,7 @@ export const metadata: Metadata = {
   },
 
   alternates: {
-    canonical: "https://droomdroom.com/mining/zcash/calculator",
+    canonical: "https://droomdroom.com/zcash-mining-calculator",
   },
 
   metadataBase: new URL("https://droomdroom.com"),

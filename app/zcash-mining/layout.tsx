@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Zcash Mining – Difficulty, Hashrate & Price Charts | DroomDroom",
+  title: "Live Crypto Mining Statistics for Zcash (ZEC)",
   description:
-    "Live Zcash mining stats: difficulty, network hashrate, block reward, price chart, and profitability calculator. Track historical trends and mining rewards in real-time.",
+    "Track real-time mining statistics of Zcash (ZEC) with clear data, performance trends, and insights to support better mining decisions.",
 
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "/zcash/mining",
-    siteName: "Mining Profit Calculator – DroomDroom",
-    title: "Zcash Mining Dashboard – Live Difficulty & Hashrate",
+    url: "https://droomdroom.com/zcash-mining",
+    siteName: "DroomDroom",
+    title: "Live Crypto Mining Statistics for Zcash (ZEC)",
     description:
-      "Real-time zcash difficulty, hashrate, block reward, price charts, and mining calculator.",
+      "Track real-time mining statistics of Zcash (ZEC) with clear data, performance trends, and insights to support better mining decisions.",
     images: [
       {
-        url: "/mining/og-zcash-mining.jpg",
+        url: "https://bucket.droomdroom.online/pricebucket/og-images/coin-1437-1763126118964.png",
         width: 1200,
         height: 630,
         alt: "Zcash Mining – Live Difficulty & Hashrate",
@@ -27,10 +27,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@droomdroom",
     creator: "@droomdroom",
-    title: "Zcash Mining Live Stats & Calculator | DroomDroom",
+    title: "Live Crypto Mining Statistics for Zcash (ZEC)",
     description:
-      "Track real-time zcash difficulty, hashrate, price, and mining profitability instantly.",
-    images: ["/mining/og-zcash-mining.jpg"],
+      "Track real-time mining statistics of Zcash (ZEC) with clear data, performance trends, and insights to support better mining decisions.",
+    images: ["https://bucket.droomdroom.online/pricebucket/og-images/coin-1437-1763126118964.png"],
   },
 
   robots: {
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "/zcash/mining",
+    canonical: "https://droomdroom.com/zcash-mining",
   },
 };
 
