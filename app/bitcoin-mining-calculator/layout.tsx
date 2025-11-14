@@ -1,23 +1,23 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Bitcoin Mining Calculator – Live Profitability & ROI",
+  title: "Crypto Mining Profit Calculator for Bitcoin (BTC)",
   description:
-    "Calculate Bitcoin mining profit in real-time. Enter hashrate, power, and electricity cost. Auto-fill with top ASIC miners. See daily BTC, revenue, ROI, and break-even time.",
+    "Calculate mining profitability instantly with accurate estimates for Bitcoin (BTC), helping you plan smarter and optimize returns.",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://droomdroom.com/mining/bitcoin/calculator",
+    url: "https://droomdroom.com/bitcoin-mining-calculator",
     siteName: "DroomDroom",
-    title: "Bitcoin Mining Calculator – Live Profitability & ROI",
+    title: "Crypto Mining Profit Calculator for Bitcoin (BTC)",
     description:
-      "Calculate Bitcoin mining profit in real-time. Enter hashrate, power, and electricity cost. Auto-fill with top ASIC miners. See daily BTC, revenue, ROI, and break-even time.",
+      "Calculate mining profitability instantly with accurate estimates for Bitcoin (BTC), helping you plan smarter and optimize returns.",
     images: [
       {
-        url: "https://droomdroom.com/mining/og-bitcoin-mining-calculator.jpg",
+        url: "https://bucket.droomdroom.online/pricebucket/og-images/coin-1-1763125753882.png",
         width: 1200,
         height: 630,
-        alt: "Bitcoin Mining Calculator – Live Profit & ROI Tracker",
+        alt: "Crypto Mining Profit Calculator for Bitcoin (BTC)",
         type: "image/jpeg",
       },
     ],
@@ -27,10 +27,12 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@droomdroom",
     creator: "@droomdroom",
-    title: "Bitcoin Mining Calculator – Live Profitability & ROI",
+    title: "Crypto Mining Profit Calculator for Bitcoin (BTC)",
     description:
-      "Calculate Bitcoin mining profit in real-time. Enter hashrate, power, and electricity cost. Auto-fill with top ASIC miners. See daily BTC, revenue, ROI, and break-even time.",
-    images: ["https://droomdroom.com/mining/og-bitcoin-mining-calculator.jpg"],
+      "Calculate mining profitability instantly with accurate estimates for Bitcoin (BTC), helping you plan smarter and optimize returns.",
+    images: [
+      "https://bucket.droomdroom.online/pricebucket/og-images/coin-1-1763125753882.png",
+    ],
   },
 
   robots: {
@@ -45,7 +47,7 @@ export const metadata: Metadata = {
   },
 
   alternates: {
-    canonical: "https://droomdroom.com/mining/bitcoin/calculator",
+    canonical: "https://droomdroom.com/bitcoin-mining-calculator",
   },
 
   metadataBase: new URL("https://droomdroom.com"),

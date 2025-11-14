@@ -1,22 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title:
-    "Bitcoin Halving 2028 Countdown – Next BTC Halving Date & History | DroomDroom",
+  title: "Bitcoin Halving Explained: Timeline, Impact & Key Insights",
   description:
-    "Live Bitcoin Halving countdown to 2028. Track blocks remaining, reward drop from 3.125 to 1.5625 BTC, past halvings, price impact, and FAQs. Updated every second.",
+    "Get a clear breakdown of Bitcoin halving, including dates, impact on supply, and market insights to help you prepare confidently.",
 
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "/bitcoin-halving",
+    url: "https://droomdroom.com/bitcoin-halving",
     siteName: "DroomDroom",
-    title: "Bitcoin Halving 2028 Countdown – Live Tracker",
+    title: "Bitcoin Halving Explained: Timeline, Impact & Key Insights",
     description:
-      "Real-time countdown to the next Bitcoin halving in 2028. See blocks left, reward reduction, historical data, and price impact.",
+      "Get a clear breakdown of Bitcoin halving, including dates, impact on supply, and market insights to help you prepare confidently.",
     images: [
       {
-        url: "/halving/og-bitcoin-halving.jpg",
+        url: "https://bucket.droomdroom.online/pricebucket/og-images/coin-1-1763125753882.png",
         width: 1200,
         height: 630,
         alt: "Bitcoin Halving 2028 – Live Countdown & History",
@@ -28,10 +27,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@droomdroom",
     creator: "@droomdroom",
-    title: "Bitcoin Halving 2028 Countdown | DroomDroom",
+    title: "Bitcoin Halving Explained: Timeline, Impact & Key Insights",
     description:
-      "Live tracker for the next Bitcoin halving event. Blocks remaining, reward drop, and historical halvings.",
-    images: ["/halving/og-bitcoin-halving.jpg"],
+      "Get a clear breakdown of Bitcoin halving, including dates, impact on supply, and market insights to help you prepare confidently.",
+    images: ["https://bucket.droomdroom.online/pricebucket/og-images/coin-1-1763125753882.png"],
   },
 
   robots: {
@@ -40,7 +39,7 @@ export const metadata: Metadata = {
   },
 
   alternates: {
-    canonical: "/bitcoin-halving",
+    canonical: "https://droomdroom.com/bitcoin-halving",
   },
 };
 

@@ -1,24 +1,24 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Bitcoin Mining – Difficulty, Hashrate & Price Charts | DroomDroom",
+  title: "Live Crypto Mining Statistics for Bitcoin (BTC)",
   description:
-    "Live Bitcoin mining stats: difficulty, network hashrate, block reward, price chart, and profitability calculator. Track historical trends and mining rewards in real-time.",
+    "Track real-time mining statistics of Bitcoin (BTC) with clear data, performance trends, and insights to support better mining decisions.",
 
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "/bitcoin/mining",
-    siteName: "Mining Profit Calculator – DroomDroom",
-    title: "Bitcoin Mining Dashboard – Live Difficulty & Hashrate",
+    url: "https://droomdroom.com/bitcoin-mining",
+    siteName: "Live Crypto Mining Statistics for Bitcoin (BTC)",
+    title: "Live Crypto Mining Statistics for Bitcoin (BTC)",
     description:
-      "Real-time Bitcoin difficulty, hashrate, block reward, price charts, and mining calculator.",
+      "Track real-time mining statistics of Bitcoin (BTC) with clear data, performance trends, and insights to support better mining decisions.",
     images: [
       {
-        url: "/mining/og-bitcoin-mining.jpg",
+        url: "https://bucket.droomdroom.online/pricebucket/og-images/coin-1-1763125753882.png",
         width: 1200,
         height: 630,
-        alt: "Bitcoin Mining – Live Difficulty & Hashrate",
+        alt: "Live Crypto Mining Statistics for Bitcoin (BTC)",
       },
     ],
   },
@@ -27,10 +27,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@droomdroom",
     creator: "@droomdroom",
-    title: "Bitcoin Mining Live Stats & Calculator | DroomDroom",
+    title: "Live Crypto Mining Statistics for Bitcoin (BTC)",
     description:
-      "Track Bitcoin difficulty, hashrate, price, and mining profitability instantly.",
-    images: ["/mining/og-bitcoin-mining.jpg"],
+      "Track real-time mining statistics of Bitcoin (BTC) with clear data, performance trends, and insights to support better mining decisions.",
+    images: ["https://bucket.droomdroom.online/pricebucket/og-images/coin-1-1763125753882.png"],
   },
 
   robots: {
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "/bitcoin/mining",
+    canonical: "https://droomdroom.com/bitcoin-mining",
   },
 };
 
@@ -47,9 +47,5 @@ export default function BitcoinMiningLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

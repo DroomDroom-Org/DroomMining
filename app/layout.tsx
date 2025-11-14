@@ -17,11 +17,11 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Mining Profit Calculator",
-    default: "Mining Profit Calculator | DroomDroom",
+    template: "%s | Crypto Mining Statistics, Calculators & Live Insights",
+    default: "Crypto Mining Statistics, Calculators & Live Insights",
   },
   description:
-    "Estimate mining profitability for Bitcoin, Zcash, Litecoin, and Monero. Compare hash rates, power usage, mining difficulty, and rewards in real-time to maximize crypto mining profits.",
+    "Explore expert mining guides, real-time insights, calculators, and essential tools to help you mine smarter and boost long-term efficiency.",
   icons: {
     icon: "/mining/favicon.png",
     shortcut: "/mining/favicon.png",
@@ -36,13 +36,13 @@ export const metadata: Metadata = {
   ),
   openGraph: {
     type: "website",
-    siteName: "Mining Profit Calculator",
-    title: "Crypto Mining Profit Calculator",
+    siteName: "Crypto Mining Statistics, Calculators & Live Insights",
+    title: "Crypto Mining Statistics, Calculators & Live Insights",
     description:
-      "Mining earnings calculator for Bitcoin (BTC), Zcash (ZEC), Litecoin (LTC), and Monero (XMR). Track mining rewards, difficulty, hash power, and costs with real-time data.",
+      "Explore expert mining guides, real-time insights, calculators, and essential tools to help you mine smarter and boost long-term efficiency.",
     images: [
       {
-        url: "/mining/mining-calculator-og.jpg",
+        url: "https://bucket.droomdroom.online/eventbucket/1763124785199-219bd33b-177f-4987-9e3a-5ba52207265f.jpg",
         width: 1200,
         height: 630,
         alt: "Crypto Mining Profit Calculator",
@@ -53,10 +53,12 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@droomdroom",
     creator: "@droomdroom",
-    title: "Crypto Mining Profit Calculator | DroomDroom",
+    title: "Crypto Mining Statistics, Calculators & Live Insights",
     description:
-      "Calculate mining profitability across Bitcoin, Zcash, Litecoin, and Monero using hash power, difficulty, and energy costs.",
-    images: ["/mining/mining-calculator-og.jpg"],
+      "Explore expert mining guides, real-time insights, calculators, and essential tools to help you mine smarter and boost long-term efficiency.",
+    images: [
+      "https://bucket.droomdroom.online/eventbucket/1763124785199-219bd33b-177f-4987-9e3a-5ba52207265f.jpg",
+    ],
   },
   robots: {
     index: true,
@@ -191,12 +193,12 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           disableTransitionOnChange
         >
           <OrganizationSchema
-            name="Mining Token Calculator - DroomDroom"
+            name="Crypto Mining Statistics, Calculators & Live Insights"
             url={process.env.NEXT_PUBLIC_APP_URL || "https://droomdroom.com"}
-            logo={`${
-              process.env.NEXT_PUBLIC_APP_URL || "https://droomdroom.com"
-            }/price/DroomDroom_light.svg`}
-            description="Calculate mining profitability for Bitcoin, Zcash, Litecoin, and Monero. Track hash rates, power usage, difficulty, rewards, and earnings in real-time to maximize crypto mining profits."
+            logo={
+              "https://bucket.droomdroom.online/eventbucket/1763124785199-219bd33b-177f-4987-9e3a-5ba52207265f.jpg"
+            }
+            description="Explore expert mining guides, real-time insights, calculators, and essential tools to help you mine smarter and boost long-term efficiency."
           />
 
           <div className="relative flex min-h-screen w-full flex-col antialiased bg-background text-foreground">
