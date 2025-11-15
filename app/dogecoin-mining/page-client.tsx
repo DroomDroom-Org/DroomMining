@@ -327,7 +327,7 @@ export default function DogecoinHomePageClient({
             </Button>
           </CardContent>
         </Card>
-
+{/* 
         <DogecoinChart
           title="Dogecoin Difficulty"
           icon={<Gauge className="h-5 w-5" />}
@@ -341,8 +341,8 @@ export default function DogecoinHomePageClient({
           loading={isDifficultyChartLoading}
           timeRange={difficultyCurrentTimerange}
           onTimeRangeChange={handleDifficultyTimeRangeChange}
-        />
-
+        /> */}
+{/* 
         <DogecoinChart
           title="Dogecoin Hashrate"
           icon={<Hash className="h-5 w-5" />}
@@ -354,7 +354,7 @@ export default function DogecoinHomePageClient({
           loading={isHashrateChartLoading}
           timeRange={hashrateCurrentTimerange}
           onTimeRangeChange={handleHashrateTimeRangeChange}
-        />
+        /> */}
 
         <DogecoinChart
           title="Dogecoin Price Chart"
