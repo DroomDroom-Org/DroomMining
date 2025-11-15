@@ -4,116 +4,119 @@ export const dynamic = 'force-dynamic';
 const BLOCK_TIME_TARGET = 60;
 const DIFFICULTY_RETARGET = 1;
 
-const endpoints = {
-  blockCount: 'https://api.blockcypher.com/v1/doge/main',
-  minerstat: 'https://api.minerstat.com/v2/coins?list=DOGE',
-} as const;
+const GETBLOCK_RPC_URL = 'https://go.getblock.io/a398275bd313417cbbc04dab6e85b9bf';
+const MINERSTAT_URL = 'https://api.minerstat.com/v2/coins?list=DOGE';
 
-interface MinerstatResponse {
-  id: string;
-  coin: string;
-  name: string;
-  type: string;
-  algorithm: string;
-  network_hashrate: number;
+interface GetMiningInfoResult {
+  blocks: number;
   difficulty: number;
-  reward: number;
-  reward_unit: string;
-  reward_block: number;
+  networkhashps: number;
+  chain?: string;
+}
+interface MinerstatCoin {
+  coin: string;
   price: number;
   volume: number;
-  updated: number;
+}
+interface Results {
+  blockCount: number | null;
+  difficulty: number | null;
+  networkHashrate: number | null;   
+  blockReward: number;            
+  blockTime: number;
+  difficultyRetarget: number;
+  volume: number | null;
+  price: number | null;
 }
 
-async function fetchBlockCount(): Promise<number> {
-  const res = await fetch(endpoints.blockCount, {
-    method: 'GET',
+async function fetchGetBlockMiningInfo(): Promise<GetMiningInfoResult> {
+  const res = await fetch(GETBLOCK_RPC_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      jsonrpc: '2.0',
+      method: 'getmininginfo',
+      params: [],
+      id: 'dogestats-api',
+    }),
     next: { revalidate: 60 },
   });
 
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) throw new Error(`GetBlock HTTP ${res.status}`);
 
-  const data = await res.json();
-  if (typeof data.height !== 'number') throw new Error('Invalid block count');
+  const payload = await res.json();
+  if (payload.error) throw new Error(`RPC error: ${payload.error.message ?? JSON.stringify(payload.error)}`);
+  if (!payload.result) throw new Error('No result from GetBlock');
 
-  return data.height;
+  return payload.result;
 }
 
+async function fetchMinerstatPriceVolume(): Promise<{ price: number; volume: number }> {
+  const res = await fetch(MINERSTAT_URL, { next: { revalidate: 300 } });
+  if (!res.ok) throw new Error(`Minerstat HTTP ${res.status}`);
 
-async function fetchMinerstat(): Promise<MinerstatResponse> {
-  const res = await fetch(endpoints.minerstat, {
-    next: { revalidate: 300 },
-  });
+  const list: MinerstatCoin[] = await res.json();
+  const doge = list.find((c) => c.coin === 'DOGE');
+  if (!doge) throw new Error('DOGE entry missing in Minerstat response');
 
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-  const data: MinerstatResponse[] = await res.json();
-  const doge = data.find((c) => c.coin === 'DOGE');
-  if (!doge) throw new Error('DOGE not found in minerstat response');
-
-  return doge;
+  return { price: doge.price, volume: doge.volume };
 }
 
-export async function GET(request: NextRequest) {
-  const results = {
-    blockCount: null as number | null,
-    difficulty: null as number | null,
-    networkHashrate: null as number | null,
-    blockReward: null as number | null,
+export async function GET(_req: NextRequest) {
+  const results: Results = {
+    blockCount: null,
+    difficulty: null,
+    networkHashrate: null,
+    blockReward: 10_000,             
     blockTime: BLOCK_TIME_TARGET,
     difficultyRetarget: DIFFICULTY_RETARGET,
-    volume: null as number | null,
-    price: null as number | null,
+    volume: null,
+    price: null,
   };
 
-  const errors: string[] = [];
+  const warnings: string[] = [];
 
-  try {
-    const [blockCountRes, minerstatRes] = await Promise.allSettled([
-      fetchBlockCount(),
-      fetchMinerstat(),
-    ]);
+  const [rpcRes, minerstatRes] = await Promise.allSettled([
+    fetchGetBlockMiningInfo(),
+    fetchMinerstatPriceVolume(),
+  ]);
 
-    // Handle block count
-    if (blockCountRes.status === 'fulfilled') {
-      results.blockCount = blockCountRes.value;
-    } else {
-      errors.push(`blockCount: ${blockCountRes.reason?.message || 'Unknown error'}`);
-      console.warn('Failed to fetch block count:', blockCountRes.reason);
+  if (rpcRes.status === 'fulfilled') {
+    const info = rpcRes.value;
+    results.blockCount = info.blocks;
+    results.difficulty = info.difficulty;
+    results.networkHashrate = info.networkhashps;
+
+    if (info.chain && info.chain !== 'main') {
+      warnings.push(`Connected to ${info.chain} chain (expected main)`);
     }
-
-    let minerstatData: MinerstatResponse | null = null;
-    if (minerstatRes.status === 'fulfilled') {
-      minerstatData = minerstatRes.value;
-      results.difficulty = minerstatData.difficulty;
-      results.networkHashrate = minerstatData.network_hashrate;
-      results.blockReward = minerstatData.reward_block;
-      results.volume = minerstatData.volume;
-      results.price = minerstatData.price;
-    } else {
-      errors.push(`minerstat: ${minerstatRes.reason?.message || 'Unknown error'}`);
-      console.warn('Failed to fetch minerstat data:', minerstatRes.reason);
-    }
-
-    const hasAnyData = Object.values(results).some((v) => v !== null);
-    const status = hasAnyData && errors.length > 0 ? 206 : hasAnyData ? 200 : 503;
-
-    return NextResponse.json(
-      {
-        data: results,
-        warnings: errors.length > 0 ? errors : undefined,
-      },
-      { status }
-    );
-  } catch (error) {
-    console.error('Critical error in DOGE stats API:', error);
-    return NextResponse.json(
-      {
-        error: 'Failed to fetch Litecoin statistics',
-        details: error instanceof Error ? error.message : 'Unknown error',
-        data: results,
-      },
-      { status: 503 }
-    );
+  } else {
+    const msg = rpcRes.reason?.message ?? 'unknown';
+    warnings.push(`GetBlock RPC failed: ${msg}`);
+    console.warn('GetBlock RPC error →', rpcRes.reason);
   }
+
+  if (minerstatRes.status === 'fulfilled') {
+    results.price = minerstatRes.value.price;
+    results.volume = minerstatRes.value.volume;
+  } else {
+    const msg = minerstatRes.reason?.message ?? 'unknown';
+    warnings.push(`Minerstat price/volume failed: ${msg}`);
+    console.warn('Minerstat error →', minerstatRes.reason);
+  }
+
+  const hasCoreData = results.blockCount !== null && results.difficulty !== null && results.networkHashrate !== null;
+  const status = hasCoreData
+    ? warnings.length > 0
+      ? 206   
+      : 200  
+    : 503;  
+
+  return NextResponse.json(
+    {
+      data: results,
+      warnings: warnings.length ? warnings : undefined,
+    },
+    { status }
+  );
 }
