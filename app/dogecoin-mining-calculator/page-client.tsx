@@ -45,12 +45,12 @@ import {
 } from "@/components/ui/accordion";
 import { getCmcImageUrl } from "@/lib/config";
 import DogecoinNavigation from "@/components/dogecoin-navigation";
-import { Stats, Calculator } from "@/types";
+import { Stats, Calculator, Faq } from "@/types";
 import { formatDifficulty, formatHashrate } from "@/lib/format";
-import { dogecoinCalculatorFaqs } from "@/constants/dogecoin";
 
 interface DogecoinCalculatorPageClientProps {
   statsData: Stats;
+  faqsData: Faq[];
 }
 
 const unitMultipliers: Record<string, number> = {
@@ -65,6 +65,7 @@ const fromHashrate = (hashrate: number, unit: string): number =>
 
 export default function DogecoinCalculatorPageClient({
   statsData,
+  faqsData,
 }: DogecoinCalculatorPageClientProps) {
   const [state, setState] = useState<Calculator>({
     hashrate: 840_000,
@@ -522,7 +523,7 @@ export default function DogecoinCalculatorPageClient({
           </CardHeader>
           <CardContent>
             <Accordion type="single" collapsible className="w-full">
-              {dogecoinCalculatorFaqs.map((faq, index) => (
+              {faqsData.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`}>
                   <AccordionTrigger className="text-lg">
                     {faq.question}
