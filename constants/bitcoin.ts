@@ -515,7 +515,7 @@ export const bitcoinMiners = [
         efficiency: 18.5,
         cost: 13699,
         thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m63s-hydro-390t.png",
-        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
+        buyUrl: "https://shop.whatsminer.com/products/details/67?skuId=132#USA"
     },
     {  
         id: 2,
@@ -527,7 +527,7 @@ export const bitcoinMiners = [
         efficiency: 19.9,
         cost: 11799,
         thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m63-hydro-366t.png",
-        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
+        buyUrl: "https://shop.whatsminer.com/products/details/57?skuId=112#USA"
     },
     {
         id: 3,
@@ -539,7 +539,7 @@ export const bitcoinMiners = [
         efficiency: 20.04,
         cost: 12499,
         thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m63s-hydro-360t.png",
-        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
+        buyUrl: "https://shop.whatsminer.com/products/details/67?skuId=132#USA"
     },
     {   
         id: 4,
@@ -563,7 +563,7 @@ export const bitcoinMiners = [
         efficiency: 21.81,
         cost: 10799,
         thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m63-hydro-334t.png",
-        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
+        buyUrl: "https://shop.whatsminer.com/products/details/57?skuId=112#USA"
     },
     {   
         id: 6,
@@ -575,7 +575,7 @@ export const bitcoinMiners = [
         efficiency: 18.5,
         cost: 10799,
         thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m66s-hydro-298t.png",
-        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
+        buyUrl: "https://shop.whatsminer.com/products/details/76?skuId=171#HK"
     },
     {  
         id: 7,
@@ -587,7 +587,7 @@ export const bitcoinMiners = [
         efficiency: 19.9,
         cost: 9499,
         thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m66-hydro-280t.png",
-        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
+        buyUrl: "https://shop.whatsminer.com/products/details/68?skuId=134#HK"
     },
     {   
         id: 8,
@@ -599,7 +599,7 @@ export const bitcoinMiners = [
         efficiency: 20.42,
         cost: 9699,
         thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m66s-hydro-270t.png",
-        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
+        buyUrl: "https://shop.whatsminer.com/products/details/69?skuId=148#HK"
     },
     {  
         id: 9,
@@ -635,7 +635,7 @@ export const bitcoinMiners = [
         efficiency: 23.41,
         cost: 7999,
         thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m66-hydro-238t.png",
-        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
+        buyUrl: "https://shop.whatsminer.com/products/details/68?skuId=134#HK"
     },
     {
         id: 12,
@@ -671,7 +671,7 @@ export const bitcoinMiners = [
         efficiency: 18.5,
         cost: 6299,
         thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m60s-186t.png",
-        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
+        buyUrl: "https://shop.whatsminer.com/products/details/74?skuId=169#HK"
     },
     {
         id: 15,
@@ -683,7 +683,7 @@ export const bitcoinMiners = [
         efficiency: 19.9,
         cost: 5499,
         thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m60-172t.png",
-        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
+        buyUrl: "https://shop.whatsminer.com/products/details/65?skuId=166#HK"
     },
     {
         id: 16,
@@ -707,7 +707,7 @@ export const bitcoinMiners = [
         efficiency: 20.24,
         cost: 5699,
         thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m60s-170t.png",
-        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
+        buyUrl: "https://shop.whatsminer.com/products/details/74?skuId=169#HK"
     },
     {
         id: 18,
@@ -719,7 +719,7 @@ export const bitcoinMiners = [
         efficiency: 21.94,
         cost: 4799,
         thumbnail: "https://www.coinwarz.com/content/v3/images/mining-hardware/whatsminer-m60-156t.png",
-        buyUrl: "https://www.cryptominerbros.com/product-category/sha-256-miner/?orderby=date&ref=droomdroom"
+        buyUrl: "https://shop.whatsminer.com/products/details/65?skuId=166#HK"
     },
     {
         id: 19,
